@@ -7,5 +7,13 @@
             "email": "juan.rodas.manez@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "slim/slim": "4.*",
+        "slim/psr7": "^1.1",
+        "php-di/php-di": "^6.2",
+        "monolog/monolog": "^2.1",
+        "ext-json": "^7.4",
+        "fig/http-message-util": "^1.1",
+        "ramsey/uuid": "^4.1"
+    }
 }
