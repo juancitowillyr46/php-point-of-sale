@@ -1,0 +1,11 @@
+{
+    "name": "juanrodas/pointofsale.api",
+    "description": "REST API Point Of Sale With Pattern ADR (Action, Domain, Responder)",
+    "authors": [
+        {
+            "name": "Juan Rodas",
+            "email": "juan.rodas.manez@gmail.com"
+        }
+    ],
+    "require": {}
+}

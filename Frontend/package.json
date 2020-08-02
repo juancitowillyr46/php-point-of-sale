@@ -1,0 +1,11 @@
+{
+  "name": "pointofsale.app",
+  "version": "1.0.0",
+  "description": "App Web of Point Of Sale With SPA(Single Page Application)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
