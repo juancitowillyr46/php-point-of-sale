@@ -1,15 +1,12 @@
 <?php declare(strict_types=1);
 
 use Slim\App;
-use Slim\Http\Response;
-use Slim\Http\ServerRequest;
+//use Slim\Http\Response;
+//use Slim\Http\ServerRequest;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use App\BackOffice\Home\Application\Actions\HelloWorldAction;
 
 return function (App $app) {
-    $app->get('/', function (ServerRequest $request, Response $response, $args){
-        $message = array(
-            "message" => "REST API v1.0.0",
-            "data" => "Hello World"
-        );
-        return $response->withJson($message);
-    });
+    $app->get('/', HelloWorldAction::class);
 };
