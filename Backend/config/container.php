@@ -15,7 +15,6 @@ return [
     },
     App::class => function (ContainerInterface $container){
         AppFactory::setContainer($container);
-        $config = $container->get(Configuration::class);
         return AppFactory::create();
     },
     LoggerInterface::class => function (ContainerInterface $c) {

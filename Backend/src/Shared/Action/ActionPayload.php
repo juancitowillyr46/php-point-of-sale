@@ -3,13 +3,18 @@
 
 namespace App\Shared\Action;
 
+use Fig\Http\Message\StatusCodeInterface;
 use JsonSerializable;
 
-class ActionPayload implements JsonSerializable
+class ActionPayload implements JsonSerializable, StatusCodeInterface
 {
 
     private int $statusCode;
-    private ?array $data;
+
+    /**
+     * @var array|object|null
+     */
+    private $data;
     private ?ActionError $error;
 
     public function __construct(
