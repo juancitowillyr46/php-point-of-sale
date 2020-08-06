@@ -1,5 +1,8 @@
 <?php declare(strict_types=1);
 
+use AutoMapperPlus\AutoMapper;
+use AutoMapperPlus\AutoMapperInterface;
+use AutoMapperPlus\Configuration\AutoMapperConfig;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\UidProcessor;
@@ -15,7 +18,18 @@ return [
     },
     App::class => function (ContainerInterface $container){
         AppFactory::setContainer($container);
-        return AppFactory::create();
+        $app = AppFactory::create();
+
+        $config = $container->get(Configuration::class);
+        $configBd = $config->getArray('db');
+
+        /* Eloquent */
+        $capsule = new \Illuminate\Database\Capsule\Manager;
+        $capsule->addConnection($configBd);
+        $capsule->setAsGlobal();
+        $capsule->bootEloquent();
+
+        return $app;
     },
     LoggerInterface::class => function (ContainerInterface $c) {
 
@@ -30,5 +44,10 @@ return [
         $logger->pushHandler($handler);
 
         return $logger;
+    },
+    AutoMapperInterface::class => function(ContainerInterface $container)
+    {
+        $config = new AutoMapperConfig();
+        return new AutoMapper($config);
     },
 ];

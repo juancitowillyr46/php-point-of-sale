@@ -6,7 +6,7 @@ class UserDto
     public string $uuid;
     public string $email;
     public string $username;
-    public string $typeId;
+    public string $typeUser;
     public string $active;
     public string $createdAt;
 }

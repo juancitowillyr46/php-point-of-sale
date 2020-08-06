@@ -9,11 +9,11 @@ interface UserRepositoryInterface
 
     public function edit(int $id, User $user): bool;
 
-    public function find(int $id): object;
+    public function find(int $id): array;
 
     public function remove(): bool;
 
     public function all(): array;
 
-    public function findByUuid(string $uuid): object;
+    public function findByUuid(string $uuid): ?int;
 }

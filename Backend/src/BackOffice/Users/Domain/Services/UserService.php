@@ -2,10 +2,15 @@
 namespace App\BackOffice\Users\Domain\Services;
 
 use App\BackOffice\Users\Domain\Entities\User;
+use App\BackOffice\Users\Domain\Entities\UserDto;
+use App\BackOffice\Users\Domain\Entities\UserMapper;
+use App\BackOffice\Users\Domain\Exceptions\UserNotFoundException;
 use App\BackOffice\Users\Infrastructure\Persistence\UserRepository;
 use App\Shared\Domain\Uuid;
 use App\Shared\Utility\SecurityPassword;
+use AutoMapperPlus\Exception\UnregisteredMappingException;
 use Cake\Chronos\Chronos;
+use Exception;
 use Ramsey\Uuid\Uuid as UuidGenerate;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -15,9 +20,11 @@ use Symfony\Component\Serializer\Serializer;
 class UserService
 {
     public UserRepository $repository;
+    public UserMapper $mapper;
 
-    public function __construct(UserRepository $repository)
+    public function __construct(UserRepository $repository, UserMapper $mapper)
     {
+        $this->mapper = $mapper;
         $this->repository = $repository;
     }
 
@@ -49,14 +56,18 @@ class UserService
         return $uid;
     }
 
-    public function find(string $uuid): object
+    public function find(string $uuid): ?UserDto
     {
-        $userx = $this->repository->find(1);
 
-        $encoders = array(new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
-        $serializer = new Serializer($normalizers, $encoders);
+        $findId = $this->repository->findByUuid($uuid);
 
-        return json_decode($serializer->serialize($userx,'json'));
+        if(!$findId) {
+            throw new UserNotFoundException();
+        }
+
+        $findId = $this->repository->findByUuid($uuid);
+        $find = $this->repository->find($findId);
+        return $this->mapper->autoMapper->map($find, UserDto::class);
+
     }
 }

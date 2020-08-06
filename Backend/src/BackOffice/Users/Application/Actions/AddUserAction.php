@@ -17,7 +17,7 @@ class AddUserAction extends UsersAction
         $payload = $validateRequest->validateRequest($validateRequest->getMessages());
 
         /* Procesa lógica */
-        $success = $this->service->addUser($requestData);
+        $success = $this->service->add($requestData);
 
         return ($payload !== null)? $this->respond($payload) : $this->respondWithData($success);
 

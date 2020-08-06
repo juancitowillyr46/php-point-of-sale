@@ -36,8 +36,7 @@ $settings['logger'] = [
 
 // Database settings
 $settings['db'] = [
-    'driver' => '',
-    'host' => 'localhost',
+    'driver' => 'mysql',
     'encoding' => 'utf8mb4',
     'collation' => 'utf8mb4_unicode_ci',
     // Enable identifier quoting
