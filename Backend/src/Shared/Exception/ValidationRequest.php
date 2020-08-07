@@ -3,6 +3,7 @@ namespace App\Shared\Exception;
 
 use App\Shared\Action\ActionError;
 use App\Shared\Action\ActionPayload;
+use Exception;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\Constraints\GroupSequence;
 use Symfony\Component\Validator\Validation;
@@ -37,13 +38,8 @@ abstract class ValidationRequest
     }
 
     public function validateRequest($messages): ?ActionPayload {
-
         if(count($messages) > 0) {
-            $error = new ActionError(
-                ActionError::BAD_REQUEST,
-                $messages
-            );
-            return new ActionPayload(ActionPayload::STATUS_NOT_FOUND, null, $error);
+            throw new ValidateRequestException(json_encode($messages));
         }
         return null;
     }

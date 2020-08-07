@@ -1,5 +1,5 @@
 <?php
-namespace App\BackOffice\Users\Domain\Exceptions;
+namespace App\BackOffice\UsersType\Domain\Exceptions;
 
 use App\Shared\Exception\ValidationRequest;
 use Symfony\Component\Validator\Constraints\Email;
@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Constraints\Type;
 
-class AddUserActionValidation extends ValidationRequest
+class AddUserTypeActionValidation extends ValidationRequest
 {
 
     public array $data;
@@ -48,7 +48,7 @@ class AddUserActionValidation extends ValidationRequest
                     'min' => 8
                 ])
             ],
-            'userTypeUuid' => [
+            'type_user' => [
                 new Required(),
             ],
             'active' => [

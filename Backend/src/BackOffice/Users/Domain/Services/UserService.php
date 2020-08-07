@@ -4,70 +4,50 @@ namespace App\BackOffice\Users\Domain\Services;
 use App\BackOffice\Users\Domain\Entities\User;
 use App\BackOffice\Users\Domain\Entities\UserDto;
 use App\BackOffice\Users\Domain\Entities\UserMapper;
-use App\BackOffice\Users\Domain\Exceptions\UserNotFoundException;
 use App\BackOffice\Users\Infrastructure\Persistence\UserRepository;
-use App\Shared\Domain\Uuid;
+use App\BackOffice\UsersType\Domain\Services\UserTypeService;
+use App\Shared\Domain\Services\BaseService;
+use App\Shared\Exception\Commands\FindActionException;
 use App\Shared\Utility\SecurityPassword;
-use AutoMapperPlus\Exception\UnregisteredMappingException;
-use Cake\Chronos\Chronos;
-use Exception;
-use Ramsey\Uuid\Uuid as UuidGenerate;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
 
 
-class UserService
+class UserService extends BaseService
 {
-    public UserRepository $repository;
     public UserMapper $mapper;
+    public User $user;
+    public UserTypeService $userTypeService;
 
-    public function __construct(UserRepository $repository, UserMapper $mapper)
+    public function __construct(UserMapper $mapper, UserRepository $userRepository, User $user, UserTypeService $userTypeService)
     {
         $this->mapper = $mapper;
-        $this->repository = $repository;
+        $this->user = $user;
+        $this->userTypeService = $userTypeService;
+        $this->setRepository($userRepository);
     }
 
-    public function add(object $request): Uuid {
-
-        // Get Request
-        $user = new User();
-        $user->setId(0);
-        $user->setTypeUserId(0);
-        $user->setUuid(UuidGenerate::uuid1());
+    public function payLoad(object $request): array
+    {
+        $user = $this->user;
         $user->setUsername($request->username);
         $user->setPassword(SecurityPassword::encryptPassword($request->password));
         $user->setEmail($request->email);
-        $user->setTypeUser($request->typeUser);
-        $user->setCreatedAt(Chronos::now()->format("Y-mm-dd hh:mm:ss"));
-        $user->setCreatedBy('ADMIN');
-        $user->setUpdatedAt('');
-        $user->setUpdatedBy('');
-        $user->setDeletedAt('');
-        $user->setDeletedBy('');
-        $user->setActive($request->active);
+        $user->setUserTypeUuid($request->userTypeUuid);
 
-        // Get Uuid
-        $uid = new Uuid();
-        $uid->setUuid($user->getUuid());
+        try {
 
-        // Get Repository
-        $this->repository->add($user);
-        return $uid;
-    }
+            $findUserType = $this->userTypeService->find($request->userTypeUuid);
+            $user->setUserTypeId($findUserType['id']);
 
-    public function find(string $uuid): ?UserDto
-    {
-
-        $findId = $this->repository->findByUuid($uuid);
-
-        if(!$findId) {
-            throw new UserNotFoundException();
+        } catch (FindActionException $e) {
+            throw new FindActionException();
         }
 
-        $findId = $this->repository->findByUuid($uuid);
-        $find = $this->repository->find($findId);
-        return $this->mapper->autoMapper->map($find, UserDto::class);
-
+        /* Ubicar el id del typeUserUuid */
+        return (array) $user;
     }
+
+    public function findToDto(string $uuid) {
+        return $this->mapper->autoMapper->map($this->find($uuid), UserDto::class);
+    }
+
 }
