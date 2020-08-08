@@ -32,39 +32,71 @@ abstract class BaseService implements ServiceInterface
 
     public function add(array $request): Uuid
     {
+        $request['created_at'] = date('Y-m-d H:m:s');
+        $request['created_by'] = 'ADMIN';
         $success = $this->repository->add($request);
-        if(!$success){
+        if(!$success)
             throw new AddActionException();
-        }
+
         $uuid = new Uuid();
         $uuid->setUuid($request['uuid']);
         return $uuid;
     }
 
-    public function edit(array $request, int $id): Uuid
+    public function edit(array $request, string $uuid): Uuid
     {
-        throw new EditActionException();
+
+        $findId = $this->repository->findByUuid($uuid);
+
+        if(!$findId)
+            throw new FindActionException();
+
+        $request['id'] = $findId;
+        $request['updated_at'] = date('Y-m-d H:m:s');
+        $request['updated_by'] = 'ADMIN';
+
+        $success = $this->repository->edit($request, $findId);
+        if(!$success)
+            throw new EditActionException();
+
+        $uuid = new Uuid();
+        $uuid->setUuid($request['uuid']);
+        return $uuid;
     }
 
     public function remove(string $uuid): Uuid
     {
-        throw new RemoveActionException();
+        $findId = $this->repository->findByUuid($uuid);
+
+        if(!$findId)
+            throw new FindActionException();
+
+        $success = $this->repository->remove($findId);
+        if(!$success)
+            throw new RemoveActionException();
+
+        $uuidGenerate = new Uuid();
+        $uuidGenerate->setUuid($uuid);
+        return $uuidGenerate;
     }
 
     public function find(string $uuid): array
     {
         $findId = $this->repository->findByUuid($uuid);
 
-        if(!$findId) {
+        if(!$findId)
             throw new FindActionException();
-        }
 
         return $this->repository->find($findId);
     }
 
     public function all(?array $query): array
     {
-        throw new FindAllActionException();
+        $findAll = $this->repository->all($query);
+        if(!$findAll) {
+            throw new FindAllActionException();
+        }
+        return $findAll;
     }
 
     abstract public function payLoad(object $request): array;

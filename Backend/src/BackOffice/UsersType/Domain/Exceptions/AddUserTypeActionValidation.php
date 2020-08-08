@@ -3,7 +3,10 @@ namespace App\BackOffice\UsersType\Domain\Exceptions;
 
 use App\Shared\Exception\ValidationRequest;
 use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\IsNull;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Constraints\Type;
 
@@ -32,8 +35,10 @@ class AddUserTypeActionValidation extends ValidationRequest
 
         return $this->createSchema([
             'email' => [
-                new Email(),
-                new Required()
+                new Required(),
+                new IsNull(),
+                new NotBlank(),
+                new Email()
             ],
             'username' => [
                 new Required(),

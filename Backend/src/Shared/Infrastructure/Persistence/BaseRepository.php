@@ -45,8 +45,9 @@ class BaseRepository implements RepositoryInterface
 
     public function remove(int $id): bool
     {
+
         $edit = $this->model::all()->find($id);
-        $edit->update(["active" => false]);
+        $edit->update(["active" => false, "deleted_at" => "ADMIN"]);
         try {
             return $edit->delete();
         } catch (\Exception $e) {
@@ -62,12 +63,17 @@ class BaseRepository implements RepositoryInterface
 
     public function all(?array $query): array
     {
-        return $this->model::all();
+        return $this->model::all()->where('active', '=', true) ->toArray();
     }
 
     public function findByUuid(string $uuid): ?int
     {
-        $find = $this->model::all()->where('uuid', $uuid)->first();
+        $find = $this->model::all()->where('uuid', '=' ,$uuid)->first();
         return ($find)? $find->getAttribute('id') : null;
+    }
+
+    public function findByAttr(string $key, string $value, string $uuid): bool {
+        $count = $this->model::all()->where($key, $value)->where('uuid', '!=', $uuid)->count();
+        return $count > 0;
     }
 }

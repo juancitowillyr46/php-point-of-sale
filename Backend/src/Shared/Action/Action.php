@@ -1,9 +1,7 @@
 <?php
-
-
 namespace App\Shared\Action;
 
-
+use App\Shared\Exception\ValidationRequest;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Log\LoggerInterface;
@@ -16,9 +14,11 @@ abstract class Action
     protected Request $request;
     protected Response $response;
     protected array $args;
+    public ValidationRequest $validationRequest;
 
-    public function __construct(LoggerInterface $logger)
+    public function __construct(LoggerInterface $logger, ValidationRequest $validationRequest)
     {
+        $this->validationRequest = $validationRequest;
         $this->logger = $logger;
     }
 
@@ -76,6 +76,16 @@ abstract class Action
         return $this->response
             ->withHeader('Content-Type', 'application/json')
             ->withStatus($payload->getStatusCode());
+    }
+
+    public function validatePayload($requestData): ?ActionPayload {
+
+        $validateRequest = $this->validationRequest;
+        $validateRequest->setData((array) $requestData);
+        $validateRequest->getMessages();
+
+        return null;
+
     }
 
 }

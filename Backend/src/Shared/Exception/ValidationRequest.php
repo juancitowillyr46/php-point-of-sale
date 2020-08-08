@@ -37,11 +37,4 @@ abstract class ValidationRequest
         return $messages;
     }
 
-    public function validateRequest($messages): ?ActionPayload {
-        if(count($messages) > 0) {
-            throw new ValidateRequestException(json_encode($messages));
-        }
-        return null;
-    }
-
 }

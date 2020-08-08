@@ -6,23 +6,33 @@ use App\Shared\Action\ActionPayload;
 use Exception;
 use Psr\Http\Message\ResponseInterface as Response;
 
-class FindUserAction extends UsersAction
+class RemoveUserAction extends UsersAction
 {
 
     protected function action(): Response
     {
+        /* Process Logic */
         try {
 
             $uuid = $this->resolveArg('uuid');
-            $success = $this->service->findToDto($uuid);
+
+            /* Service */
+            $success = $this->service->remove($uuid);
+
             return $this->respondWithData($success);
 
         } catch (Exception $e) {
 
-            $error = new ActionError(ActionError::BAD_REQUEST, $e->getMessage());
+            $message = $e->getMessage();
+
+            if($e->getCode() === 1500){
+                $message = json_decode($e->getMessage(), JSON_PRETTY_PRINT);
+            }
+
+            $error = new ActionError(ActionError::BAD_REQUEST, $message);
             $payLoad = new ActionPayload(ActionPayload::STATUS_NOT_FOUND, null, $error);
             return $this->respond($payLoad);
-        }
 
+        }
     }
 }

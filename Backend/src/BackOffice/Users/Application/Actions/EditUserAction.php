@@ -6,7 +6,7 @@ use App\Shared\Action\ActionPayload;
 use Exception;
 use Psr\Http\Message\ResponseInterface as Response;
 
-class AddUserAction extends UsersAction
+class EditUserAction extends UsersAction
 {
 
     protected function action(): Response
@@ -14,7 +14,10 @@ class AddUserAction extends UsersAction
         /* Process Logic */
         try {
 
+            $uuid = $this->resolveArg('uuid');
+
             $requestData = $this->getFormData();
+            $requestData->uuid = $uuid;
 
             /* Validation Schema Request */
             $validatePayload = $this->validatePayload($requestData);
@@ -23,7 +26,7 @@ class AddUserAction extends UsersAction
             $payLoad = $this->service->payLoad($requestData);
 
             /* Service */
-            $success = $this->service->add($payLoad);
+            $success = $this->service->edit($payLoad, $uuid);
 
             return ($validatePayload !== null)? $this->respond($validatePayload) : $this->respondWithData($success);
 
@@ -40,6 +43,5 @@ class AddUserAction extends UsersAction
             return $this->respond($payLoad);
 
         }
-
     }
 }

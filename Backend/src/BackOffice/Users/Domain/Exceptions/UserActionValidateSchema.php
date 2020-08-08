@@ -1,16 +1,22 @@
 <?php
 namespace App\BackOffice\Users\Domain\Exceptions;
 
+use App\Shared\Exception\ValidateRequestException;
 use App\Shared\Exception\ValidationRequest;
+use Symfony\Component\Validator\Constraints\Blank;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Constraints\Type;
 
-class AddUserActionValidation extends ValidationRequest
+class UserActionValidateSchema extends ValidationRequest
 {
 
+    public array $messages;
+
     public array $data;
+
+
 
     /**
      * @return array
@@ -28,17 +34,24 @@ class AddUserActionValidation extends ValidationRequest
         $this->data = $data;
     }
 
-    public function getMessages() {
+    public function getMessages(): array {
 
-        return $this->createSchema([
+        $messages = $this->createSchema([
+            'uuid' => [
+               new Required(),
+            ],
             'email' => [
                 new Email(),
-                new Required()
+                new Required(),
+                new Length([
+                    'min' => 4,
+                    'max' => 50
+                ])
             ],
             'username' => [
                 new Required(),
                 new Length([
-                    'min' => 1,
+                    'min' => 4,
                     'max' => 50
                 ])
             ],
@@ -55,5 +68,11 @@ class AddUserActionValidation extends ValidationRequest
                 new Type('bool')
             ]
         ], $this->getData());
+
+        if(count($messages) > 0) {
+            throw new ValidateRequestException(json_encode($messages));
+        }
+
+        return $messages;
     }
 }

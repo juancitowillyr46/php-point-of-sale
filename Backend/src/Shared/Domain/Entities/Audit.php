@@ -1,8 +1,5 @@
 <?php
-
-
 namespace App\Shared\Domain\Entities;
-
 
 use Cake\Chronos\Chronos;
 use Ramsey\Uuid\Uuid as UuidGenerate;
@@ -22,15 +19,20 @@ class Audit
 
     public function __construct()
     {
-        $this->setId(0);
-        $this->setActive(true);
-        $this->setCreatedAt(Chronos::now()->format("Y-m-d h:m:s"));
-        $this->setCreatedBy('ADMIN');
-        $this->setUpdatedAt('');
-        $this->setUpdatedBy('');
-        $this->setDeletedAt('');
-        $this->setDeletedBy('');
-        $this->setUuid(UuidGenerate::uuid1());
+//        $this->setId(0);
+//        $this->setActive(true);
+//        $this->setCreatedAt(date('Y-m-d H:m:s'));
+//        $this->setCreatedBy('ADMIN');
+//        $this->setDeletedAt('');
+//        $this->setDeletedBy('');
+//        if($this->getUuid() == "") {
+//            $this->setUuid(UuidGenerate::uuid1());
+//        } else {
+//            $this->setUpdatedAt(date('Y-m-d H:m:s'));
+//            $this->setUpdatedBy('ADMIN');
+//
+//        }
+//        $this->setUuid(UuidGenerate::uuid1());
     }
 
     /**

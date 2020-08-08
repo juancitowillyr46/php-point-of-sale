@@ -16,11 +16,9 @@ return function (App $app) {
         $group->group('/users', function (RouteCollectorProxy $group) {
             $group->post('', \App\BackOffice\Users\Application\Actions\AddUserAction::class);
             $group->get('/{uuid}', \App\BackOffice\Users\Application\Actions\FindUserAction::class);
-//            $group->get('', \App\Modules\Users\Infrastructure\Controllers\UserFindAllController::class);
-//            $group->put('/{uuid}', \App\Modules\Users\Infrastructure\Controllers\UserEditController::class);
-
-
-//            $group->delete('/{uuid}', \App\Modules\Users\Infrastructure\Controllers\UserRemoveController::class);
+            $group->get('/', \App\BackOffice\Users\Application\Actions\FindUserAllAction::class);
+            $group->put('/{uuid}', \App\BackOffice\Users\Application\Actions\EditUserAction::class);
+            $group->delete('/{uuid}', \App\BackOffice\Users\Application\Actions\RemoveUserAction::class);
         });
     });
 
