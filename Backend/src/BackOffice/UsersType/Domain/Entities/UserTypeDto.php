@@ -4,9 +4,7 @@ namespace App\BackOffice\UsersType\Domain\Entities;
 class UserTypeDto
 {
     public string $uuid;
-    public string $email;
-    public string $username;
-    public string $typeUser;
+    public string $name;
+    public string $description;
     public string $active;
-    public string $createdAt;
 }

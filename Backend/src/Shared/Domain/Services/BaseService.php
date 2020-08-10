@@ -6,6 +6,7 @@ use App\Shared\Exception\Commands\AddActionException;
 use App\Shared\Exception\Commands\EditActionException;
 use App\Shared\Exception\Commands\FindActionException;
 use App\Shared\Exception\Commands\FindAllActionException;
+use App\Shared\Exception\Commands\NotEqualResourceException;
 use App\Shared\Exception\Commands\RemoveActionException;
 use App\Shared\Infrastructure\Persistence\BaseRepository;
 
@@ -45,6 +46,8 @@ abstract class BaseService implements ServiceInterface
 
     public function edit(array $request, string $uuid): Uuid
     {
+        if($request['uuid'] !== $uuid)
+            throw new NotEqualResourceException();
 
         $findId = $this->repository->findByUuid($uuid);
 

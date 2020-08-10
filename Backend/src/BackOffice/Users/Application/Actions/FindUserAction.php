@@ -1,28 +1,28 @@
 <?php
 namespace App\BackOffice\Users\Application\Actions;
 
-use App\Shared\Action\ActionError;
-use App\Shared\Action\ActionPayload;
+use App\BackOffice\Users\Domain\Exceptions\UserActionRequestSchema;
+use App\BackOffice\Users\Domain\Services\UserService;
+use App\Shared\Action\ActionCommandFind;
 use Exception;
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Log\LoggerInterface;
 
-class FindUserAction extends UsersAction
+class FindUserAction extends ActionCommandFind
 {
+    public function __construct(LoggerInterface $logger, UserService $serviceCommand, UserActionRequestSchema $validateSchema)
+    {
+        $this->setValidator($validateSchema);
+        $this->setService($serviceCommand);
+        parent::__construct($logger);
+    }
 
     protected function action(): Response
     {
         try {
-
-            $uuid = $this->resolveArg('uuid');
-            $success = $this->service->findToDto($uuid);
-            return $this->respondWithData($success);
-
+            return $this->commandSuccess($this->find());
         } catch (Exception $e) {
-
-            $error = new ActionError(ActionError::BAD_REQUEST, $e->getMessage());
-            $payLoad = new ActionPayload(ActionPayload::STATUS_NOT_FOUND, null, $error);
-            return $this->respond($payLoad);
+            return $this->commandError($e);
         }
-
     }
 }

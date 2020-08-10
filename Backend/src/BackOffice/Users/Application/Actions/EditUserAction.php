@@ -1,47 +1,28 @@
 <?php
 namespace App\BackOffice\Users\Application\Actions;
 
-use App\Shared\Action\ActionError;
-use App\Shared\Action\ActionPayload;
+use App\BackOffice\Users\Domain\Exceptions\UserActionRequestSchema;
+use App\BackOffice\Users\Domain\Services\UserService;
+use App\Shared\Action\ActionCommandEdit;
 use Exception;
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Log\LoggerInterface;
 
-class EditUserAction extends UsersAction
+class EditUserAction extends ActionCommandEdit
 {
+    public function __construct(LoggerInterface $logger, UserService $serviceCommand, UserActionRequestSchema $validateSchema)
+    {
+        $this->setValidator($validateSchema);
+        $this->setService($serviceCommand);
+        parent::__construct($logger);
+    }
 
     protected function action(): Response
     {
-        /* Process Logic */
         try {
-
-            $uuid = $this->resolveArg('uuid');
-
-            $requestData = $this->getFormData();
-            $requestData->uuid = $uuid;
-
-            /* Validation Schema Request */
-            $validatePayload = $this->validatePayload($requestData);
-
-            /* Set Data */
-            $payLoad = $this->service->payLoad($requestData);
-
-            /* Service */
-            $success = $this->service->edit($payLoad, $uuid);
-
-            return ($validatePayload !== null)? $this->respond($validatePayload) : $this->respondWithData($success);
-
+            return $this->commandSuccess($this->edit());
         } catch (Exception $e) {
-
-            $message = $e->getMessage();
-
-            if($e->getCode() === 1500){
-                $message = json_decode($e->getMessage(), JSON_PRETTY_PRINT);
-            }
-
-            $error = new ActionError(ActionError::BAD_REQUEST, $message);
-            $payLoad = new ActionPayload(ActionPayload::STATUS_NOT_FOUND, null, $error);
-            return $this->respond($payLoad);
-
+            return $this->commandError($e);
         }
     }
 }

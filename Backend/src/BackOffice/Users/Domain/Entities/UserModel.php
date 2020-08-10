@@ -22,6 +22,4 @@ class UserModel extends Model
 
     use SoftDeletes;
 
-    public const UPDATED_AT = null;
-
 }

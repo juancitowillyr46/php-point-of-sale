@@ -5,8 +5,6 @@ use AutoMapperPlus\AutoMapperInterface;
 use AutoMapperPlus\Configuration\AutoMapperConfigInterface;
 use AutoMapperPlus\NameConverter\NamingConvention\CamelCaseNamingConvention;
 use AutoMapperPlus\NameConverter\NamingConvention\SnakeCaseNamingConvention;
-use Cake\Chronos\Chronos;
-use Cake\Chronos\Date;
 
 class UserMapper
 {

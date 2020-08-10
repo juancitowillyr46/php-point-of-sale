@@ -1,38 +1,29 @@
 <?php
 namespace App\BackOffice\Users\Application\Actions;
 
-use App\Shared\Action\ActionError;
-use App\Shared\Action\ActionPayload;
+use App\BackOffice\Users\Domain\Exceptions\UserActionRequestSchema;
+use App\BackOffice\Users\Domain\Services\UserService;
+use App\Shared\Action\ActionCommandRemove;
 use Exception;
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Log\LoggerInterface;
 
-class RemoveUserAction extends UsersAction
+class RemoveUserAction extends ActionCommandRemove
 {
+
+    public function __construct(LoggerInterface $logger, UserService $serviceCommand, UserActionRequestSchema $validateSchema)
+    {
+        $this->setValidator($validateSchema);
+        $this->setService($serviceCommand);
+        parent::__construct($logger);
+    }
 
     protected function action(): Response
     {
-        /* Process Logic */
         try {
-
-            $uuid = $this->resolveArg('uuid');
-
-            /* Service */
-            $success = $this->service->remove($uuid);
-
-            return $this->respondWithData($success);
-
+            return $this->commandSuccess($this->remove());
         } catch (Exception $e) {
-
-            $message = $e->getMessage();
-
-            if($e->getCode() === 1500){
-                $message = json_decode($e->getMessage(), JSON_PRETTY_PRINT);
-            }
-
-            $error = new ActionError(ActionError::BAD_REQUEST, $message);
-            $payLoad = new ActionPayload(ActionPayload::STATUS_NOT_FOUND, null, $error);
-            return $this->respond($payLoad);
-
+            return $this->commandError($e);
         }
     }
 }

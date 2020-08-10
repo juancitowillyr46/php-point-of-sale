@@ -1,35 +1,50 @@
 <?php
 namespace App\BackOffice\UsersType\Domain\Services;
 
-use App\BackOffice\Users\Domain\Entities\User;
 use App\BackOffice\Users\Domain\Entities\UserDto;
-use App\BackOffice\Users\Domain\Entities\UserMapper;
-use App\BackOffice\Users\Infrastructure\Persistence\UserRepository;
+use App\BackOffice\UsersType\Domain\Entities\UserType;
+use App\BackOffice\UsersType\Domain\Entities\UserTypeDto;
+use App\BackOffice\UsersType\Domain\Entities\UserTypeMapper;
 use App\BackOffice\UsersType\Infrastructure\Persistence\UserTypeRepository;
 use App\Shared\Domain\Services\BaseService;
-use App\Shared\Domain\Uuid;
-use App\Shared\Exception\Commands\AddActionException;
-use App\Shared\Exception\Commands\FindActionException;
-use App\Shared\Utility\SecurityPassword;
-use AutoMapperPlus\Exception\UnregisteredMappingException;
-use Cake\Chronos\Chronos;
 use Exception;
 use Ramsey\Uuid\Uuid as UuidGenerate;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
-
 
 class UserTypeService extends BaseService
 {
+    public UserTypeMapper $mapper;
+    public UserType $userType;
+    public UserTypeRepository $repository;
 
-    public function __construct(UserTypeRepository $repository)
+    public function __construct(UserTypeMapper $mapper, UserTypeRepository $repository, UserType $userType)
     {
+        $this->mapper = $mapper;
+        $this->userType = $userType;
+        $this->repository = $repository;
         $this->setRepository($repository);
     }
 
     public function payLoad(object $request): array
     {
-        return [];
+        try {
+            $userType = $this->userType;
+            if($request->uuid != "") {
+                $userType->setUuid($request->uuid);
+            } else {
+                $userType->setUuid(UuidGenerate::uuid1());
+            }
+            $userType->setName($request->name);
+            $userType->setDescription($request->description);
+            $userType->setActive($request->active);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+
+        return (array) $userType;
     }
+
+    public function findToDto(string $uuid) {
+        return $this->mapper->autoMapper->map($this->find($uuid), UserTypeDto::class);
+    }
+
 }

@@ -1,7 +1,8 @@
 <?php
 namespace App\Shared\Action;
 
-use App\Shared\Exception\ValidationRequest;
+use App\Shared\Domain\Services\BaseService;
+use Exception;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Log\LoggerInterface;
@@ -14,11 +15,9 @@ abstract class Action
     protected Request $request;
     protected Response $response;
     protected array $args;
-    public ValidationRequest $validationRequest;
 
-    public function __construct(LoggerInterface $logger, ValidationRequest $validationRequest)
+    public function __construct(LoggerInterface $logger)
     {
-        $this->validationRequest = $validationRequest;
         $this->logger = $logger;
     }
 
@@ -78,14 +77,37 @@ abstract class Action
             ->withStatus($payload->getStatusCode());
     }
 
-    public function validatePayload($requestData): ?ActionPayload {
+    public function commandSuccess($data): Response {
+        try {
 
-        $validateRequest = $this->validationRequest;
-        $validateRequest->setData((array) $requestData);
-        $validateRequest->getMessages();
+            return $this->respondWithData($data);
 
-        return null;
+        } catch (Exception $e) {
 
+            $message = $e->getMessage();
+
+            if($e->getCode() === 1500){
+                $message = json_decode($e->getMessage(), JSON_PRETTY_PRINT);
+            }
+
+            $error = new ActionError(ActionError::BAD_REQUEST, $message);
+            $payLoad = new ActionPayload(ActionPayload::STATUS_NOT_FOUND, null, $error);
+            return $this->respond($payLoad);
+
+        }
+    }
+
+    public function commandError(Exception $e): Response {
+
+        $message = $e->getMessage();
+
+        if($e->getCode() == 1500)
+            $message = json_decode($e->getMessage(), JSON_PRETTY_PRINT);
+
+
+        $error = new ActionError(ActionError::BAD_REQUEST, $message);
+        $payLoad = new ActionPayload(ActionPayload::STATUS_NOT_FOUND, null, $error);
+        return $this->respond($payLoad);
     }
 
 }

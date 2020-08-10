@@ -8,7 +8,6 @@ use App\BackOffice\Users\Infrastructure\Persistence\UserRepository;
 use App\BackOffice\UsersType\Domain\Services\UserTypeService;
 use App\Shared\Domain\Services\BaseService;
 use App\Shared\Exception\Commands\DuplicateActionException;
-use App\Shared\Exception\Commands\FindActionException;
 use App\Shared\Utility\SecurityPassword;
 use Exception;
 use Ramsey\Uuid\Uuid as UuidGenerate;
@@ -48,7 +47,7 @@ class UserService extends BaseService
             $user->setPassword(SecurityPassword::encryptPassword($request->password));
             $user->setEmail($request->email);
             $user->setUserTypeUuid($request->userTypeUuid);
-
+            $user->setActive($request->active);
             $findUserType = $this->userTypeService->find($request->userTypeUuid);
 
             $user->setUserTypeId($findUserType['id']);

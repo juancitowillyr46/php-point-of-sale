@@ -5,8 +5,8 @@ use App\Shared\Domain\Entities\Audit;
 
 class UserType extends Audit
 {
-    protected string $name;
-    protected string $description;
+    public string $name;
+    public string $description;
 
     /**
      * @return string

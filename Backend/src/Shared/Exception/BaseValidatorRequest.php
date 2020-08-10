@@ -9,13 +9,13 @@ use Symfony\Component\Validator\Constraints\GroupSequence;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-abstract class ValidationRequest
+abstract class BaseValidatorRequest
 {
-    public ValidatorInterface $validator;
+    public ValidatorInterface $createValidator;
 
     public function __construct()
     {
-        $this->validator = Validation::createValidator();
+        $this->createValidator = Validation::createValidator();
     }
 
     public function createSchema($options, $data): array {
@@ -26,7 +26,7 @@ abstract class ValidationRequest
 
         $messages = [];
 
-        $validations = $this->validator->validate((array) $data, $constraint, $groups);
+        $validations = $this->createValidator->validate((array) $data, $constraint, $groups);
 
         if(count($validations) > 0) {
             foreach($validations as $validation) {
@@ -36,5 +36,7 @@ abstract class ValidationRequest
 
         return $messages;
     }
+
+    abstract function getMessages(array $data): array;
 
 }
