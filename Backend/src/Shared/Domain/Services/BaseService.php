@@ -33,7 +33,8 @@ abstract class BaseService implements ServiceInterface
 
     public function add(array $request): Uuid
     {
-        $request['created_at'] = date('Y-m-d H:m:s');
+
+        $request['created_at'] = date('Y-m-d H:i:s');
         $request['created_by'] = 'ADMIN';
         $success = $this->repository->add($request);
         if(!$success)
@@ -55,7 +56,7 @@ abstract class BaseService implements ServiceInterface
             throw new FindActionException();
 
         $request['id'] = $findId;
-        $request['updated_at'] = date('Y-m-d H:m:s');
+        $request['updated_at'] = date('Y-m-d H:i:s');
         $request['updated_by'] = 'ADMIN';
 
         $success = $this->repository->edit($request, $findId);
@@ -100,6 +101,14 @@ abstract class BaseService implements ServiceInterface
             throw new FindAllActionException();
         }
         return $findAll;
+    }
+
+    public function findById(int $id): array {
+        $findId = $this->repository->find($id);
+        if(!$findId)
+            throw new FindActionException();
+
+        return $findId;
     }
 
     abstract public function payLoad(object $request): array;

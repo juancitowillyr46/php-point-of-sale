@@ -1,30 +1,33 @@
 <?php
 namespace App\BackOffice\UsersType\Application\Actions;
 
+use App\Shared\Action\ActionCommandEdit;
+use App\Shared\Action\ActionCommandFind;
 use App\Shared\Action\ActionError;
 use App\Shared\Action\ActionPayload;
 use AutoMapperPlus\Exception\UnregisteredMappingException;
 use Exception;
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Log\LoggerInterface;
 
-class FindUserTypeAction extends UsersTypeAction
+class FindUserTypeAction extends ActionCommandFind
 {
+    public UsersTypeAction $action;
+
+    public function __construct(LoggerInterface $logger, UsersTypeAction $action)
+    {
+        $this->action = $action;
+        $this->setValidator($this->action->validateSchema);
+        $this->setService($this->action->service);
+        parent::__construct($logger);
+    }
 
     protected function action(): Response
     {
-        $uuid = $this->resolveArg('uuid');
-
         try {
-
-            $success = $this->service->find($uuid);
-            return $this->respondWithData($success);
-
+            return $this->commandSuccess($this->find());
         } catch (Exception $e) {
-
-            $error = new ActionError(ActionError::BAD_REQUEST, $e->getMessage());
-            $payLoad = new ActionPayload(ActionPayload::STATUS_NOT_FOUND, null, $error);
-            return $this->respond($payLoad);
+            return $this->commandError($e);
         }
-
     }
 }

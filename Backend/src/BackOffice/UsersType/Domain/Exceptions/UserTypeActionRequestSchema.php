@@ -7,28 +7,10 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Constraints\Type;
 
-class UserTypeActionValidateSchema extends BaseValidatorRequest
+class UserTypeActionRequestSchema extends BaseValidatorRequest
 {
 
-    public array $data;
-
-    /**
-     * @return array
-     */
-    public function getData(): array
-    {
-        return $this->data;
-    }
-
-    /**
-     * @param array $data
-     */
-    public function setData(array $data): void
-    {
-        $this->data = $data;
-    }
-
-    public function getMessages() {
+    public function getMessages(array $data): array {
 
         $messages = $this->createSchema([
             'uuid' => [
@@ -51,10 +33,10 @@ class UserTypeActionValidateSchema extends BaseValidatorRequest
             'active' => [
                 new Type('bool')
             ]
-        ], $this->getData());
+        ], $data);
 
         if(count($messages) > 0) {
-            throw new ValidateRequestException(json_encode($messages));
+            throw new ValidateRequestException(json_encode($messages, JSON_PRETTY_PRINT), 1500);
         }
 
         return $messages;

@@ -5,30 +5,31 @@ namespace App\BackOffice\UsersType\Application\Actions;
 
 
 use App\Shared\Action\Action;
+use App\Shared\Action\ActionCommandFindAll;
 use App\Shared\Action\ActionError;
 use App\Shared\Action\ActionPayload;
 use Exception;
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Log\LoggerInterface;
 
-class FindAllUserTypeAction extends UsersTypeAction
+class FindAllUserTypeAction extends ActionCommandFindAll
 {
+    public UsersTypeAction $action;
+
+    public function __construct(LoggerInterface $logger, UsersTypeAction $action)
+    {
+        $this->action = $action;
+        $this->setValidator($this->action->validateSchema);
+        $this->setService($this->action->service);
+        parent::__construct($logger);
+    }
 
     protected function action(): Response
     {
         try {
-
-            $list = [];
-            $all = $this->service->all([]);
-            foreach($all as $item) {
-                $list[] = $this->service->findToDto($item['uuid']);
-            }
-            return $this->respondWithData($list);
-
+            return $this->commandSuccess($this->findAll());
         } catch (Exception $e) {
-
-            $error = new ActionError(ActionError::BAD_REQUEST, $e->getMessage());
-            $payLoad = new ActionPayload(ActionPayload::STATUS_NOT_FOUND, null, $error);
-            return $this->respond($payLoad);
+            return $this->commandError($e);
         }
     }
 }

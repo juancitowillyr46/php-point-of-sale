@@ -1,8 +1,6 @@
 <?php
 namespace App\BackOffice\Users\Application\Actions;
 
-use App\BackOffice\Users\Domain\Exceptions\UserActionRequestSchema;
-use App\BackOffice\Users\Domain\Services\UserService;
 use App\Shared\Action\ActionCommandRemove;
 use Exception;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -11,10 +9,13 @@ use Psr\Log\LoggerInterface;
 class RemoveUserAction extends ActionCommandRemove
 {
 
-    public function __construct(LoggerInterface $logger, UserService $serviceCommand, UserActionRequestSchema $validateSchema)
+    public UsersAction $action;
+
+    public function __construct(LoggerInterface $logger, UsersAction $action)
     {
-        $this->setValidator($validateSchema);
-        $this->setService($serviceCommand);
+        $this->action = $action;
+        $this->setValidator($this->action->validateSchema);
+        $this->setService($this->action->service);
         parent::__construct($logger);
     }
 

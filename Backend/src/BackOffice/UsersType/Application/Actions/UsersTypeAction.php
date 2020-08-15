@@ -1,18 +1,20 @@
 <?php
 namespace App\BackOffice\UsersType\Application\Actions;
 
-use App\BackOffice\UsersType\Domain\Exceptions\UserTypeActionValidateSchema;
+use App\BackOffice\UsersType\Domain\Exceptions\UserTypeActionRequestSchema;
 use App\BackOffice\UsersType\Domain\Services\UserTypeService;
-use App\Shared\Action\Action;
 use Psr\Log\LoggerInterface;
 
-abstract class UsersTypeAction extends Action
+class UsersTypeAction
 {
+    public UserTypeActionRequestSchema $validateSchema;
     public UserTypeService $service;
+    public LoggerInterface $logger;
 
-    public function __construct(LoggerInterface $logger, UserTypeService $service, UserTypeActionValidateSchema $schema)
+    public function __construct(LoggerInterface $logger, UserTypeActionRequestSchema $validateSchema, UserTypeService $service)
     {
+        $this->validateSchema = $validateSchema;
         $this->service = $service;
-        parent::__construct($logger, $schema);
+        $this->logger = $logger;
     }
 }

@@ -4,10 +4,18 @@ namespace App\Shared\Infrastructure\Persistence;
 use App\Shared\Domain\Repository\RepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 use mysql_xdevapi\Exception;
+use Psr\Log\LoggerInterface;
+use Throwable;
 
 class BaseRepository implements RepositoryInterface
 {
     private Model $model;
+    /*private LoggerInterface $logger;
+
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }*/
 
     /**
      * @return Model
@@ -29,11 +37,11 @@ class BaseRepository implements RepositoryInterface
 
     public function add(array $request): bool
     {
-        $add = $this->model->fill($request);
         try {
-            return $add->saveOrFail($request);
-        } catch (\Throwable $e) {
-            throw new Exception($e->getMessage());
+            $add = $this->model->fill($request);
+            return $add->save();
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
         }
     }
 
@@ -47,7 +55,7 @@ class BaseRepository implements RepositoryInterface
     {
 
         $edit = $this->model::all()->find($id);
-        $edit->update(["active" => false, "deleted_at" => "ADMIN"]);
+        $edit->update(["active" => false, "deleted_by" => "ADMIN"]);
         try {
             return $edit->delete();
         } catch (\Exception $e) {
