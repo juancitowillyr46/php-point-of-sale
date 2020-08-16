@@ -1,16 +1,16 @@
 <?php
-namespace App\BackOffice\Categories\Application\Actions;
+namespace App\BackOffice\DataMaster\Application\Actions;
 
-use App\Shared\Action\ActionCommandFindAll;
+use App\Shared\Action\ActionCommandFind;
 use Exception;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Log\LoggerInterface;
 
-class FindCategoryAllAction extends ActionCommandFindAll
+class FindDataMasterAction extends ActionCommandFind
 {
-    public CategoriesAction $action;
+    public DataMasterAction $action;
 
-    public function __construct(LoggerInterface $logger, CategoriesAction $action)
+    public function __construct(LoggerInterface $logger, DataMasterAction $action)
     {
         $this->action = $action;
         $this->setValidator($this->action->validateSchema);
@@ -21,7 +21,7 @@ class FindCategoryAllAction extends ActionCommandFindAll
     protected function action(): Response
     {
         try {
-            return $this->commandSuccess($this->findAll());
+            return $this->commandSuccess($this->find());
         } catch (Exception $e) {
             return $this->commandError($e);
         }

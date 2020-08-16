@@ -31,7 +31,7 @@ return function (App $app) {
         $group->group('/categories', function (RouteCollectorProxy $group) {
             $group->post('', \App\BackOffice\Categories\Application\Actions\AddCategoryAction::class);
             $group->get('/{uuid}', \App\BackOffice\Categories\Application\Actions\FindCategoryAction::class);
-            $group->get('', \App\BackOffice\Categories\Application\Actions\FindCategoryAllAction::class);
+            $group->get('', \App\BackOffice\Categories\Application\Actions\FindAllCategoryAction::class);
             $group->put('/{uuid}', \App\BackOffice\Categories\Application\Actions\EditCategoryAction::class);
             $group->delete('/{uuid}', \App\BackOffice\Categories\Application\Actions\RemoveCategoryAction::class);
         });
@@ -48,6 +48,13 @@ return function (App $app) {
             $group->get('', \App\BackOffice\Products\Application\Actions\FindAllProductAction::class);
             $group->put('/{uuid}', \App\BackOffice\Products\Application\Actions\EditProductAction::class);
             $group->delete('/{uuid}', \App\BackOffice\Products\Application\Actions\RemoveProductAction::class);
+        });
+        $group->group('/purchases', function (RouteCollectorProxy $group) {
+            $group->post('', \App\BackOffice\Purchases\Application\Actions\AddPurchaseAction::class);
+            $group->get('/{uuid}', \App\BackOffice\Purchases\Application\Actions\FindPurchaseAction::class);
+            $group->get('', \App\BackOffice\Purchases\Application\Actions\FindAllPurchaseAction::class);
+            $group->put('/{uuid}', \App\BackOffice\Purchases\Application\Actions\EditPurchaseAction::class);
+            $group->delete('/{uuid}', \App\BackOffice\Purchases\Application\Actions\RemovePurchaseAction::class);
         });
     });
 

@@ -54,12 +54,12 @@ class ProductActionRequestSchema extends BaseValidatorRequest
                     'max' => 50
                 ])
             ],
-            'stock' => [
+            /*'stock' => [
                 new Required(),
                 new NotBlank(),
                 new Type('integer'),
                 new PositiveOrZero()
-            ],
+            ],*/
             'active' => [
                 new Type('bool')
             ],

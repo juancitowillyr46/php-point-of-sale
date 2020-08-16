@@ -20,6 +20,9 @@ abstract class ActionCommandAdd extends BaseActionCommand
 
         } catch (Exception $e) {
             $message = $e->getMessage();
+
+            $this->logger->error($message);
+
             if($e->getCode() == '23000'){
                 throw new ExceptionEloquent($message, $e->getCode());
             }
