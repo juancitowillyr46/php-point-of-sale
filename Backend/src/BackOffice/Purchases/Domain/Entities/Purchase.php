@@ -15,6 +15,7 @@ class Purchase extends Audit
     public float $total;
     public float $tax;
     public int $employee_id;
+    public array $detail;
 
     /**
      * @return int
@@ -176,5 +177,23 @@ class Purchase extends Audit
     {
         $this->employee_id = $employee_id;
     }
+
+    /**
+     * @return array
+     */
+    public function getDetail(): array
+    {
+        return $this->detail;
+    }
+
+    /**
+     * @param array $detail
+     */
+    public function setDetail(array $detail): void
+    {
+        $this->detail = $detail;
+    }
+
+
 
 }

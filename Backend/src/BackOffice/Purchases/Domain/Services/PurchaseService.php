@@ -1,7 +1,6 @@
 <?php
 namespace App\BackOffice\Purchases\Domain\Services;
 
-use App\BackOffice\DataMaster\Domain\Entities\DataMaster;
 use App\BackOffice\DataMaster\Domain\Services\DataMasterService;
 use App\BackOffice\Purchases\Domain\Entities\Purchase;
 use App\BackOffice\Purchases\Domain\Entities\PurchaseDto;
@@ -44,7 +43,6 @@ class PurchaseService extends BaseService
             $purchase->setNumDocument($request->numDocument);
             $purchase->setSerieDocument($request->serieDocument);
             $purchase->setDate($request->date);
-            //$purchase->setProviderId($request->numDocument);
 
             // Tipo documento
             $findDocumentType = $this->dataMasterService->find($request->documentTypeUuid);
@@ -57,6 +55,7 @@ class PurchaseService extends BaseService
             // Empleado
             $purchase->setEmployeeId(1);
 
+            // Proveedor
             $purchase->setProviderId(1);
 
             $purchase->setTotal((float) $request->total);
@@ -73,19 +72,5 @@ class PurchaseService extends BaseService
     public function findToDto(string $uuid) {
         return $this->mapper->autoMapper->map($this->find($uuid), PurchaseDto::class);
     }
-
-    /*public function validateDuplicate(array $request): void {
-
-        $existEmail = $this->userRepository->findByAttr('email', $request['email'], $request['uuid']);
-        if($existEmail) {
-            throw new DuplicateActionException();
-        }
-
-        $existUsername = $this->userRepository->findByAttr('username', $request['username'], $request['uuid']);
-        if($existUsername) {
-            throw new DuplicateActionException();
-        }
-
-    }*/
 
 }

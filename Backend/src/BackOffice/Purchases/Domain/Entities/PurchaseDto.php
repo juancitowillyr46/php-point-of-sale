@@ -13,4 +13,5 @@ class PurchaseDto
     public string $employee;
     public string $createdAt;
     public string $active;
+    public string $detail;
 }

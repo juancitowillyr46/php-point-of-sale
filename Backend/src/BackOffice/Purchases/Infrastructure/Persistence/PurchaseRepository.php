@@ -11,4 +11,10 @@ class PurchaseRepository extends BaseRepository
         $this->setModel($model);
     }
 
+    /*public function find(int $id): array
+    {
+        $find = $this->getModel()::with('detail')->find($id);
+        return $find->toArray();
+    }*/
+
 }

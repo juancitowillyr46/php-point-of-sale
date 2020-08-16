@@ -20,10 +20,16 @@ class PurchaseModel extends Model
         'total',
         'tax',
         'employee_id',
-        'active'
+        'active',
+        'detail'
     ];
 
     use SoftDeletes;
 
     const UPDATED_AT = null;
+
+    public function detail()
+    {
+        return $this->hasMany(PurchaseDetailModel::class, 'buy_id', 'id');
+    }
 }
