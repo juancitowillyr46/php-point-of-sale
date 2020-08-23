@@ -21,6 +21,10 @@ class AddProductAction extends ActionCommandAdd
     protected function action(): Response
     {
         try {
+
+
+            $success = $this->add();
+
             return $this->commandSuccess($this->add());
         } catch (Exception $e) {
             return $this->commandError($e);

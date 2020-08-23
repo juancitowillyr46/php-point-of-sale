@@ -3,11 +3,7 @@ namespace App\BackOffice\Products\Domain\Exceptions;
 
 use App\Shared\Exception\ValidateRequestException;
 use App\Shared\Exception\BaseValidatorRequest;
-use Symfony\Component\Validator\Constraints\Blank;
-use Symfony\Component\Validator\Constraints\Currency;
 use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\PositiveOrZero;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Constraints\Type;
 

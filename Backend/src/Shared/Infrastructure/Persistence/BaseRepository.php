@@ -38,7 +38,7 @@ class BaseRepository implements RepositoryInterface
     public function add(array $request): bool
     {
         try {
-            $add = $this->model->fill($request);
+            $add = $this->model::create($request);
             return $add->save();
         } catch (Exception $e) {
             throw new Exception($e->getMessage(), $e->getCode());
@@ -71,7 +71,12 @@ class BaseRepository implements RepositoryInterface
 
     public function all(?array $query): array
     {
-        return $this->model::all()->where('active', '=', true) ->toArray();
+        return $this->model::all()->where('active', '=', true)->toArray();
+    }
+
+    public function allById(string $key, string $value): array
+    {
+        return $this->model::all()->where($key, $value)->toArray();
     }
 
     public function findByUuid(string $uuid): ?int

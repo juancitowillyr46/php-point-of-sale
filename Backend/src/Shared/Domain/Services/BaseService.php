@@ -103,6 +103,15 @@ abstract class BaseService implements ServiceInterface
         return $findAll;
     }
 
+    public function allById(string $key, string $value): array
+    {
+        $findAll = $this->repository->allById($key, $value);
+        if(!$findAll) {
+            throw new FindAllActionException();
+        }
+        return $findAll;
+    }
+
     public function findById(int $id): array {
         $findId = $this->repository->find($id);
         if(!$findId)
@@ -112,4 +121,5 @@ abstract class BaseService implements ServiceInterface
     }
 
     abstract public function payLoad(object $request): array;
+    //abstract public function findDetailByUuid(string $uuidRef): array;
 }

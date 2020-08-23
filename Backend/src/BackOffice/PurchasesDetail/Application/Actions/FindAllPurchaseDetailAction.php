@@ -21,7 +21,11 @@ class FindAllPurchaseDetailAction extends ActionCommandFindAll
     protected function action(): Response
     {
         try {
+
+            $uuid = $this->resolveArg('uuid');
+
             return $this->commandSuccess($this->findAll());
+
         } catch (Exception $e) {
             return $this->commandError($e);
         }

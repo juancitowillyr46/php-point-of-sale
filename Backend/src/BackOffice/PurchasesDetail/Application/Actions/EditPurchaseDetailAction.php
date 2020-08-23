@@ -14,6 +14,7 @@ class EditPurchaseDetailAction extends ActionCommandEdit
     {
         $this->action = $action;
         $this->setValidator($this->action->validateSchema);
+
         $this->setService($this->action->service);
         parent::__construct($logger);
     }

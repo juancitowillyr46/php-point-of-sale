@@ -55,9 +55,8 @@ return function (App $app) {
             $group->get('', \App\BackOffice\Purchases\Application\Actions\FindAllPurchaseAction::class);
             $group->put('/{uuid}', \App\BackOffice\Purchases\Application\Actions\EditPurchaseAction::class);
             $group->delete('/{uuid}', \App\BackOffice\Purchases\Application\Actions\RemovePurchaseAction::class);
-
-            $group->get('/{uuid}/detail', \App\BackOffice\PurchasesDetail\Application\Actions\FindAllPurchaseDetailAction::class);
-
+            $group->get('/{uuidPurchase}/items', \App\BackOffice\PurchasesDetail\Application\Actions\FindAllDetailPurchaseDetailAction::class);
+            $group->post('/{uuidPurchase}/items', \App\BackOffice\PurchasesDetail\Application\Actions\AddPurchaseDetailAction::class);
         });
     });
 

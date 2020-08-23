@@ -9,4 +9,5 @@ class UserDto
     public string $typeUser;
     public string $active;
     public string $createdAt;
+    public string $userType;
 }
