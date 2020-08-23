@@ -10,12 +10,6 @@ use Throwable;
 class BaseRepository implements RepositoryInterface
 {
     private Model $model;
-    /*private LoggerInterface $logger;
-
-    public function __construct(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
-    }*/
 
     /**
      * @return Model

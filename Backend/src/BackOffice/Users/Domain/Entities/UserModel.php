@@ -21,9 +21,11 @@ class UserModel extends Model
         'active'
     ];
 
+    protected $with = ['userType'];
+
     use SoftDeletes;
 
-    public function type()
+    public function userType()
     {
         return $this->belongsTo(UserTypeModel::class, 'user_type_id', 'id');
     }

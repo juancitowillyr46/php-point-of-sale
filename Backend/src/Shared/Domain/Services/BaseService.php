@@ -87,7 +87,6 @@ abstract class BaseService implements ServiceInterface
     public function find(string $uuid): array
     {
         $findId = $this->repository->findByUuid($uuid);
-
         if(!$findId)
             throw new FindActionException();
 

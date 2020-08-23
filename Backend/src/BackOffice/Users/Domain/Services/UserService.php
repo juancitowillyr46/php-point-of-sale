@@ -61,7 +61,8 @@ class UserService extends BaseService
     }
 
     public function findToDto(string $uuid) {
-        return $this->mapper->autoMapper->map($this->find($uuid), UserDto::class);
+        $f = $model = $this->userRepository->getUser();
+        return $this->mapper->autoMapper->map($find, UserDto::class);
     }
 
     public function validateDuplicate(array $request): void {

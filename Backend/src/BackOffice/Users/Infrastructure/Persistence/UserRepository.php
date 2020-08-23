@@ -2,15 +2,18 @@
 namespace App\BackOffice\Users\Infrastructure\Persistence;
 
 use App\BackOffice\Users\Domain\Entities\UserModel;
-use App\Shared\Exception\Commands\DuplicateActionException;
 use App\Shared\Infrastructure\Persistence\BaseRepository;
-use Exception;
 
 class UserRepository extends BaseRepository
 {
     public function __construct(UserModel $userModel)
     {
         $this->setModel($userModel);
+    }
+
+    public function getUser() {
+        $model = $this->getModel()::all()->find(1);
+        $f = $model->toArray();
     }
 
 //    public function findDuplicateRegister(array $request) {
