@@ -31,7 +31,9 @@ class ProductMapper
         })->forMember('category', function ($source) {
             return $source['category']['name'];
         })->forMember('measureUnit', function ($source) {
-            return $source['measureUnit']['name'];
+            return $source['measure_unit'];
+        })->forMember('id', function($source){
+            return $source['uuid'];
         });
     }
 }

@@ -1,55 +1,55 @@
 <?php
 namespace App\BackOffice\DataMaster\Domain\Services;
 
-use App\BackOffice\DataMaster\Domain\Entities\DataMaster;
-use App\BackOffice\DataMaster\Domain\Entities\DataMasterDto;
+use App\BackOffice\DataMaster\Domain\Entities\DataMasterEntity;
 use App\BackOffice\DataMaster\Domain\Entities\DataMasterMapper;
 use App\BackOffice\DataMaster\Infrastructure\Persistence\DataMasterRepository;
 use App\Shared\Domain\Services\BaseService;
+use App\Shared\Exception\Commands\DuplicateActionException;
+use App\Shared\Exception\Commands\FindActionException;
 use Exception;
-use Ramsey\Uuid\Uuid as UuidGenerate;
+use stdClass;
 
 class DataMasterService extends BaseService
 {
-    public DataMasterMapper $mapper;
-    public DataMaster $dataMaster;
-    public DataMasterRepository $repository;
+    protected DataMasterEntity $dataMasterEntity;
+    protected DataMasterRepository $dataMasterRepository;
+    protected DataMasterMapper $dataMasterMapper;
 
-    public function __construct(DataMasterMapper $mapper, DataMasterRepository $repository, DataMaster $dataMaster)
+    public function __construct(DataMasterRepository $dataMasterRepository, DataMasterEntity $dataMasterEntity, DataMasterMapper $dataMasterMapper)
     {
-        $this->mapper = $mapper;
-        $this->dataMaster = $dataMaster;
-        $this->repository = $repository;
-        $this->setRepository($repository);
+        $this->dataMasterRepository = $dataMasterRepository;
+        $this->dataMasterEntity = $dataMasterEntity;
+        $this->dataMasterMapper = $dataMasterMapper;
     }
 
-    public function payLoad(object $request): array
-    {
+    public function validateDuplicate(string $type, int $idRegister, string $uuid): void {
 
-        try {
-
-            $dataMaster = $this->dataMaster;
-
-            if($request->uuid != "") {
-                $dataMaster->setUuid($request->uuid);
-            } else {
-                $dataMaster->setUuid(UuidGenerate::uuid1());
-            }
-
-            $dataMaster->setDescription($request->description);
-            $dataMaster->setName($request->name);
-            $dataMaster->setActive($request->active);
-
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        $existDocumentNum = $this->dataMasterRepository->validateIdRegister('id_register', $idRegister, $type, $uuid);
+        if($existDocumentNum) {
+            throw new DuplicateActionException();
         }
 
-        /* Ubicar el id del typeUserUuid */
-        return (array) $dataMaster;
     }
 
-    public function findToDto(string $uuid) {
-        return $this->mapper->autoMapper->map($this->find($uuid), DataMasterDto::class);
+    function execute(object $bodyParsed): object
+    {
+        return new stdClass();
     }
 
+    function executeArg(string $uuid): object
+    {
+        return new stdClass();
+    }
+
+    function executeArgWithBodyParsed(string $uuid, object $bodyParsed): object
+    {
+        return new stdClass();
+    }
+
+    function executeCollection(array $query): array
+    {
+        return [];
+    }
+    
 }

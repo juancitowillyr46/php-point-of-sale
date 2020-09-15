@@ -4,6 +4,7 @@ namespace App\BackOffice\Purchases\Domain\Exceptions;
 use App\Shared\Exception\ValidateRequestException;
 use App\Shared\Exception\BaseValidatorRequest;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Optional;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Constraints\Type;
 
@@ -12,10 +13,10 @@ class PurchaseActionRequestSchema extends BaseValidatorRequest
     public function getMessages(array $data): array {
 
         $messages = $this->createSchema([
-            'uuid' => [
-                new Required(),
+            'id' => [
+                new Optional(),
             ],
-            'documentTypeUuid' => [
+            'documentTypeId' => [
                 new Required(),
             ],
             'numDocument' => [
@@ -24,10 +25,13 @@ class PurchaseActionRequestSchema extends BaseValidatorRequest
             'serieDocument' => [
                 new Required(),
             ],
-            'providerUuid' => [
+            'providerId' => [
                 new Required(),
             ],
-            'statusUuid' => [
+            'employeeId' => [
+                new Required(),
+            ],
+            'statusId' => [
                 new Required(),
             ],
             'date' => [
@@ -42,9 +46,6 @@ class PurchaseActionRequestSchema extends BaseValidatorRequest
             ],
             'active' => [
                 new Type('bool')
-            ],
-            'detail' => [
-                new Type('array')
             ]
         ], $data);
 

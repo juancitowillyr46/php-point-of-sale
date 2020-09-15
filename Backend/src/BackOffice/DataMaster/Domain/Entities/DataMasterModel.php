@@ -8,7 +8,19 @@ class DataMasterModel extends Model
 {
     protected $table = "table_master";
 
-    protected $fillable = [];
+    protected $fillable = [
+        'id',
+        'uuid',
+        'id_register',
+        'type',
+        'name',
+        'description',
+        'created_at',
+        'created_by',
+        'updated_at',
+        'updated_by',
+        'active'
+    ];
 
     use SoftDeletes;
 

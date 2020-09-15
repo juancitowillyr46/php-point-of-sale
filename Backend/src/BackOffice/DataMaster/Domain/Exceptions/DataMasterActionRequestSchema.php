@@ -5,6 +5,7 @@ use App\Shared\Exception\ValidateRequestException;
 use App\Shared\Exception\BaseValidatorRequest;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Optional;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Constraints\Type;
 
@@ -13,7 +14,13 @@ class DataMasterActionRequestSchema extends BaseValidatorRequest
     public function getMessages(array $data): array {
 
         $messages = $this->createSchema([
-            'uuid' => [
+            'id' => [
+                new Optional(),
+            ],
+            'idRegister' => [
+                new Required(),
+            ],
+            'type' => [
                 new Required(),
             ],
             'name' => [

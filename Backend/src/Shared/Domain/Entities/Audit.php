@@ -1,6 +1,8 @@
 <?php
 namespace App\Shared\Domain\Entities;
 
+use App\Shared\Domain\ResponseDataId;
+use App\Shared\Domain\Uuid;
 use Cake\Chronos\Chronos;
 use Ramsey\Uuid\Uuid as UuidGenerate;
 
@@ -15,6 +17,26 @@ class Audit
     public string $deleted_at;
     public string $deleted_by;
     public bool $active;
+    public ResponseDataId $responseDataId;
+
+    /**
+     * @return ResponseDataId
+     */
+    public function getResponseDataId(): ResponseDataId
+    {
+        $uuid = new ResponseDataId();
+        $uuid->setId($this->uuid);
+        return $uuid;
+    }
+
+    /**
+     * @param ResponseDataId $responseDataId
+     */
+    public function setResponseDataId(ResponseDataId $responseDataId): void
+    {
+        $this->responseDataId = $responseDataId;
+    }
+
 
 
     public function __construct()
@@ -179,6 +201,27 @@ class Audit
     public function setId(int $id): void
     {
         $this->id = $id;
+    }
+
+    public function setAuditUpdate() {
+        $this->setUpdatedAt(date('Y-m-d H:i:s'));
+        $this->setUpdatedBy('ADMIN');
+    }
+
+    public function setAuditCreate() {
+        $this->setCreatedAt(date('Y-m-d H:i:s'));
+        $this->setCreatedBy('ADMIN');
+        $this->setUpdatedAt('');
+        $this->setUpdatedBy('');
+    }
+
+    public function identifiedResource(object $formData): void {
+        if(!property_exists($formData, "id")) {
+            $this->setAuditCreate();
+        } else {
+            $this->setAuditUpdate();
+        }
+        $this->setUuid((!property_exists($formData, "id"))? \Ramsey\Uuid\Uuid::uuid1() : $formData->id);
     }
 
 

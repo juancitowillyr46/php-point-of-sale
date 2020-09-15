@@ -3,7 +3,7 @@ namespace App\BackOffice\Products\Domain\Entities;
 
 class ProductDto
 {
-    public string $uuid;
+    public string $id;
     public string $description;
     public string $name;
     public string $active;

@@ -1,7 +1,7 @@
 <?php
 namespace App\BackOffice\Users\Domain\Entities;
 
-use App\BackOffice\UsersType\Domain\Entities\UserTypeModel;
+use App\BackOffice\DataMaster\Domain\Entities\DataMasterModel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -18,6 +18,8 @@ class UserModel extends Model
         'user_type_id',
         'created_at',
         'created_by',
+        'updated_at',
+        'updated_by',
         'active'
     ];
 
@@ -27,6 +29,7 @@ class UserModel extends Model
 
     public function userType()
     {
-        return $this->belongsTo(UserTypeModel::class, 'user_type_id', 'id');
+        // return $this->belongsTo(UserTypeModel::class, 'user_type_id', 'id');
+        return $this->belongsTo(DataMasterModel::class, 'user_type_id', 'id_register');
     }
 }

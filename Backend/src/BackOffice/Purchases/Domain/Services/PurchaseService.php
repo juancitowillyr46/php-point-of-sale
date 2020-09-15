@@ -2,75 +2,45 @@
 namespace App\BackOffice\Purchases\Domain\Services;
 
 use App\BackOffice\DataMaster\Domain\Services\DataMasterService;
-use App\BackOffice\Purchases\Domain\Entities\Purchase;
+use App\BackOffice\Purchases\Domain\Entities\PurchaseEntity;
 use App\BackOffice\Purchases\Domain\Entities\PurchaseDto;
 use App\BackOffice\Purchases\Domain\Entities\PurchaseMapper;
 use App\BackOffice\Purchases\Infrastructure\Persistence\PurchaseRepository;
 use App\Shared\Domain\Services\BaseService;
 use Exception;
 use Ramsey\Uuid\Uuid as UuidGenerate;
+use stdClass;
 
 class PurchaseService extends BaseService
 {
-    public PurchaseMapper $mapper;
-    public Purchase $purchase;
-    public PurchaseRepository $purchaseRepository;
-    public DataMasterService $dataMasterService;
+    protected PurchaseEntity $purchaseEntity;
+    protected PurchaseRepository $purchaseRepository;
+    protected PurchaseMapper $purchaseMapper;
 
-    public function __construct(PurchaseMapper $mapper, PurchaseRepository $purchaseRepository, Purchase $purchase, DataMasterService $dataMasterService)
+    public function __construct(PurchaseRepository $purchaseRepository, PurchaseEntity $purchaseEntity, PurchaseMapper $purchaseMapper)
     {
-        $this->mapper = $mapper;
-        $this->purchase = $purchase;
         $this->purchaseRepository = $purchaseRepository;
-        $this->dataMasterService = $dataMasterService;
-        $this->setRepository($purchaseRepository);
+        $this->purchaseEntity = $purchaseEntity;
+        $this->purchaseMapper = $purchaseMapper;
     }
 
-    public function payLoad(object $request): array
+    public function execute(object $bodyParsed): object
     {
-
-        try {
-
-            $purchase = $this->purchase;
-
-            // Datos de la cabecera
-            if($request->uuid != "") {
-                $purchase->setUuid($request->uuid);
-            } else {
-                $purchase->setUuid(UuidGenerate::uuid1());
-            }
-
-            $purchase->setNumDocument($request->numDocument);
-            $purchase->setSerieDocument($request->serieDocument);
-            $purchase->setDate($request->date);
-
-            // Tipo documento
-            $findDocumentType = $this->dataMasterService->find($request->documentTypeUuid);
-            $purchase->setDocumentTypeId($findDocumentType['id']);
-
-            // Estado de la compra
-            $findStatus = $this->dataMasterService->find($request->statusUuid);
-            $purchase->setStatusId($findStatus['id']);
-
-            // Empleado
-            $purchase->setEmployeeId(1);
-
-            // Proveedor
-            $purchase->setProviderId(1);
-
-            $purchase->setTotal((float) $request->total);
-            $purchase->setActive($request->active);
-
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
-
-        /* Ubicar el id del typeUserUuid */
-        return (array) $purchase;
+        return new stdClass();
     }
 
-    public function findToDto(string $uuid) {
-        return $this->mapper->autoMapper->map($this->find($uuid), PurchaseDto::class);
+    public function executeArg(string $uuid): object
+    {
+        return new stdClass();
     }
 
+    public function executeArgWithBodyParsed(string $uuid, object $bodyParsed): object
+    {
+        return new stdClass();
+    }
+
+    public function executeCollection(array $query): array
+    {
+        return [];
+    }
 }

@@ -4,6 +4,7 @@ namespace App\BackOffice\Products\Domain\Exceptions;
 use App\Shared\Exception\ValidateRequestException;
 use App\Shared\Exception\BaseValidatorRequest;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Optional;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Constraints\Type;
 
@@ -12,8 +13,8 @@ class ProductActionRequestSchema extends BaseValidatorRequest
     public function getMessages(array $data): array {
 
         $messages = $this->createSchema([
-            'uuid' => [
-                new Required(),
+            'id' => [
+                new Optional(),
             ],
             'code' => [
                 new Required(),
@@ -29,14 +30,14 @@ class ProductActionRequestSchema extends BaseValidatorRequest
                     'max' => 50
                 ])
             ],
-            'categoryUuid' => [
+            'categoryId' => [
                 new Required(),
                 new Length([
                     'min' => 1,
                     'max' => 50
                 ])
             ],
-            'measureUnitUuid' => [
+            'measureUnitId' => [
                 new Required(),
                 new Length([
                     'min' => 1,

@@ -1,16 +1,20 @@
 <?php
 namespace App\Shared\Domain\Services;
 
+use App\BackOffice\DataMaster\Domain\Entities\DataMasterModel;
 use App\Shared\Domain\Uuid;
 use App\Shared\Exception\Commands\AddActionException;
 use App\Shared\Exception\Commands\EditActionException;
+use App\Shared\Exception\Commands\EditVerifiedArgActionException;
 use App\Shared\Exception\Commands\FindActionException;
 use App\Shared\Exception\Commands\FindAllActionException;
 use App\Shared\Exception\Commands\NotEqualResourceException;
 use App\Shared\Exception\Commands\RemoveActionException;
 use App\Shared\Infrastructure\Persistence\BaseRepository;
+use Illuminate\Database\Eloquent\Model;
 
-abstract class BaseService implements ServiceInterface
+abstract class BaseService
+    //implements ServiceInterface
 {
 
     private BaseRepository $repository;
@@ -31,7 +35,7 @@ abstract class BaseService implements ServiceInterface
         $this->repository = $repository;
     }
 
-    public function add(array $request): Uuid
+    /*public function add(array $request): Uuid
     {
 
         $request['created_at'] = date('Y-m-d H:i:s');
@@ -43,9 +47,9 @@ abstract class BaseService implements ServiceInterface
         $uuid = new Uuid();
         $uuid->setUuid($request['uuid']);
         return $uuid;
-    }
+    }*/
 
-    public function edit(array $request, string $uuid): Uuid
+    /*public function edit(array $request, string $uuid): Uuid
     {
         if($request['uuid'] !== $uuid)
             throw new NotEqualResourceException();
@@ -66,9 +70,9 @@ abstract class BaseService implements ServiceInterface
         $uuid = new Uuid();
         $uuid->setUuid($request['uuid']);
         return $uuid;
-    }
+    }*/
 
-    public function remove(string $uuid): Uuid
+    /*public function remove(string $uuid): Uuid
     {
         $findId = $this->repository->findByUuid($uuid);
 
@@ -82,43 +86,84 @@ abstract class BaseService implements ServiceInterface
         $uuidGenerate = new Uuid();
         $uuidGenerate->setUuid($uuid);
         return $uuidGenerate;
-    }
+    }*/
 
-    public function find(string $uuid): array
+    /*public function find(string $uuid): array
     {
         $findId = $this->repository->findByUuid($uuid);
         if(!$findId)
             throw new FindActionException();
 
         return $this->repository->find($findId);
-    }
+    }*/
 
-    public function all(?array $query): array
+    /*public function all(?array $query): array
     {
         $findAll = $this->repository->all($query);
         if(!$findAll) {
             throw new FindAllActionException();
         }
         return $findAll;
-    }
+    }*/
 
-    public function allById(string $key, string $value): array
+    /*public function allById(string $key, string $value): array
     {
         $findAll = $this->repository->allById($key, $value);
         if(!$findAll) {
             throw new FindAllActionException();
         }
         return $findAll;
-    }
+    }*/
 
-    public function findById(int $id): array {
+    /*public function findById(int $id): array {
         $findId = $this->repository->find($id);
         if(!$findId)
             throw new FindActionException();
 
         return $findId;
+    }*/
+
+    public function findResourceByUuid(Model $model, string $uuid): ?int
+    {
+        $find = $model::all()->where('uuid', '=' ,$uuid)->first();
+        if(!$find)
+            throw new FindActionException();
+
+        return $find->getAttribute('id');
     }
 
-    abstract public function payLoad(object $request): array;
-    //abstract public function findDetailByUuid(string $uuidRef): array;
+    public function findCompareIdWithArg(string $uuid, string $id): void {
+        if($uuid !== $id){
+            throw new EditVerifiedArgActionException();
+        }
+    }
+
+    public function findResourceByUuidReturnIdRegister(string $uuid): ?int
+    {
+        $dataModel = new DataMasterModel();
+        $find = $dataModel::all()->where('uuid', '=' ,$uuid)->first();
+        if(!$find)
+            throw new FindActionException();
+
+        return $find->getAttribute('id_register');
+    }
+
+    public function findNameResourceByUIdRegister(int $idRegister, string $type): string
+    {
+        $dataModel = new DataMasterModel();
+        $find = $dataModel::all()->where('id_register', '=' ,$idRegister)->where('type', '=' ,$type)->first();
+        if(!$find)
+            throw new FindActionException();
+
+        return $find->getAttribute('name');
+    }
+
+    abstract function execute(object $bodyParsed): object;
+
+    abstract function executeArg(string $uuid): object;
+
+    abstract function executeArgWithBodyParsed(string $uuid, object $bodyParsed): object;
+
+    abstract function executeCollection(array $query): array;
+
 }

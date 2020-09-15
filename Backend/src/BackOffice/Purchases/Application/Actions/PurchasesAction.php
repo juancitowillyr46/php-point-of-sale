@@ -1,21 +1,39 @@
 <?php
 namespace App\BackOffice\Purchases\Application\Actions;
 
-use App\BackOffice\Purchases\Domain\Exceptions\PurchaseActionRequestSchema;
-use App\BackOffice\Purchases\Domain\Services\PurchaseService;
+use App\BackOffice\Purchases\Domain\Services\PurchaseAddService;
+use App\BackOffice\Purchases\Domain\Services\PurchaseEditService;
+use App\BackOffice\Purchases\Domain\Services\PurchaseFindAllService;
+use App\BackOffice\Purchases\Domain\Services\PurchaseFindService;
+use App\BackOffice\Purchases\Domain\Services\PurchaseRemoveService;
+use App\Shared\Action\Action;
 use Psr\Log\LoggerInterface;
 
-class PurchasesAction
+abstract class PurchasesAction extends Action
 {
-    public PurchaseActionRequestSchema $validateSchema;
-    public PurchaseService $service;
+    public PurchaseAddService $purchaseAddService;
+    public PurchaseEditService $purchaseEditService;
+    public PurchaseFindService $purchaseFindService;
+    public PurchaseFindAllService $purchaseFindAllService;
+    public PurchaseRemoveService $purchaseRemoveService;
+
     public LoggerInterface $logger;
 
-    public function __construct(LoggerInterface $logger, PurchaseActionRequestSchema $validateSchema, PurchaseService $service)
+    public function __construct(
+        LoggerInterface $logger,
+        PurchaseAddService $purchaseAddService,
+        PurchaseEditService $purchaseEditService,
+        PurchaseFindService $purchaseFindService,
+        PurchaseFindAllService $purchaseFindAllService,
+        PurchaseRemoveService $purchaseRemoveService
+    )
     {
-        $this->validateSchema = $validateSchema;
-        $this->service = $service;
-        $this->logger = $logger;
+        $this->purchaseAddService = $purchaseAddService;
+        $this->purchaseEditService = $purchaseEditService;
+        $this->purchaseFindService = $purchaseFindService;
+        $this->purchaseFindAllService = $purchaseFindAllService;
+        $this->purchaseRemoveService = $purchaseRemoveService;
+        parent::__construct($logger);
     }
 }
 

@@ -28,6 +28,11 @@ class BaseRepository implements RepositoryInterface
     }
 
 
+    public function findResourceByUuid(string $uuid): ?int
+    {
+        $find = $this->model::all()->where('uuid', '=' ,$uuid)->first();
+        return ($find)? $find->getAttribute('id') : null;
+    }
 
     public function add(array $request): bool
     {

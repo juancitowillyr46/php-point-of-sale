@@ -15,7 +15,6 @@ class PurchaseDetailModel extends Model
         'product_id',
         'quantity',
         'price',
-        'status_id',
         'active',
         'created_at',
         'created_by'

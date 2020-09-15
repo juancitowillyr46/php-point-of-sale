@@ -1,21 +1,30 @@
 <?php
 namespace App\BackOffice\Users\Domain\Services;
 
-use App\BackOffice\Users\Infrastructure\Persistence\UserRepository;
+use App\BackOffice\DataMaster\Domain\Entities\DataMasterModel;
+use App\Shared\Exception\Commands\AddActionException;
+use Exception;
 
-class UserAddService
+class UserAddService extends UserService
 {
-    private UserRepository $userRepository;
+    public function execute(object $bodyParsed): object {
+        try {
 
-    public function __construct(
-        UserRepository $userRepository
-    )
-    {
-        $this->userRepository = $userRepository;
-    }
+            $findUserType = $this->findResourceByUuidReturnIdRegister($bodyParsed->userTypeId);
 
-    public function createUserFromArray() {
-        //$this->userRepository->find()
+            $this->userEntity->setUserTypeId((int) $findUserType);
+            $this->userEntity->payload($bodyParsed);
+            $this->validateDuplicate();
+
+            $success = $this->userRepository->addUser((array) $this->userEntity);
+            if(!$success) {
+                throw new AddActionException();
+            }
+            return $this->userEntity->getResponseDataId();
+
+        } catch (Exception $ex) {
+            throw new Exception($ex->getMessage(), $ex->getCode());
+        }
     }
 
 }

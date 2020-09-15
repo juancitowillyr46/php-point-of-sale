@@ -14,50 +14,61 @@ return function (App $app) {
 
     $app->group('/api', function (RouteCollectorProxy $group) {
         $group->group('/users', function (RouteCollectorProxy $group) {
-            $group->post('', \App\BackOffice\Users\Application\Actions\AddUserAction::class);
-            $group->put('/{uuid}', \App\BackOffice\Users\Application\Actions\EditUserAction::class);
-            $group->get('/{uuid}', \App\BackOffice\Users\Application\Actions\FindUserAction::class);
-            $group->delete('/{uuid}', \App\BackOffice\Users\Application\Actions\RemoveUserAction::class);
-            $group->get('', \App\BackOffice\Users\Application\Actions\FindUserAllAction::class);
+            $group->post('', \App\BackOffice\Users\Application\Actions\UserAddAction::class);
+            $group->put('/{uuid}', \App\BackOffice\Users\Application\Actions\UserEditAction::class);
+            $group->get('/{uuid}', \App\BackOffice\Users\Application\Actions\UserFindAction::class);
+            $group->delete('/{uuid}', \App\BackOffice\Users\Application\Actions\UserRemoveAction::class);
+            $group->get('', \App\BackOffice\Users\Application\Actions\UserFindAllAction::class);
+        });
 
-        });
-        $group->group('/users-type', function (RouteCollectorProxy $group) {
-            $group->post('', \App\BackOffice\UsersType\Application\Actions\AddUserTypeAction::class);
-            $group->get('/{uuid}', \App\BackOffice\UsersType\Application\Actions\FindUserTypeAction::class);
-            $group->get('', \App\BackOffice\UsersType\Application\Actions\FindAllUserTypeAction::class);
-            $group->put('/{uuid}', \App\BackOffice\UsersType\Application\Actions\EditUserTypeAction::class);
-            $group->delete('/{uuid}', \App\BackOffice\UsersType\Application\Actions\RemoveUserTypeAction::class);
-        });
         $group->group('/categories', function (RouteCollectorProxy $group) {
-            $group->post('', \App\BackOffice\Categories\Application\Actions\AddCategoryAction::class);
-            $group->get('/{uuid}', \App\BackOffice\Categories\Application\Actions\FindCategoryAction::class);
-            $group->get('', \App\BackOffice\Categories\Application\Actions\FindAllCategoryAction::class);
-            $group->put('/{uuid}', \App\BackOffice\Categories\Application\Actions\EditCategoryAction::class);
-            $group->delete('/{uuid}', \App\BackOffice\Categories\Application\Actions\RemoveCategoryAction::class);
+            $group->post('', \App\BackOffice\Categories\Application\Actions\CategoryAddAction::class);
+            $group->get('/{uuid}', \App\BackOffice\Categories\Application\Actions\CategoryFindAction::class);
+            $group->get('', \App\BackOffice\Categories\Application\Actions\CategoryFindAllAction::class);
+            $group->put('/{uuid}', \App\BackOffice\Categories\Application\Actions\CategoryEditAction::class);
+            $group->delete('/{uuid}', \App\BackOffice\Categories\Application\Actions\CategoryRemoveAction::class);
         });
-        $group->group('/measure-units', function (RouteCollectorProxy $group) {
-            $group->post('', \App\BackOffice\MeasureUnits\Application\Actions\AddMeasureUnitAction::class);
-            $group->get('/{uuid}', \App\BackOffice\MeasureUnits\Application\Actions\FindMeasureUnitAction::class);
-            $group->get('', \App\BackOffice\MeasureUnits\Application\Actions\FindAllMeasureUnitAction::class);
-            $group->put('/{uuid}', \App\BackOffice\MeasureUnits\Application\Actions\EditMeasureUnitAction::class);
-            $group->delete('/{uuid}', \App\BackOffice\MeasureUnits\Application\Actions\RemoveMeasureUnitAction::class);
-        });
+
         $group->group('/products', function (RouteCollectorProxy $group) {
-            $group->post('', \App\BackOffice\Products\Application\Actions\AddProductAction::class);
-            $group->get('/{uuid}', \App\BackOffice\Products\Application\Actions\FindProductAction::class);
-            $group->get('', \App\BackOffice\Products\Application\Actions\FindAllProductAction::class);
-            $group->put('/{uuid}', \App\BackOffice\Products\Application\Actions\EditProductAction::class);
-            $group->delete('/{uuid}', \App\BackOffice\Products\Application\Actions\RemoveProductAction::class);
+            $group->post('', \App\BackOffice\Products\Application\Actions\ProductAddAction::class);
+            $group->get('/{uuid}', \App\BackOffice\Products\Application\Actions\ProductFindAction::class);
+            $group->get('', \App\BackOffice\Products\Application\Actions\ProductFindAllAction::class);
+            $group->put('/{uuid}', \App\BackOffice\Products\Application\Actions\ProductEditAction::class);
+            $group->delete('/{uuid}', \App\BackOffice\Products\Application\Actions\ProductRemoveAction::class);
         });
+
+        $group->group('/persons', function (RouteCollectorProxy $group) {
+            $group->post('', \App\BackOffice\Persons\Application\Actions\PersonAddAction::class);
+            $group->get('/{uuid}', \App\BackOffice\Persons\Application\Actions\PersonFindAction::class);
+            $group->get('', \App\BackOffice\Persons\Application\Actions\PersonFindAllAction::class);
+            $group->put('/{uuid}', \App\BackOffice\Persons\Application\Actions\PersonEditAction::class);
+            $group->delete('/{uuid}', \App\BackOffice\Persons\Application\Actions\PersonRemoveAction::class);
+        });
+
         $group->group('/purchases', function (RouteCollectorProxy $group) {
-            $group->post('', \App\BackOffice\Purchases\Application\Actions\AddPurchaseAction::class);
-            $group->get('/{uuid}', \App\BackOffice\Purchases\Application\Actions\FindPurchaseAction::class);
-            $group->get('', \App\BackOffice\Purchases\Application\Actions\FindAllPurchaseAction::class);
-            $group->put('/{uuid}', \App\BackOffice\Purchases\Application\Actions\EditPurchaseAction::class);
-            $group->delete('/{uuid}', \App\BackOffice\Purchases\Application\Actions\RemovePurchaseAction::class);
-            $group->get('/{uuidPurchase}/items', \App\BackOffice\PurchasesDetail\Application\Actions\FindAllDetailPurchaseDetailAction::class);
-            $group->post('/{uuidPurchase}/items', \App\BackOffice\PurchasesDetail\Application\Actions\AddPurchaseDetailAction::class);
+            $group->post('', \App\BackOffice\Purchases\Application\Actions\PurchaseAddAction::class);
+            $group->get('/{uuid}', \App\BackOffice\Purchases\Application\Actions\PurchaseFindAction::class);
+            $group->get('', \App\BackOffice\Purchases\Application\Actions\PurchaseFindAllAction::class);
+            $group->put('/{uuid}', \App\BackOffice\Purchases\Application\Actions\PurchaseEditAction::class);
+            $group->delete('/{uuid}', \App\BackOffice\Purchases\Application\Actions\PurchaseRemoveAction::class);
         });
+
+        $group->group('/purchases/{purchaseId}/items', function (RouteCollectorProxy $group) {
+            $group->post('', \App\BackOffice\PurchasesDetail\Application\Actions\PurchaseDetailAddAction::class);
+            $group->get('/{id}', \App\BackOffice\PurchasesDetail\Application\Actions\PurchaseDetailFindAction::class);
+            $group->get('', \App\BackOffice\PurchasesDetail\Application\Actions\PurchaseDetailFindAllAction::class);
+            $group->put('/{id}', \App\BackOffice\PurchasesDetail\Application\Actions\PurchaseDetailEditAction::class);
+            $group->delete('/{id}', \App\BackOffice\PurchasesDetail\Application\Actions\PurchaseDetailRemoveAction::class);
+        });
+
+        $group->group('/data-master', function (RouteCollectorProxy $group) {
+            $group->post('', \App\BackOffice\DataMaster\Application\Actions\DataMasterAddAction::class);
+            $group->get('/{uuid}', \App\BackOffice\DataMaster\Application\Actions\DataMasterFindAction::class);
+            $group->get('', \App\BackOffice\DataMaster\Application\Actions\DataMasterFindAllAction::class);
+            $group->put('/{uuid}', \App\BackOffice\DataMaster\Application\Actions\DataMasterEditAction::class);
+            $group->delete('/{uuid}', \App\BackOffice\DataMaster\Application\Actions\DataMasterRemoveAction::class);
+        });
+
     });
 
 };

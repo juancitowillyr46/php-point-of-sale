@@ -1,21 +1,40 @@
 <?php
 namespace App\BackOffice\Users\Application\Actions;
 
-use App\BackOffice\Users\Domain\Exceptions\UserActionRequestSchema;
-use App\BackOffice\Users\Domain\Services\UserService;
+use App\BackOffice\Users\Domain\Services\UserAddService;
+use App\BackOffice\Users\Domain\Services\UserEditService;
+use App\BackOffice\Users\Domain\Services\UserFindAllService;
+use App\BackOffice\Users\Domain\Services\UserFindService;
+use App\BackOffice\Users\Domain\Services\UserRemoveService;
+use App\Shared\Action\Action;
 use Psr\Log\LoggerInterface;
 
-class UsersAction
+abstract class UsersAction extends Action
 {
-    public UserActionRequestSchema $validateSchema;
-    public UserService $service;
+    public UserAddService $userAddService;
+    public UserEditService $userEditService;
+    public UserFindService $userFindService;
+    public UserFindAllService $userFindAllService;
+    public UserRemoveService $userRemoveService;
+
     public LoggerInterface $logger;
 
-    public function __construct(LoggerInterface $logger, UserActionRequestSchema $validateSchema, UserService $service)
+    public function __construct(
+        LoggerInterface $logger,
+        UserAddService $userAddService,
+        UserEditService $userEditService,
+        UserFindService $userFindService,
+        UserFindAllService $userFindAllService,
+        UserRemoveService $userRemoveService
+    )
     {
-        $this->validateSchema = $validateSchema;
-        $this->service = $service;
-        $this->logger = $logger;
+        $this->userAddService = $userAddService;
+        $this->userEditService = $userEditService;
+        $this->userFindService = $userFindService;
+        $this->userFindAllService = $userFindAllService;
+        $this->userRemoveService = $userRemoveService;
+        parent::__construct($logger);
     }
+
 }
 

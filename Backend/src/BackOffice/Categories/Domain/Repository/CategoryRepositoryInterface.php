@@ -1,19 +1,15 @@
 <?php
 namespace App\BackOffice\Categories\Domain\Repository;
 
-use App\BackOffice\Users\Domain\Entities\User;
-
 interface CategoryRepositoryInterface
 {
-    public function add(User $user): bool;
+    public function addCategory(array $category): bool;
 
-    public function edit(int $id, User $user): bool;
+    public function editCategory(int $id, array $userType): bool;
 
-    public function find(int $id): array;
+    public function findCategory(int $id): array;
 
-    public function remove(): bool;
+    public function removeCategory(int $id): bool;
 
-    public function all(): array;
-
-    public function findByUuid(string $uuid): ?int;
+    public function allCategories(array $query): array;
 }

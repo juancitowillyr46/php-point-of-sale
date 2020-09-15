@@ -28,6 +28,12 @@ class PurchaseMapper
         })->forMember('createdAt', function ($source) {
             $time = strtotime($source['created_at']); // Y-m-d H:m:s
             return date('d/m/Y H:m:s', $time);
+        })->forMember('id', function($source){
+            return $source['uuid'];
+        })->forMember('provider', function($source){
+            return $source['provider']['business_name'];
+        })->forMember('employee', function($source){
+            return $source['employee']['user']['username'];
         });
     }
 }

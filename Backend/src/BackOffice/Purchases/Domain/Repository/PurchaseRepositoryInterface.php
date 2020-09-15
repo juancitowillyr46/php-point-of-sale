@@ -1,19 +1,15 @@
 <?php
 namespace App\BackOffice\Purchases\Domain\Repository;
 
-use App\BackOffice\Users\Domain\Entities\User;
-
 interface PurchaseRepositoryInterface
 {
-    public function add(User $user): bool;
+    public function addPurchase(array $purchase): bool;
 
-    public function edit(int $id, User $user): bool;
+    public function editPurchase(int $id, array $purchase): bool;
 
-    public function find(int $id): array;
+    public function findPurchase(int $id): array;
 
-    public function remove(): bool;
+    public function removePurchase(int $id): bool;
 
-    public function all(): array;
-
-    public function findByUuid(string $uuid): ?int;
+    public function allPurchases(array $query): array;
 }

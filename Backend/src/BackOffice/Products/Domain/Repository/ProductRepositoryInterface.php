@@ -1,19 +1,15 @@
 <?php
 namespace App\BackOffice\Products\Domain\Repository;
 
-use App\BackOffice\Users\Domain\Entities\User;
-
 interface ProductRepositoryInterface
 {
-    public function add(User $user): bool;
+    public function addProduct(array $product): bool;
 
-    public function edit(int $id, User $user): bool;
+    public function editProduct(int $id, array $product): bool;
 
-    public function find(int $id): array;
+    public function findProduct(int $id): array;
 
-    public function remove(): bool;
+    public function removeProduct(int $id): bool;
 
-    public function all(): array;
-
-    public function findByUuid(string $uuid): ?int;
+    public function allProduct(array $query): array;
 }

@@ -1,77 +1,43 @@
 <?php
 namespace App\BackOffice\Categories\Domain\Services;
 
-use App\BackOffice\Categories\Domain\Entities\Category;
-use App\BackOffice\Categories\Domain\Entities\CategoryDto;
+use App\BackOffice\Categories\Domain\Entities\CategoryEntity;
 use App\BackOffice\Categories\Domain\Entities\CategoryMapper;
 use App\BackOffice\Categories\Infrastructure\Persistence\CategoryRepository;
-use App\BackOffice\Users\Domain\Entities\User;
-use App\BackOffice\Users\Domain\Entities\UserDto;
-use App\BackOffice\Users\Domain\Entities\UserMapper;
-use App\BackOffice\UsersType\Domain\Services\UserTypeService;
 use App\Shared\Domain\Services\BaseService;
-use App\Shared\Exception\Commands\DuplicateActionException;
-use App\Shared\Utility\SecurityPassword;
-use Exception;
-use Ramsey\Uuid\Uuid as UuidGenerate;
+use stdClass;
 
 class CategoryService extends BaseService
 {
-    public CategoryMapper $mapper;
-    public Category $category;
-    public CategoryRepository $categoryRepository;
 
-    public function __construct(CategoryMapper $mapper, CategoryRepository $categoryRepository, Category $category)
+    protected CategoryEntity $categoryEntity;
+    protected CategoryRepository $categoryRepository;
+    protected CategoryMapper $categoryMapper;
+
+    public function __construct(CategoryRepository $categoryRepository, CategoryEntity $categoryEntity, CategoryMapper $categoryMapper)
     {
-        $this->mapper = $mapper;
-        $this->category = $category;
         $this->categoryRepository = $categoryRepository;
-        $this->setRepository($categoryRepository);
+        $this->categoryEntity = $categoryEntity;
+        $this->categoryMapper = $categoryMapper;
     }
 
-    public function payLoad(object $request): array
+    public function execute(object $bodyParsed): object
     {
-
-        try {
-
-            //$this->validateDuplicate((array) $request);
-
-            $category = $this->category;
-
-            if($request->uuid != "") {
-                $category->setUuid($request->uuid);
-            } else {
-                $category->setUuid(UuidGenerate::uuid1());
-            }
-
-            $category->setDescription($request->description);
-            $category->setName($request->name);
-            $category->setActive($request->active);
-
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
-
-        /* Ubicar el id del typeUserUuid */
-        return (array) $category;
+        return new stdClass();
     }
 
-    public function findToDto(string $uuid) {
-        return $this->mapper->autoMapper->map($this->find($uuid), CategoryDto::class);
+    public function executeArg(string $uuid): object
+    {
+        return new stdClass();
     }
 
-    /*public function validateDuplicate(array $request): void {
+    public function executeArgWithBodyParsed(string $uuid, object $bodyParsed): object
+    {
+        return new stdClass();
+    }
 
-        $existEmail = $this->userRepository->findByAttr('email', $request['email'], $request['uuid']);
-        if($existEmail) {
-            throw new DuplicateActionException();
-        }
-
-        $existUsername = $this->userRepository->findByAttr('username', $request['username'], $request['uuid']);
-        if($existUsername) {
-            throw new DuplicateActionException();
-        }
-
-    }*/
-
+    public function executeCollection(array $query): array
+    {
+        return [];
+    }
 }

@@ -3,7 +3,7 @@ namespace App\BackOffice\Users\Domain\Entities;
 
 class UserDto
 {
-    public string $uuid;
+    public string $id;
     public string $email;
     public string $username;
     public string $typeUser;

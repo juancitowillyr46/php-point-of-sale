@@ -3,7 +3,7 @@ namespace App\BackOffice\PurchasesDetail\Domain\Entities;
 
 class PurchaseDetailDto
 {
-    public string $uuid;
+    public string $id;
     public string $product;
     public string $buyUuid;
     public int $quantity;

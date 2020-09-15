@@ -1,82 +1,60 @@
 <?php
 namespace App\BackOffice\Users\Domain\Services;
 
-use App\BackOffice\Users\Domain\Entities\User;
-use App\BackOffice\Users\Domain\Entities\UserDto;
+use App\BackOffice\Users\Domain\Entities\UserEntity;
 use App\BackOffice\Users\Domain\Entities\UserMapper;
 use App\BackOffice\Users\Infrastructure\Persistence\UserRepository;
-use App\BackOffice\UsersType\Domain\Services\UserTypeService;
 use App\Shared\Domain\Services\BaseService;
 use App\Shared\Exception\Commands\DuplicateActionException;
-use App\Shared\Utility\SecurityPassword;
-use Exception;
-use Ramsey\Uuid\Uuid as UuidGenerate;
+use stdClass;
 
 class UserService extends BaseService
 {
-    public UserMapper $mapper;
-    public User $user;
-    public UserTypeService $userTypeService;
-    public UserRepository $userRepository;
+    protected UserEntity $userEntity;
+    protected UserRepository $userRepository;
+    protected UserMapper $userMapper;
 
-    public function __construct(UserMapper $mapper, UserRepository $userRepository, User $user, UserTypeService $userTypeService)
+    public function __construct(UserRepository $userRepository, UserEntity $userEntity, UserMapper $userMapper)
     {
-        $this->mapper = $mapper;
-        $this->user = $user;
-        $this->userTypeService = $userTypeService;
         $this->userRepository = $userRepository;
-        $this->setRepository($userRepository);
+        $this->userEntity = $userEntity;
+        $this->userMapper = $userMapper;
     }
 
-    public function payLoad(object $request): array
-    {
+    public function validateDuplicate(): void {
 
-        try {
+        $uuid = $this->userEntity->getUuid();
+        $email = $this->userEntity->getEmail();
+        $username = $this->userEntity->getUsername();
 
-            $this->validateDuplicate((array) $request);
-
-            $user = $this->user;
-
-            if($request->uuid != "") {
-                $user->setUuid($request->uuid);
-            } else {
-                $user->setUuid(UuidGenerate::uuid1());
-            }
-
-            $user->setUsername($request->username);
-            $user->setPassword(SecurityPassword::encryptPassword($request->password));
-            $user->setEmail($request->email);
-            $user->setUserTypeUuid($request->userTypeUuid);
-            $user->setActive($request->active);
-            $findUserType = $this->userTypeService->find($request->userTypeUuid);
-
-            $user->setUserTypeId($findUserType['id']);
-
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
-
-        /* Ubicar el id del typeUserUuid */
-        return (array) $user;
-    }
-
-    public function findToDto(string $uuid) {
-        $f = $model = $this->userRepository->getUser();
-        return $this->mapper->autoMapper->map($find, UserDto::class);
-    }
-
-    public function validateDuplicate(array $request): void {
-
-        $existEmail = $this->userRepository->findByAttr('email', $request['email'], $request['uuid']);
+        $existEmail = $this->userRepository->findByAttr('email', $email, $uuid);
         if($existEmail) {
             throw new DuplicateActionException();
         }
 
-        $existUsername = $this->userRepository->findByAttr('username', $request['username'], $request['uuid']);
+        $existUsername = $this->userRepository->findByAttr('username', $username, $uuid);
         if($existUsername) {
             throw new DuplicateActionException();
         }
-
     }
 
+    function execute(object $bodyParsed): object
+    {
+        return new stdClass();
+    }
+
+    function executeArg(string $uuid): object
+    {
+        return new stdClass();
+    }
+
+    function executeArgWithBodyParsed(string $uuid, object $bodyParsed): object
+    {
+        return new stdClass();
+    }
+
+    function executeCollection(array $query): array
+    {
+        return [];
+    }
 }

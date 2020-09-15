@@ -5,6 +5,7 @@ use App\Shared\Exception\ValidateRequestException;
 use App\Shared\Exception\BaseValidatorRequest;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Optional;
 use Symfony\Component\Validator\Constraints\Positive;
 use Symfony\Component\Validator\Constraints\PositiveOrZero;
 use Symfony\Component\Validator\Constraints\Required;
@@ -15,7 +16,13 @@ class PurchaseDetailValidateSchema extends BaseValidatorRequest
     public function getMessages(array $data): array {
 
         $messages = $this->createSchema([
-            'uuidProduct' => [
+            'id' => [
+                new Optional()
+            ],
+            'purchaseId' => [
+                new Required(),
+            ],
+            'productId' => [
                 new Required(),
             ],
             'quantity' => [
@@ -26,7 +33,10 @@ class PurchaseDetailValidateSchema extends BaseValidatorRequest
             ],
             'price' => [
                 new Required(),
-            ]
+            ],
+            'active' => [
+                new Type('bool')
+            ],
         ], $data);
 
         if(count($messages) > 0) {
