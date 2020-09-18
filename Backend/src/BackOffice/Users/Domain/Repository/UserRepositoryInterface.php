@@ -11,6 +11,6 @@ interface UserRepositoryInterface
 
     public function removeUser(int $id): bool;
 
-    public function allUsers(array $query): array;
+    public function allUsers(array $query): object;
 
 }

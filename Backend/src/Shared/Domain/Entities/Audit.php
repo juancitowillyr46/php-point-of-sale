@@ -211,7 +211,7 @@ class Audit
     public function setAuditCreate() {
         $this->setCreatedAt(date('Y-m-d H:i:s'));
         $this->setCreatedBy('ADMIN');
-        $this->setUpdatedAt('');
+//        $this->setUpdatedAt('');
         $this->setUpdatedBy('');
     }
 

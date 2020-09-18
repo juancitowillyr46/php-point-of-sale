@@ -1,0 +1,62 @@
+<?php
+namespace App\BackOffice\Security\Domain\Entities;
+
+use App\BackOffice\Security\Domain\Exceptions\LoginActionRequestSchema;
+use App\Shared\Domain\Entities\Audit;
+use App\Shared\Utility\SecurityPassword;
+use Exception;
+use Ramsey\Uuid\Uuid;
+
+class LoginEntity extends Audit
+{
+    public string $username;
+    public string $password;
+
+    /**
+     * @return string
+     */
+    public function getUsername(): string
+    {
+        return $this->username;
+    }
+
+    /**
+     * @param string $username
+     */
+    public function setUsername(string $username): void
+    {
+        $this->username = $username;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
+    }
+
+    public function payload(object $formData): void {
+
+        try {
+
+            $validate = new LoginActionRequestSchema();
+            $validate->getMessages((array)$formData);
+
+            $this->setPassword($formData->password);
+            $this->setUsername($formData->username);
+
+        } catch(Exception $ex) {
+            throw new Exception($ex->getMessage(), $ex->getCode());
+        }
+
+    }
+}

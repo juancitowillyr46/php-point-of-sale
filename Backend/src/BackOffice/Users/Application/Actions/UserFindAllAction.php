@@ -9,7 +9,7 @@ class UserFindAllAction extends UsersAction
     {
         try {
             $query = $this->request->getQueryParams();
-            return $this->commandSuccess($this->userFindAllService->executeCollection($query));
+            return $this->commandSuccess($this->userFindAllService->executeCollectionPagination($query));
         } catch (Exception $ex) {
             return $this->commandError($ex);
         }

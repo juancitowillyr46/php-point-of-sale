@@ -6,5 +6,5 @@ use Slim\App;
 return function (App $app) {
     $app->addBodyParsingMiddleware();
     $app->addRoutingMiddleware();
-    $app->add(AuthValidateTokenMiddleware::class);
+//    $app->add(AuthValidateTokenMiddleware::class);
 };

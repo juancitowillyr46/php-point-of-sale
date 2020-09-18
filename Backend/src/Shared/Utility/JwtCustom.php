@@ -2,31 +2,33 @@
 namespace App\Shared\Utility;
 
 use DateTime;
+use Exception;
 use Firebase\JWT\JWT;
 
 class JwtCustom
 {
-    private string $exp;
-    private string $secretKey;
+    private string $exp = "+5 minutes";
+    private string $secretKey = '12345678';
 
-    public function __construct()
-    {
-//        $this->exp = $exp;
-//        $this->secretKey = $secretKey;
-    }
-
-    public function geToken($payload): string
+    public function geToken($userData): string
     {
 
         try {
 
+            $now = new DateTime();
             $future = new DateTime($this->exp);
-            $payload['exp'] = $future->getTimeStamp();
+
+            $payload = array(
+                'iat' => $now->getTimeStamp(),
+                'exp' => $future->getTimeStamp(),
+                'data' => $userData
+            );
+
             return JWT::encode($payload, $this->secretKey);
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
 
-            throw new \Exception($e->getMessage());
+            throw new Exception($e->getMessage());
 
         }
 

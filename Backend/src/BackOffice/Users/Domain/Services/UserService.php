@@ -57,4 +57,9 @@ class UserService extends BaseService
     {
         return [];
     }
+
+    function executeCollectionPagination(array $query): object
+    {
+        return new stdClass();
+    }
 }

@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class UserModel extends Model
 {
+    const UPDATED_AT = null;
+
+    public $timestamps = ["created_at"];
+
     protected $table = "user";
 
     protected $fillable = [
@@ -18,7 +22,7 @@ class UserModel extends Model
         'user_type_id',
         'created_at',
         'created_by',
-        'updated_at',
+//        'updated_at',
         'updated_by',
         'active'
     ];
@@ -26,6 +30,8 @@ class UserModel extends Model
     protected $with = ['userType'];
 
     use SoftDeletes;
+
+
 
     public function userType()
     {

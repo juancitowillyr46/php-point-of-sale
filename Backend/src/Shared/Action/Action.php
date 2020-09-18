@@ -97,7 +97,7 @@ abstract class Action
         }
     }
 
-    public function commandError(Exception $e): Response {
+    public function commandError(Exception $e, int $statusCode = ActionPayload::STATUS_NOT_FOUND, string $messageError = ActionError::BAD_REQUEST): Response {
 
         $message = $e->getMessage();
 
@@ -105,8 +105,8 @@ abstract class Action
             $message = json_decode($e->getMessage(), JSON_PRETTY_PRINT);
 
 
-        $error = new ActionError(ActionError::BAD_REQUEST, $message);
-        $payLoad = new ActionPayload(ActionPayload::STATUS_NOT_FOUND, null, $error);
+        $error = new ActionError($messageError, $message);
+        $payLoad = new ActionPayload($statusCode, null, $error);
         return $this->respond($payLoad);
     }
 

@@ -13,6 +13,7 @@ class UserEntity extends Audit
     public string $password;
     public int $user_type_id;
     public string $email;
+    public bool $blocked;
 
     /**
      * @return string
@@ -78,6 +79,24 @@ class UserEntity extends Audit
         $this->email = $email;
     }
 
+    /**
+     * @return bool
+     */
+    public function isBlocked(): bool
+    {
+        return $this->blocked;
+    }
+
+    /**
+     * @param bool $blocked
+     */
+    public function setBlocked(bool $blocked): void
+    {
+        $this->blocked = $blocked;
+    }
+
+
+
     public function payload(object $formData): void {
 
         try {
@@ -89,6 +108,7 @@ class UserEntity extends Audit
             $this->setUsername($formData->username);
             $this->setEmail($formData->email);
             $this->setActive($formData->active);
+            $this->setBlocked($formData->blocked);
 
         } catch(Exception $ex) {
             throw new Exception($ex->getMessage(), $ex->getCode());
