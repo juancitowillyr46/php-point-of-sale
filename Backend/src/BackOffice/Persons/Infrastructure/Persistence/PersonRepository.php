@@ -54,16 +54,9 @@ class PersonRepository extends BaseRepository implements PersonRepositoryInterfa
         }
     }
 
-    public function allPersons(array $query): array
+    public function allPersons(array $query): object
     {
-        $findAllPerson = $this->personModel::all();
-        $getQuery = [];
-        if(count($query)) {
-            $getQuery = $findAllPerson->where('active', '=', (boolean) $query['active'])->toArray();
-        } else {
-            $getQuery = $findAllPerson->toArray();
-        }
-        return $getQuery;
+          return $this->paginateModel($query, $this->personModel);
     }
 
 }

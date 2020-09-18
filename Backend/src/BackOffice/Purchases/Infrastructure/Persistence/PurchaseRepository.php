@@ -54,15 +54,8 @@ class PurchaseRepository extends BaseRepository implements PurchaseRepositoryInt
         }
     }
 
-    public function allPurchases(array $query): array
+    public function allPurchases(array $query): object
     {
-        $findAllPurchase = $this->purchaseModel::all();
-        $getQuery = [];
-        if(count($query)) {
-            $getQuery = $findAllPurchase->where('active', '=', (boolean) $query['active'])->toArray();
-        } else {
-            $getQuery = $findAllPurchase->toArray();
-        }
-        return $getQuery;
+        return $this->paginateModel($query, $this->purchaseModel);
     }
 }

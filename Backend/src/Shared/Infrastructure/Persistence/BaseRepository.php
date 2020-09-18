@@ -1,10 +1,12 @@
 <?php
 namespace App\Shared\Infrastructure\Persistence;
 
+use App\Shared\Domain\Entities\PaginateEntity;
 use App\Shared\Domain\Repository\RepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 use mysql_xdevapi\Exception;
 use Psr\Log\LoggerInterface;
+use stdClass;
 use Throwable;
 
 class BaseRepository implements RepositoryInterface
@@ -87,5 +89,27 @@ class BaseRepository implements RepositoryInterface
     public function findByAttr(string $key, string $value, string $uuid): bool {
         $count = $this->model::all()->where($key, $value)->where('uuid', '!=', $uuid)->count();
         return $count > 0;
+    }
+
+    public function paginateModel(array $query, Model $model): object {
+
+        try {
+
+            $findAll = $model::all()
+                ->sortByDesc('id')
+                ->skip(((int)$query['page'] - 1) * $query['size'])
+                ->take((int)$query['size'])
+                ->toArray();
+
+            $paginate = new PaginateEntity();
+            $paginate->setRegisters($findAll);
+            $paginate->setTotalRegisters($model::all()->count());
+            $paginate->setTotalPages(ceil($model::all()->count()/(int)$query['size']));
+            return $paginate;
+
+        } catch (Exception $ex) {
+            throw new Exception($ex->getMessage(), $ex->getCode());
+        }
+
     }
 }

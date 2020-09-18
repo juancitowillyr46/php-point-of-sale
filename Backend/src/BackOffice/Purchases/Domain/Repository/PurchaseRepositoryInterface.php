@@ -11,5 +11,5 @@ interface PurchaseRepositoryInterface
 
     public function removePurchase(int $id): bool;
 
-    public function allPurchases(array $query): array;
+    public function allPurchases(array $query): object;
 }

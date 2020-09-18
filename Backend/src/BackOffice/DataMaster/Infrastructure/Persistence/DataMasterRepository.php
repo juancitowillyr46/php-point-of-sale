@@ -54,20 +54,23 @@ class DataMasterRepository extends BaseRepository implements DataMasterRepositor
         }
     }
 
-    public function allDataMaster(array $query): array
+    public function allDataMaster(array $query): object
     {
-        $findAllDataMaster = $this->dataMasterModel::all();
 
-        $ll = [];
-        if(array_key_exists('active', $query)) {
-            $ll = $findAllDataMaster->where('active', '=', (boolean) $query['active']);
-        }
+        return $this->paginateModel($query, $this->dataMasterModel);
 
-        if(array_key_exists('type', $query)) {
-            $ll = $findAllDataMaster->where('type', '=', $query['type']);
-        }
-
-        return $ll->toArray();
+//        $findAllDataMaster = $this->dataMasterModel::all();
+//
+//        $ll = [];
+//        if(array_key_exists('active', $query)) {
+//            $ll = $findAllDataMaster->where('active', '=', (boolean) $query['active']);
+//        }
+//
+//        if(array_key_exists('type', $query)) {
+//            $ll = $findAllDataMaster->where('type', '=', $query['type']);
+//        }
+//
+//        return $ll->toArray();
     }
 
     public function validateIdRegister(string $key, string $value, string $type, string $uuid): bool {

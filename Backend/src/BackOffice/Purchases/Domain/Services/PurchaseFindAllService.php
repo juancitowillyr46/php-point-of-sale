@@ -6,15 +6,17 @@ use Exception;
 
 class PurchaseFindAllService extends PurchaseService
 {
-    public function executeCollection(array $query): array {
+    public function executeCollectionPagination(array $query): object {
         try {
 
             $findPurchaseAll = $this->purchaseRepository->allPurchases($query);
             $listPurchase = [];
-            foreach ($findPurchaseAll as $purchase) {
+            foreach ($findPurchaseAll->registers as $purchase) {
                 $listPurchase[] = $this->purchaseMapper->autoMapper->map($purchase, PurchaseDto::class);
             }
-            return $listPurchase;
+
+            $findPurchaseAll->registers = $listPurchase;
+            return $findPurchaseAll;
 
         } catch (Exception $ex) {
             throw new Exception($ex->getMessage(), $ex->getCode());

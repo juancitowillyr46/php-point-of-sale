@@ -60,30 +60,6 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
     public function allUsers(array $query): object
     {
-        if(!array_key_exists('size', $query)) {
-            throw new Exception('size not found');
-        } else if(!array_key_exists('page', $query) || ($query['page']*1) < 1) {
-            throw new Exception('page not found');
-        } else if(!array_key_exists('active', $query)) {
-            throw new Exception('active not found');
-        }
-
-        $findAllUser = $this->userModel::all();
-        $getQuery = [];
-        if(count($query)) {
-            $getQuery = $findAllUser
-                                    ->where('active', '=', (boolean) $query['active'])
-                                    ->sortByDesc('id')
-                                    ->skip(($query['page'] - 1) * $query['size'])
-                                    ->take($query['size'])->toArray();
-        } else {
-            $getQuery = $findAllUser->toArray();
-        }
-
-        $class = new stdClass();
-        $class->data = $getQuery;
-        $class->totalRegister =  $findAllUser->count();
-
-        return $class;
+         return $this->paginateModel($query, $this->userModel);
     }
 }

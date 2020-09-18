@@ -56,15 +56,8 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         }
     }
 
-    public function allProduct(array $query): array
+    public function allProduct(array $query): object
     {
-        $findAllUser = $this->productModel::all();
-        $getQuery = [];
-        if(count($query)) {
-            $getQuery = $findAllUser->where('active', '=', (boolean) $query['active'])->toArray();
-        } else {
-            $getQuery = $findAllUser->toArray();
-        }
-        return $getQuery;
+        return $this->paginateModel($query, $this->productModel);
     }
 }

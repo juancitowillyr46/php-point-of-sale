@@ -11,5 +11,5 @@ interface PersonRepositoryInterface
 
     public function removePerson(int $id): bool;
 
-    public function allPersons(array $query): array;
+    public function allPersons(array $query): object;
 }

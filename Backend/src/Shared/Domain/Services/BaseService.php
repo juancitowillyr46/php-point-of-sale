@@ -11,7 +11,9 @@ use App\Shared\Exception\Commands\FindAllActionException;
 use App\Shared\Exception\Commands\NotEqualResourceException;
 use App\Shared\Exception\Commands\RemoveActionException;
 use App\Shared\Infrastructure\Persistence\BaseRepository;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
+use stdClass;
 
 abstract class BaseService
     //implements ServiceInterface
@@ -166,4 +168,19 @@ abstract class BaseService
 
     abstract function executeCollection(array $query): array;
 
+    public function validatePagerParameters(array $query): void {
+
+        if(count($query) == 0) {
+            throw new Exception('No exist params');
+        } else if(!array_key_exists('size', $query)) {
+            throw new Exception('size not exist');
+        } else if(!array_key_exists('page', $query)) {
+            throw new Exception('page not exist');
+        } else if( (int) $query['page'] < 1) {
+            throw new Exception('Parameter not allowed');
+        } else if( (int) $query['size'] < 1) {
+            throw new Exception('Parameter not allowed');
+        }
+
+    }
 }

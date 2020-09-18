@@ -11,7 +11,7 @@ class CategoryFindAllAction extends CategoriesAction
     {
         try {
             $query = $this->request->getQueryParams();
-            return $this->commandSuccess($this->categoryFindAllService->executeCollection($query));
+            return $this->commandSuccess($this->categoryFindAllService->executeCollectionPagination($query));
         } catch (Exception $ex) {
             return $this->commandError($ex);
         }

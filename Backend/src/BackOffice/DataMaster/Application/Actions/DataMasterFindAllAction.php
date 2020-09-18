@@ -12,7 +12,7 @@ class DataMasterFindAllAction extends DataMasterAction
     {
         try {
             $query = $this->request->getQueryParams();
-            return $this->commandSuccess($this->dataMasterFindAllService->executeCollection($query));
+            return $this->commandSuccess($this->dataMasterFindAllService->executeCollectionPagination($query));
         } catch (Exception $ex) {
             return $this->commandError($ex);
         }

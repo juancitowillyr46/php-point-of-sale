@@ -9,16 +9,17 @@ use Exception;
 
 class ProductFindAllService extends ProductService
 {
-    public function executeCollection(array $query): array {
+    public function executeCollectionPagination(array $query): object {
         try {
 
             $findProductAll = $this->productRepository->allProduct($query);
             $listProduct = [];
-            foreach ($findProductAll as $product) {
+            foreach ($findProductAll->registers as $product) {
                 $product['measure_unit'] = $this->findNameResourceByUIdRegister($product['id_unit_measurent'], 'TABLE_UNIT_MEASUREMENT');
                 $listProduct[] = $this->productMapper->autoMapper->map($product, ProductDto::class);
             }
-            return $listProduct;
+            $findProductAll->registers = $listProduct;
+            return $findProductAll;
 
         } catch (Exception $ex) {
             throw new Exception($ex->getMessage(), $ex->getCode());

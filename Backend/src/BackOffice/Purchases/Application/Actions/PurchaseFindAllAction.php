@@ -13,7 +13,7 @@ class PurchaseFindAllAction extends PurchasesAction
     {
         try {
             $query = $this->request->getQueryParams();
-            return $this->commandSuccess($this->purchaseFindAllService->executeCollection($query));
+            return $this->commandSuccess($this->purchaseFindAllService->executeCollectionPagination($query));
         } catch (Exception $ex) {
             return $this->commandError($ex);
         }

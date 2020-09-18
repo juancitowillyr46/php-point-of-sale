@@ -11,7 +11,7 @@ class PersonFindAllAction extends PersonsAction
     {
         try {
             $query = $this->request->getQueryParams();
-            return $this->commandSuccess($this->personFindAllService->executeCollection($query));
+            return $this->commandSuccess($this->personFindAllService->executeCollectionPagination($query));
         } catch (Exception $ex) {
             return $this->commandError($ex);
         }

@@ -7,15 +7,16 @@ use Exception;
 class PersonFindAllService extends PersonService
 {
 
-    public function executeCollection(array $query): array {
+    public function executeCollectionPagination(array $query): object {
         try {
 
             $findPersonAll = $this->personRepository->allPersons($query);
             $listPerson = [];
-            foreach ($findPersonAll as $person) {
+            foreach ($findPersonAll->registers as $person) {
                 $listPerson[] = $this->personMapper->autoMapper->map($person, PersonDto::class);
             }
-            return $listPerson;
+            $findPersonAll->registers = $listPerson;
+            return $findPersonAll;
 
         } catch (Exception $ex) {
             throw new Exception($ex->getMessage(), $ex->getCode());

@@ -11,5 +11,5 @@ interface CategoryRepositoryInterface
 
     public function removeCategory(int $id): bool;
 
-    public function allCategories(array $query): array;
+    public function allCategories(array $query): object;
 }

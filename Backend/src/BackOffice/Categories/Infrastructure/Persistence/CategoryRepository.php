@@ -54,16 +54,9 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
         }
     }
 
-    public function allCategories(array $query): array
+    public function allCategories(array $query): object
     {
-        $findAllCategory = $this->categoryModel::all();
-        $getQuery = [];
-        if(count($query)) {
-            $getQuery = $findAllCategory->where('active', '=', (boolean) $query['active'])->toArray();
-        } else {
-            $getQuery = $findAllCategory->toArray();
-        }
-        return $getQuery;
+        return $this->paginateModel($query, $this->categoryModel);
     }
 
 }

@@ -6,16 +6,20 @@ use Exception;
 
 class DataMasterFindAllService extends DataMasterService
 {
-    public function executeCollection(array $query): array {
+    public function executeCollectionPagination(array $query): object {
 
         try {
 
+            $this->validatePagerParameters($query);
+
             $findDataMasterAll = $this->dataMasterRepository->allDataMaster($query);
             $listDataMaster = [];
-            foreach ($findDataMasterAll as $dataMaster) {
+            foreach ($findDataMasterAll->registers as $dataMaster) {
                 $listDataMaster[] = $this->dataMasterMapper->autoMapper->map($dataMaster, DataMasterDto::class);
             }
-            return $listDataMaster;
+
+            $findDataMasterAll->registers = $listDataMaster;
+            return $findDataMasterAll;
 
         } catch (Exception $ex) {
             throw new Exception($ex->getMessage(), $ex->getCode());

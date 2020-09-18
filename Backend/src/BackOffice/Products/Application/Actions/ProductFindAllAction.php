@@ -12,7 +12,7 @@ class ProductFindAllAction extends ProductsAction
     {
         try {
             $query = $this->request->getQueryParams();
-            return $this->commandSuccess($this->productFindAllService->executeCollection($query));
+            return $this->commandSuccess($this->productFindAllService->executeCollectionPagination($query));
         } catch (Exception $ex) {
             return $this->commandError($ex);
         }

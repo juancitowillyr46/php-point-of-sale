@@ -11,5 +11,5 @@ interface DataMasterRepositoryInterface
 
     public function removeDataMaster(int $id): bool;
 
-    public function allDataMaster(array $query): array;
+    public function allDataMaster(array $query): object;
 }

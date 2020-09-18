@@ -7,15 +7,16 @@ use Exception;
 class CategoryFindAllService extends CategoryService
 {
 
-    public function executeCollection(array $query): array {
+    public function executeCollectionPagination(array $query): object {
         try {
 
             $findUserAll = $this->categoryRepository->allCategories($query);
-            $listUser = [];
-            foreach ($findUserAll as $userType) {
-                $listUser[] = $this->categoryMapper->autoMapper->map($userType, CategoryDto::class);
+            $listCategory = [];
+            foreach ($findUserAll->registers as $userType) {
+                $listCategory[] = $this->categoryMapper->autoMapper->map($userType, CategoryDto::class);
             }
-            return $listUser;
+            $findUserAll->registers = $listCategory;
+            return $findUserAll;
 
         } catch (Exception $ex) {
             throw new Exception($ex->getMessage(), $ex->getCode());
