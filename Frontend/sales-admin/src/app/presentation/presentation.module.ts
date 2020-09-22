@@ -8,10 +8,14 @@ import { UsersComponent } from './users/users.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { ProductsComponent } from './products/products.component';
 import { PurchasesComponent } from './purchases/purchases.component';
+import { PresentationComponent } from './presentation.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { PresentationRoutingModule } from './../presentation/presentation-routing.module';
 
 @NgModule({
-  declarations: [LoginComponent, DataMasterComponent, UsersComponent, CategoriesComponent, ProductsComponent, PurchasesComponent],
+  declarations: [LoginComponent, DataMasterComponent, UsersComponent, CategoriesComponent, ProductsComponent, PurchasesComponent, PresentationComponent],
   imports: [
+    PresentationRoutingModule,
     SharedModule,
     ModalsModule
   ]
