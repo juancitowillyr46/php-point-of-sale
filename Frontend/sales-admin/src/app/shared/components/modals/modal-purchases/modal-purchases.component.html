@@ -1,0 +1,74 @@
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" data-dismiss="modal" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Producto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 col-xs-12">
+                        <form>
+                            <div class="form-group">
+                                <label for="documentTypeId">Tipo de documento:</label>
+                                <select id="documentTypeId" class="form-control mb-3">
+                                    <option disabled selected>Open this select menu</option>
+                                    <option value="1">Activo</option>
+                                    <option value="2">No Activo</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="numDocument">Número documento:</label>
+                                <input type="text" class="form-control" id="numDocument" placeholder="Ingrese numero de documento">
+                            </div>
+                            <div class="form-group">
+                                <label for="serieDocument">Serie:</label>
+                                <input type="text" class="form-control" id="serieDocument" placeholder="Ingrese serie">
+                            </div>
+                            <div class="form-group">
+                                <label for="providerId">Proveedor:</label>
+                                <select id="providerId" class="form-control mb-3">
+                                    <option disabled selected>Open this select menu</option>
+                                    <option value="1">Activo</option>
+                                    <option value="2">No Activo</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="employeeId">Personal:</label>
+                                <select id="employeeId" class="form-control mb-3">
+                                    <option disabled selected>Open this select menu</option>
+                                    <option value="1">Activo</option>
+                                    <option value="2">No Activo</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="statusId">Estado compra:</label>
+                                <select id="statusId" class="form-control mb-3">
+                                    <option disabled selected>Open this select menu</option>
+                                    <option value="1">Activo</option>
+                                    <option value="2">No Activo</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="date">Fecha</label>
+                                <input type="text" class="form-control" id="date" placeholder="Ingrese serie">
+                            </div>
+                            <div class="form-group">
+                                <label for="date">Total</label>
+                                <input type="text" class="form-control" id="date" placeholder="Ingrese el total de la compra">
+                            </div>
+                            <button type="submit" class="btn btn-primary mr-2 mt-15">Guardar</button>
+                            <button type="submit" class="btn btn-danger mt-15">Cancelar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div> -->
+        </div>
+    </div>
+</div>

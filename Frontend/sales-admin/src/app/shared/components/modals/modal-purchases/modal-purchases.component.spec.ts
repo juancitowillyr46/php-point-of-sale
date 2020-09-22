@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GridSimpleComponent } from './grid-simple.component';
+import { ModalPurchasesComponent } from './modal-purchases.component';
 
-describe('GridSimpleComponent', () => {
-  let component: GridSimpleComponent;
-  let fixture: ComponentFixture<GridSimpleComponent>;
+describe('ModalPurchasesComponent', () => {
+  let component: ModalPurchasesComponent;
+  let fixture: ComponentFixture<ModalPurchasesComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GridSimpleComponent ]
+      declarations: [ ModalPurchasesComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GridSimpleComponent);
+    fixture = TestBed.createComponent(ModalPurchasesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
