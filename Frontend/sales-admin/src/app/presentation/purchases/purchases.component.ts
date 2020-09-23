@@ -1,5 +1,6 @@
-import {  Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { InitFunctionJsService } from 'src/app/shared/services/init-function-js.service';
 declare var jquery: any;
 declare var $: any;
 
@@ -8,11 +9,12 @@ declare var $: any;
   templateUrl: './purchases.component.html',
   styleUrls: ['./purchases.component.css']
 })
-export class PurchasesComponent implements OnInit {
+export class PurchasesComponent implements OnInit, AfterViewInit {
 
   public data: any;
 
   constructor(
+    private initFunctionJsService: InitFunctionJsService,
     private route: ActivatedRoute
   ) { }
 
@@ -26,6 +28,7 @@ export class PurchasesComponent implements OnInit {
 
   ngAfterViewInit(): void {
     const that = this;
+    that.initFunctionJsService.executeFunction();
   }
 
 }

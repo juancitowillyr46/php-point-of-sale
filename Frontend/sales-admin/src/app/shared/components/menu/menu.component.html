@@ -1,9 +1,9 @@
 <nav>
     <ul class="sidebar-menu" data-widget="tree">
-        <li class="treeview active">
+        <li class="treeview">
             <a href="javascript:void(0)"><i class="bx bxl-dropbox"></i><span>Productos</span> <i class="fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
-                <li class="active"><a href="basic-table.html">Categorias</a></li>
+                <li ><a href="basic-table.html">Categorias</a></li>
                 <li><a href="filter-table.html">Productos</a></li>
                 <li><a href="filter-table.html">Stock</a></li>
             </ul>
@@ -11,13 +11,13 @@
         <li class="treeview">
             <a href="javascript:void(0)"><i class="bx bx-cart-alt"></i><span>Compras</span> <i class="fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
-                <li class="active"><a href="basic-table.html">Gestionar Compras</a></li>
+                <li ><a href="basic-table.html">Gestionar Compras</a></li>
             </ul>
         </li>
         <li class="treeview">
             <a href="javascript:void(0)"><i class="bx bx-store"></i><span>Ventas</span> <i class="fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
-                <li class="active"><a href="basic-table.html">Gestionar Ventas</a></li>
+                <li><a href="basic-table.html">Gestionar Ventas</a></li>
             </ul>
         </li>
         
@@ -31,16 +31,16 @@
         <li class="treeview">
             <a href="javascript:void(0)"><i class="bx bxs-truck"></i><span>Proveedores</span> <i class="fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
-                <li class="active"><a href="basic-table.html">Gestión de Proveedores</a></li>
+                <li><a href="basic-table.html">Gestión de Proveedores</a></li>
             </ul>
         </li>
 
         <li class="treeview">
             <a href="javascript:void(0)"><i class="bx bxs-report"></i><span>Reportes</span> <i class="fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
-                <li class="active"><a href="basic-table.html">Compras</a></li>
-                <li class="active"><a href="basic-table.html">Ventas</a></li>
-                <li class="active"><a href="basic-table.html">Productos</a></li>
+                <li><a href="basic-table.html">Compras</a></li>
+                <li><a href="basic-table.html">Ventas</a></li>
+                <li><a href="basic-table.html">Productos</a></li>
             </ul>
         </li>
         <li class="treeview">
@@ -50,14 +50,10 @@
                 <li><a href="mail-view.html">Gestión Usuarios</a></li>
             </ul>
         </li>
-        <li class="treeview">
-            <a href="javascript:void(0)"><i class="bx bx-data"></i><span>Maestro</span> <i class="fa fa-angle-right"></i></a>
+        <li class="treeview" [ngClass]="{active: true}" >
+            <a href="javascript:void(0)"><i class="bx bx-data"></i><span>Configuración</span> <i class="fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
-                <li class="active"><a href="basic-table.html">Compras</a></li>
-                <li class="active"><a href="basic-table.html">Personal</a></li>
-                <li class="active"><a href="basic-table.html">Productos</a></li>
-                <li class="active"><a href="basic-table.html">Empresa</a></li>
-                <li class="active"><a href="basic-table.html">Clientes</a></li>
+                <li [ngClass]="{active: true}"><a href="basic-table.html">Data Maestra</a></li>
             </ul>
         </li>
     </ul>

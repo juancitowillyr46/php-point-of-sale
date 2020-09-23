@@ -11,19 +11,12 @@ declare var $: any;
 })
 export class UsersComponent implements OnInit, AfterViewInit {
 
-  public data: any;
-
   constructor(
-    private initFunctionJsService: InitFunctionJsService,
-    private route: ActivatedRoute
+    private initFunctionJsService: InitFunctionJsService
   ) { }
 
   ngOnInit(): void {
     const that = this;
-    that.route.data.subscribe( res => {
-      console.log(res);
-      that.data = res;
-    });
   }
 
   ngAfterViewInit(): void {

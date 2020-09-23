@@ -1,23 +1,32 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoginComponent } from './login/login.component';
-import { DataMasterComponent } from './data-master/data-master.component';
+
 import { SharedModule } from '../shared/shared.module';
-import { ModalsModule } from '../shared/components/modals/modals.module';
-import { UsersComponent } from './users/users.component';
-import { CategoriesComponent } from './categories/categories.component';
-import { ProductsComponent } from './products/products.component';
-import { PurchasesComponent } from './purchases/purchases.component';
+
+import { ConfigurationModule } from '../presentation/configuration/configuration.module';
+
 import { PresentationComponent } from './presentation.component';
-import { BrowserModule } from '@angular/platform-browser';
 import { PresentationRoutingModule } from './../presentation/presentation-routing.module';
 
+import { CustomersModule } from './customers/customers.module';
+import { ProductsModule } from '../presentation/products/products.module';
+
+import { UsersModule } from '../presentation/users/users.module';
+import { PurchasesModule } from '../presentation/purchases/purchases.module';
+
 @NgModule({
-  declarations: [LoginComponent, DataMasterComponent, UsersComponent, CategoriesComponent, ProductsComponent, PurchasesComponent, PresentationComponent],
+  declarations: [PresentationComponent],
   imports: [
-    PresentationRoutingModule,
     SharedModule,
-    ModalsModule
+    PresentationRoutingModule,
+    CommonModule,
+
+    // Modules
+    ConfigurationModule,
+    CustomersModule,
+    ProductsModule,
+    UsersModule,
+    PurchasesModule
   ]
 })
 export class PresentationModule { }
