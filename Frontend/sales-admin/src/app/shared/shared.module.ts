@@ -5,12 +5,14 @@ import { FooterComponent } from './components/footer/footer.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { CommonModule } from '@angular/common';
 import { ModalsModule } from './components/modals/modals.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [GridSimpleComponent, SideNavComponent, FooterComponent, MenuComponent],
   imports: [
     CommonModule,
-    ModalsModule
+    ModalsModule,
+    RouterModule
   ],
   exports: [
     GridSimpleComponent, SideNavComponent, FooterComponent, MenuComponent, ModalsModule

@@ -6,7 +6,7 @@
                     <h4 class="mb-0 font-18">{{ data.title }}</h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Maestro</a></li>
+                            <li class="breadcrumb-item" ><a href="javascript: void(0);">Maestro</a></li>
                             <li class="breadcrumb-item active">Compras</li>
                         </ol>
                     </div>
@@ -17,7 +17,10 @@
             <div class="col-12 box-margin">
                 <div class="card">
                     <div class="card-body">
-                        <button type="button" class="btn-add btn btn-success mb-2 mr-2"><i class="ti-plus"></i> Crear</button>
+                        <button type="button" class="btn-add btn btn-success mb-2 mr-2">
+                            <i class="ti-plus"></i> Crear
+                        </button>
+                        
                         <button type="button" class="btn btn-primary mb-2 mr-2"><i class="ti-reload"></i> Refrescar</button>
                         <app-grid-simple></app-grid-simple>
                         <app-modal-purchases></app-modal-purchases>

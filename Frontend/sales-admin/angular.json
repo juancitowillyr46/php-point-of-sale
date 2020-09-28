@@ -28,6 +28,8 @@
               "src/assets/css/default-assets/responsive.bootstrap4.css",
               "src/assets/css/default-assets/buttons.bootstrap4.css",
               "src/assets/css/default-assets/select.bootstrap4.css",
+              "src/assets/css/bootstrap-datepicker.min.css",
+              "src/assets/css/default-assets/form-picker.css",
               "src/styles.css"
             ],
             "scripts": [
@@ -42,7 +44,8 @@
               "src/assets/js/default-assets/datatable-responsive.min.js",
               "src/assets/js/default-assets/responsive.bootstrap4.min.js",
               "src/assets/js/default-assets/datatable-button.min.js",
-              "src/assets/js/default-assets/button.bootstrap4.min.js"
+              "src/assets/js/default-assets/button.bootstrap4.min.js",
+              "src/assets/js/bootstrap-datepicker.min.js"
             ]
           },
           "configurations": {

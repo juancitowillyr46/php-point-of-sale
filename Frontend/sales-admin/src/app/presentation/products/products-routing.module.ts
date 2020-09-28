@@ -27,7 +27,7 @@ const routes: Routes = [
       {
         path: 'stock',
         component: ProductsStockComponent,
-        data: {title: 'Stocks'},
+        data: {title: 'Stock'},
         // resolve
       }
     ]

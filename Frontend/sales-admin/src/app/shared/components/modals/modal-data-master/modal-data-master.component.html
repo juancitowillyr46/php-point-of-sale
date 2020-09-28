@@ -12,8 +12,15 @@
                     <div class="col-sm-12 col-xs-12">
                         <form>
                             <div class="form-group">
-                                <label for="exampleInputEmail12">Id Registro</label>
-                                <input type="email" class="form-control" readonly id="exampleInputEmail12" placeholder="Id Registro">
+                                <label for="description">Tipo:</label>
+                                <select id="description" class="form-control mb-3">
+                                    <option disabled selected>-- SELECCIONE --</option>
+                                    <option value="1">TABLE_DOCUMENT_TYPE_TAX</option>
+                                    <option value="2">TABLE_STATUS_BUY</option>
+                                    <option value="3">TABLE_TYPE_EMPLOYEE</option>
+                                    <option value="4">TABLE_TYPE_USER</option>
+                                    <option value="5">TABLE_UNIT_MEASUREMENT</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="name">Nombre:</label>
@@ -24,24 +31,22 @@
                                 <textarea class="form-control" id="description" placeholder="Ingrese una descripción" rows="4"></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="description">Tipo</label>
-                                <select id="description" class="form-control mb-3">
-                                    <!-- <option selected="">Open this select menu</option> -->
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="active">Activo</label>
+                                <label for="active">Activo:</label>
                                 <select id="active" class="form-control mb-3">
-                                    <option disabled selected>Open this select menu</option>
-                                    <option value="1">Activo</option>
-                                    <option value="2">No Activo</option>
+                                    <option disabled selected>-- SELECCIONE --</option>
+                                    <option value="1">ACTIVO</option>
+                                    <option value="2">NO ACTIVO</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-primary mr-2 mt-15">Guardar</button>
-                            <button type="submit" class="btn btn-danger mt-15">Cancelar</button>
+                            <button type="submit" class="btn btn-success mr-2 mt-15">
+                                <i class="ti-save mr-2"></i>Actualizar
+                            </button>
+                            <button type="submit" class="btn btn-primary mr-2 mt-15">
+                                <i class="ti-save mr-2"></i>Guardar
+                            </button>
+                            <button type="submit" class="btn btn-danger mt-15">
+                                <i class="ti-close mr-2"></i>Cancelar
+                            </button>
                         </form>
                     </div>
                 </div>

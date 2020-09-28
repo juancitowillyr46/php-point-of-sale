@@ -1,8 +1,8 @@
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" data-dismiss="modal" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="true">
-    <div class="modal-dialog" role="document">
+<div class="modal fade example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" data-dismiss="modal" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="true">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Producto</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Compra</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -12,11 +12,19 @@
                     <div class="col-sm-12 col-xs-12">
                         <form>
                             <div class="form-group">
+                                <label for="providerId">Proveedor:</label>
+                                <select id="providerId" class="form-control mb-3">
+                                    <option disabled selected>-- SELECCIONE --</option>
+                                    <option value="1">PROVEEDOR 1</option>
+                                    <option value="2">PROVEEDOR 2</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label for="documentTypeId">Tipo de documento:</label>
                                 <select id="documentTypeId" class="form-control mb-3">
-                                    <option disabled selected>Open this select menu</option>
-                                    <option value="1">Activo</option>
-                                    <option value="2">No Activo</option>
+                                    <option disabled selected>-- SELECCIONE --</option>
+                                    <option value="1">BOLETA</option>
+                                    <option value="2">FACTURA</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -24,41 +32,101 @@
                                 <input type="text" class="form-control" id="numDocument" placeholder="Ingrese numero de documento">
                             </div>
                             <div class="form-group">
+                                <label for="date">Fecha</label>
+                                <input type="text" class="form-control" id="date" placeholder="Ingrese fecha" data-provide="datepicker" data-date-format="dd-mm-yyyy" data-date-autoclose="true">
+                            </div>
+                            <!-- <div class="form-group">
                                 <label for="serieDocument">Serie:</label>
                                 <input type="text" class="form-control" id="serieDocument" placeholder="Ingrese serie">
-                            </div>
-                            <div class="form-group">
-                                <label for="providerId">Proveedor:</label>
-                                <select id="providerId" class="form-control mb-3">
-                                    <option disabled selected>Open this select menu</option>
-                                    <option value="1">Activo</option>
-                                    <option value="2">No Activo</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
+                            </div> -->
+                            
+                            <!-- <div class="form-group">
                                 <label for="employeeId">Personal:</label>
                                 <select id="employeeId" class="form-control mb-3">
                                     <option disabled selected>Open this select menu</option>
                                     <option value="1">Activo</option>
                                     <option value="2">No Activo</option>
                                 </select>
-                            </div>
+                            </div> -->
                             <div class="form-group">
                                 <label for="statusId">Estado compra:</label>
                                 <select id="statusId" class="form-control mb-3">
-                                    <option disabled selected>Open this select menu</option>
+                                    <option disabled selected>-- SELECCIONE --</option>
                                     <option value="1">Activo</option>
                                     <option value="2">No Activo</option>
                                 </select>
                             </div>
+                            
+                            <hr>
+                            <h6 class="modal-title" id="exampleModalLabel">Detalle</h6><br>
+                            <!-- <hr> -->
                             <div class="form-group">
-                                <label for="date">Fecha</label>
-                                <input type="text" class="form-control" id="date" placeholder="Ingrese serie">
+                                <label for="statusId">Elegir Producto:</label>
+                                <select id="statusId" class="form-control mb-3">
+                                    <option disabled selected>-- SELECCIONE --</option>
+                                    <option value="1">PRODUCTO 1</option>
+                                    <option value="2">PRODUCTO 2</option>
+                                    <option value="2">PRODUCTO 3</option>
+                                </select>
+                            </div>
+                            <table class="table">
+                                <tr>
+                                    <td width="55%">Producto</td>
+                                    <td width="15%" align="center">Cantidad</td>
+                                    <td width="15%" align="center">Precio</td>
+                                    <td width="15%" align="center">Subtotal</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>PRODUCTO 1</td>
+                                    <td><input type="number" class="form-control" /></td>
+                                    <td><input type="text" class="form-control" /></td>
+                                    <td align="center">S/. 150.00</td>
+                                    <td><a href="#"><i class="ti-close"></i></a></td>
+                                </tr>
+                                <tr>
+                                    <td>PRODUCTO 2</td>
+                                    <td><input type="number" class="form-control" /></td>
+                                    <td><input type="text" class="form-control" /></td>
+                                    <td align="center">S/. 150.00</td>
+                                    <td><a href="#"><i class="ti-close"></i></a></td>
+                                </tr>
+                                <tr>
+                                    <td>PRODUCTO 3</td>
+                                    <td><input type="number" class="form-control" /></td>
+                                    <td><input type="text" class="form-control" /></td>
+                                    <td align="center">S/. 150.00</td>
+                                    <td><a href="#"><i class="ti-close"></i></a></td>
+                                </tr>
+                                <tr>
+                                    <td>PRODUCTO 4</td>
+                                    <td><input type="number" class="form-control" /></td>
+                                    <td><input type="text" class="form-control" /></td>
+                                    <td align="center">S/. 150.00</td>
+                                    <td><a href="#"><i class="ti-close"></i></a></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td align="center">Total</td>
+                                    <td align="center">S/. 1600.00</td>
+                                </tr>
+                            </table>
+                            
+                            <div class="form-group">
+                                <label for="date">Nota:</label>
+                                <textarea class="form-control" id="description" placeholder="Ingrese una descripción" rows="4"></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="date">Total</label>
-                                <input type="text" class="form-control" id="date" placeholder="Ingrese el total de la compra">
+                                <label for="date">Adjunto:</label>
+                                <div class="input-group mb-30">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="inputGroupFile01">
+                                        <label class="custom-file-label" for="inputGroupFile01">Seleccione documento</label>
+                                    </div>
+                                </div>
                             </div>
+
                             <button type="submit" class="btn btn-primary mr-2 mt-15">Guardar</button>
                             <button type="submit" class="btn btn-danger mt-15">Cancelar</button>
                         </form>
