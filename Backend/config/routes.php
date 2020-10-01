@@ -14,6 +14,12 @@ return function (App $app) {
     $app->get('/', HelloWorldAction::class);
 
     $app->group('/api', function (RouteCollectorProxy $group) {
+
+        $group->group('/security', function (RouteCollectorProxy $group) {
+            $group->post('/login', \App\BackOffice\Security\Application\Actions\LoginAction::class);
+//            $group->post('/refresh-token/{token}', \App\BackOffice\Security\Application\Actions\RefreshTokenAction::class);
+        });
+
         $group->group('/users', function (RouteCollectorProxy $group) {
             $group->post('', \App\BackOffice\Users\Application\Actions\UserAddAction::class);
             $group->put('/{uuid}', \App\BackOffice\Users\Application\Actions\UserEditAction::class);
@@ -70,10 +76,20 @@ return function (App $app) {
             $group->delete('/{uuid}', \App\BackOffice\DataMaster\Application\Actions\DataMasterRemoveAction::class);
         })->add(AuthValidateTokenMiddleware::class);
 
-        $group->group('/security', function (RouteCollectorProxy $group) {
-            $group->post('/login', \App\BackOffice\Security\Application\Actions\LoginAction::class);
-//            $group->post('/refresh-token/{token}', \App\BackOffice\Security\Application\Actions\RefreshTokenAction::class);
-        });
+        $group->group('/roles', function (RouteCollectorProxy $group) {
+            $group->post('', \App\BackOffice\Roles\Application\Actions\RoleAddAction::class);
+            $group->get('/{uuid}', \App\BackOffice\Roles\Application\Actions\RoleFindAction::class);
+            $group->get('', \App\BackOffice\Roles\Application\Actions\RoleFindAllAction::class);
+            $group->put('/{uuid}', \App\BackOffice\Roles\Application\Actions\RoleEditAction::class);
+            $group->delete('/{uuid}', \App\BackOffice\Roles\Application\Actions\RoleRemoveAction::class);
+        })->add(AuthValidateTokenMiddleware::class);
+
+
+        $group->group('/commons', function (RouteCollectorProxy $group) {
+            $group->get('/roles', \App\BackOffice\Roles\Application\Actions\RoleCommonAction::class);
+        })->add(AuthValidateTokenMiddleware::class);
+
+
 
     });
 

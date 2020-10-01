@@ -102,8 +102,8 @@ class BaseRepository implements RepositoryInterface
                 ->toArray();
 
             $paginate = new PaginateEntity();
-            $paginate->setRegisters($findAll);
-            $paginate->setTotalRegisters($model::all()->count());
+            $paginate->setRows($findAll);
+            $paginate->setTotalRows($model::all()->count());
             $paginate->setTotalPages(ceil($model::all()->count()/(int)$query['size']));
             return $paginate;
 

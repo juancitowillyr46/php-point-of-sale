@@ -11,9 +11,62 @@ class UserEntity extends Audit
 {
     public string $username;
     public string $password;
-    public int $user_type_id;
+    public int $role_id;
     public string $email;
     public bool $blocked;
+    public string $first_name;
+    public string $last_name;
+
+    /**
+     * @return int
+     */
+    public function getRoleId(): int
+    {
+        return $this->role_id;
+    }
+
+    /**
+     * @param int $role_id
+     */
+    public function setRoleId(int $role_id): void
+    {
+        $this->role_id = $role_id;
+    }
+
+
+
+    /**
+     * @return string
+     */
+    public function getFirstName(): string
+    {
+        return $this->first_name;
+    }
+
+    /**
+     * @param string $first_name
+     */
+    public function setFirstName(string $first_name): void
+    {
+        $this->first_name = $first_name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastName(): string
+    {
+        return $this->last_name;
+    }
+
+    /**
+     * @param string $last_name
+     */
+    public function setLastName(string $last_name): void
+    {
+        $this->last_name = $last_name;
+    }
+
 
     /**
      * @return string
@@ -45,22 +98,6 @@ class UserEntity extends Audit
     public function setPassword(string $password): void
     {
         $this->password = $password;
-    }
-
-    /**
-     * @return int
-     */
-    public function getUserTypeId(): int
-    {
-        return $this->user_type_id;
-    }
-
-    /**
-     * @param int $user_type_id
-     */
-    public function setUserTypeId(int $user_type_id): void
-    {
-        $this->user_type_id = $user_type_id;
     }
 
     /**
@@ -109,6 +146,8 @@ class UserEntity extends Audit
             $this->setEmail($formData->email);
             $this->setActive($formData->active);
             $this->setBlocked($formData->blocked);
+            $this->setFirstName($formData->firstName);
+            $this->setLastName($formData->lastName);
 
         } catch(Exception $ex) {
             throw new Exception($ex->getMessage(), $ex->getCode());

@@ -168,6 +168,8 @@ abstract class BaseService
 
     abstract function executeCollection(array $query): array;
 
+//    abstract function executeCommon(): array;
+
     public function validatePagerParameters(array $query): void {
 
         if(count($query) == 0) {

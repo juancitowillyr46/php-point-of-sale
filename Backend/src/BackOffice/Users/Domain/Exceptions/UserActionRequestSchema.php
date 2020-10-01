@@ -38,7 +38,7 @@ class UserActionRequestSchema extends BaseValidatorRequest
                     'min' => 8
                 ])
             ],
-            'userTypeId' => [
+            'roleId' => [
                 new Required(),
             ],
             'active' => [
@@ -46,6 +46,20 @@ class UserActionRequestSchema extends BaseValidatorRequest
             ],
             'blocked' => [
                 new Type('bool')
+            ],
+            'firstName' => [
+                new Required(),
+                new Length([
+                    'min' => 4,
+                    'max' => 50
+                ])
+            ],
+            'lastName' => [
+                new Required(),
+                new Length([
+                    'min' => 4,
+                    'max' => 50
+                ])
             ]
         ], $data);
 

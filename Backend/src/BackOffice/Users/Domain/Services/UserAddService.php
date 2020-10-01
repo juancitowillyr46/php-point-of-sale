@@ -2,6 +2,7 @@
 namespace App\BackOffice\Users\Domain\Services;
 
 use App\BackOffice\DataMaster\Domain\Entities\DataMasterModel;
+use App\BackOffice\Roles\Domain\Entities\RoleModel;
 use App\Shared\Exception\Commands\AddActionException;
 use Exception;
 
@@ -10,9 +11,9 @@ class UserAddService extends UserService
     public function execute(object $bodyParsed): object {
         try {
 
-            $findUserType = $this->findResourceByUuidReturnIdRegister($bodyParsed->userTypeId);
+            $findRole = $this->findResourceByUuid(new RoleModel(), $bodyParsed->roleId);
 
-            $this->userEntity->setUserTypeId((int) $findUserType);
+            $this->userEntity->setRoleId($findRole);
             $this->userEntity->payload($bodyParsed);
             $this->validateDuplicate();
 

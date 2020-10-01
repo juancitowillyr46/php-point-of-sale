@@ -6,40 +6,40 @@ namespace App\Shared\Domain\Entities;
 
 class PaginateEntity
 {
-    public array $registers = [];
-    public int $totalRegisters = 0;
+    public array $rows = [];
+    public int $totalRows = 0;
     public int $totalPages = 0;
 
     /**
      * @return array
      */
-    public function getRegisters(): array
+    public function getRows(): array
     {
-        return $this->registers;
+        return $this->rows;
     }
 
     /**
-     * @param array $registers
+     * @param array $rows
      */
-    public function setRegisters(array $registers): void
+    public function setRows(array $rows): void
     {
-        $this->registers = $registers;
+        $this->rows = $rows;
     }
 
     /**
      * @return int
      */
-    public function getTotalRegisters(): int
+    public function getTotalRows(): int
     {
-        return $this->totalRegisters;
+        return $this->totalRows;
     }
 
     /**
-     * @param int $totalRegisters
+     * @param int $totalRows
      */
-    public function setTotalRegisters(int $totalRegisters): void
+    public function setTotalRows(int $totalRows): void
     {
-        $this->totalRegisters = $totalRegisters;
+        $this->totalRows = $totalRows;
     }
 
     /**
@@ -57,6 +57,7 @@ class PaginateEntity
     {
         $this->totalPages = $totalPages;
     }
+
 
 
 

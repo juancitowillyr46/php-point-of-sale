@@ -2,6 +2,7 @@
 namespace App\BackOffice\Users\Domain\Entities;
 
 use App\BackOffice\DataMaster\Domain\Entities\DataMasterModel;
+use App\BackOffice\Roles\Domain\Entities\RoleModel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -24,7 +25,11 @@ class UserModel extends Model
         'created_by',
 //        'updated_at',
         'updated_by',
-        'active'
+        'first_name',
+        'last_name',
+        'active',
+        'role_id',
+        'blocked'
     ];
 
     protected $with = ['userType'];
@@ -36,6 +41,6 @@ class UserModel extends Model
     public function userType()
     {
         // return $this->belongsTo(UserTypeModel::class, 'user_type_id', 'id');
-        return $this->belongsTo(DataMasterModel::class, 'user_type_id', 'id_register');
+        return $this->belongsTo(RoleModel::class, 'role_id', 'id');
     }
 }

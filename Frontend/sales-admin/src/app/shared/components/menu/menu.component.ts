@@ -93,38 +93,38 @@ export class MenuComponent implements OnInit {
         }
       ]
     },
-    {
-      title: 'Vender', 
-      path: '/modules/providers/',
-      order: 0,
-      icon: 'bx-store',  
-      children: [
-        {
-          title: 'Proveedores',
-          path: 'maintainer'
-        },
-        {
-          title: 'Representantes',
-          path: 'legal-representative'
-        }
-      ]
-    },
-    {
-      title: 'Reportes', 
-      path: '/modules/providers/',
-      order: 0,
-      icon: 'bxs-report',  
-      children: [
-        {
-          title: 'Stock',
-          path: 'maintainer'
-        },
-        {
-          title: 'Kardex',
-          path: 'legal-representative'
-        }
-      ]
-    },
+    // {
+    //   title: 'Vender', 
+    //   path: '/modules/providers/',
+    //   order: 0,
+    //   icon: 'bx-store',  
+    //   children: [
+    //     {
+    //       title: 'Proveedores',
+    //       path: 'maintainer'
+    //     },
+    //     {
+    //       title: 'Representantes',
+    //       path: 'legal-representative'
+    //     }
+    //   ]
+    // },
+    // {
+    //   title: 'Reportes', 
+    //   path: '/modules/providers/',
+    //   order: 0,
+    //   icon: 'bxs-report',  
+    //   children: [
+    //     {
+    //       title: 'Stock',
+    //       path: 'maintainer'
+    //     },
+    //     {
+    //       title: 'Kardex',
+    //       path: 'legal-representative'
+    //     }
+    //   ]
+    // },
     // {
     //   title: 'Employees', 
     //   path: '/modules/employees/',
