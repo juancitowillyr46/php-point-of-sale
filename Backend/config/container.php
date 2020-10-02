@@ -19,7 +19,6 @@ return [
     App::class => function (ContainerInterface $container){
         AppFactory::setContainer($container);
         $app = AppFactory::create();
-
         $config = $container->get(Configuration::class);
         $configBd = $config->getArray('db');
 

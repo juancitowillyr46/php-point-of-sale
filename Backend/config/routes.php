@@ -17,7 +17,6 @@ return function (App $app) {
 
         $group->group('/security', function (RouteCollectorProxy $group) {
             $group->post('/login', \App\BackOffice\Security\Application\Actions\LoginAction::class);
-//            $group->post('/refresh-token/{token}', \App\BackOffice\Security\Application\Actions\RefreshTokenAction::class);
         });
 
         $group->group('/users', function (RouteCollectorProxy $group) {

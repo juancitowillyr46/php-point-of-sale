@@ -71,5 +71,9 @@ $settings['smtp'] = [
     'to' => 'to@example.com',
 ];
 
+$settings['settings'] = [
+//    'addContentLengthHeader' => true,
+//    "determineRouteBeforeAppMiddleware" => true,
+];
 
 return $settings;

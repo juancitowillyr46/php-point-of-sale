@@ -14,12 +14,11 @@ class UserFindAllService extends UserService
 
             $findUserAll = $this->userRepository->allUsers($query);
             $listUser = [];
-            foreach ($findUserAll->registers as $user) {
-                $user['user_type'] = $this->findNameResourceByUIdRegister($user['user_type_id'], 'TABLE_TYPE_USER');
+            foreach ($findUserAll->rows as $user) {
                 $listUser[] = $this->userMapper->autoMapper->map($user, UserDto::class);
             }
 
-            $findUserAll->registers = $listUser;
+            $findUserAll->rows = $listUser;
             return $findUserAll;
 
         } catch (Exception $ex) {

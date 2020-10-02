@@ -56,7 +56,7 @@ class ActionError implements JsonSerializable
     {
         $payload = [
             'type' => $this->type,
-            'description' => $this->description,
+            'message' => $this->description,
         ];
 
         return $payload;

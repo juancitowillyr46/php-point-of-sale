@@ -13,7 +13,6 @@ class UserFindService extends UserService
 
             $findUserId = $this->findResourceByUuid(new UserModel(), $uuid);
             $findUser = $this->userRepository->findUser($findUserId);
-            $findUser['user_type'] = $this->findNameResourceByUIdRegister($findUser['user_type_id'], 'TABLE_TYPE_USER');
             return $this->userMapper->autoMapper->map($findUser, UserDto::class);
 
         } catch (Exception $ex) {

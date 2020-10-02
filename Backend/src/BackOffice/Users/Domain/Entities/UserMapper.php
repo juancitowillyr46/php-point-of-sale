@@ -29,7 +29,7 @@ class UserMapper
             $time = strtotime($source['created_at']); // Y-m-d H:m:s
             return date('d/m/Y H:m:s', $time);
         })->forMember('userType', function ($source) {
-            return $source['user_type'];
+            return $source['user_type']['name'];
         })->forMember('id', function($source){
             return $source['uuid'];
         });;
