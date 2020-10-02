@@ -23,7 +23,6 @@ class UserModel extends Model
         'user_type_id',
         'created_at',
         'created_by',
-//        'updated_at',
         'updated_by',
         'first_name',
         'last_name',
@@ -40,7 +39,6 @@ class UserModel extends Model
 
     public function userType()
     {
-        // return $this->belongsTo(UserTypeModel::class, 'user_type_id', 'id');
         return $this->belongsTo(RoleModel::class, 'role_id', 'id');
     }
 }

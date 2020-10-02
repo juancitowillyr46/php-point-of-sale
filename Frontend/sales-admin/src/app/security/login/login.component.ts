@@ -19,7 +19,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
     password: ''
   };
 
-
   constructor(
     private signInUseCase: SignInUseCase,
     private formBuilder: FormBuilder,
