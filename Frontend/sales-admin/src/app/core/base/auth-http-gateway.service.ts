@@ -1,10 +1,8 @@
-import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AuthHttpGatewayService {
 
   constructor(private http: HttpClient) { 
@@ -18,6 +16,7 @@ export class AuthHttpGatewayService {
       data => subject.next(data),
       error => {
         // TODO: Implementar alerta
+        // alert(JSON.stringify(error));
         subject.error(error);
       }
     );
@@ -26,11 +25,16 @@ export class AuthHttpGatewayService {
 
   public post(path: string, parsedBody: any): Observable<Response> {
     const subject = new Subject<any>();
-    this.http.post(path, parsedBody, {withCredentials: true})
+    this.http.post(path, parsedBody) // , {withCredentials: true}
         .subscribe(
           data => subject.next(data),
           error => {
             // TODO: Implementar alerta
+            if(error){
+              console.log(error);
+              alert(error['error']['error']['message']);
+            }
+            
             subject.error(error);
           }
         );

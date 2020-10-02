@@ -20,17 +20,23 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthHttpHeaderInterceptor } from './shared/interceptors/auth-http-header.interceptor';
 import { AuthHttpErrorsInterceptor } from './shared/interceptors/auth-http-errors.interceptor';
 
+import { CoreModule } from './core/core.module';
+
+
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
-    AppRoutingModule,
-    SharedModule,
     BrowserModule,
     CommonModule,
+
+    AppRoutingModule,
+    CoreModule,
+    
     SecurityModule,
-    PresentationModule
+    PresentationModule,
+    
   ],
   providers: [
     {
