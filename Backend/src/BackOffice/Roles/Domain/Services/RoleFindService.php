@@ -19,4 +19,16 @@ class RoleFindService extends RoleService
             throw new Exception($ex->getMessage(), $ex->getCode());
         }
     }
+
+    public function executeGetRole(string $uuid) {
+        try {
+
+            $findUserId = $this->findResourceByUuid(new UserModel(), $uuid);
+            $findUser = $this->userRepository->findUser($findUserId);
+            return $this->userMapper->autoMapper->map($findUser, UserInfoDto::class);
+
+        } catch (Exception $ex) {
+            throw new Exception($ex->getMessage(), $ex->getCode());
+        }
+    }
 }

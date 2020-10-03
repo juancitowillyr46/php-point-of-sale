@@ -41,4 +41,5 @@ class UserModel extends Model
     {
         return $this->belongsTo(RoleModel::class, 'role_id', 'id');
     }
+
 }

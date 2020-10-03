@@ -17,6 +17,7 @@ return function (App $app) {
 
         $group->group('/security', function (RouteCollectorProxy $group) {
             $group->post('/login', \App\BackOffice\Security\Application\Actions\LoginAction::class);
+            $group->get('/me', \App\BackOffice\Users\Application\Actions\UserInfoAction::class)->add(AuthValidateTokenMiddleware::class);
         });
 
         $group->group('/users', function (RouteCollectorProxy $group) {
@@ -25,6 +26,7 @@ return function (App $app) {
             $group->get('/{uuid}', \App\BackOffice\Users\Application\Actions\UserFindAction::class);
             $group->delete('/{uuid}', \App\BackOffice\Users\Application\Actions\UserRemoveAction::class);
             $group->get('', \App\BackOffice\Users\Application\Actions\UserFindAllAction::class);
+
         })->add(AuthValidateTokenMiddleware::class);
 
         $group->group('/categories', function (RouteCollectorProxy $group) {
