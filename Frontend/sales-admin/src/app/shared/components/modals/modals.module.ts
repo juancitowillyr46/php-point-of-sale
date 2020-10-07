@@ -8,6 +8,8 @@ import { ModalPurchasesComponent } from './modal-purchases/modal-purchases.compo
 import { ModalProvidersComponent } from './modal-providers/modal-providers.component';
 import { ModalRepresentativeComponent } from './modal-representative/modal-representative.component';
 import { ModalCustomersComponent } from './modal-customers/modal-customers.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,10 @@ import { ModalCustomersComponent } from './modal-customers/modal-customers.compo
     ModalCustomersComponent,
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    FontAwesomeModule
   ],
   exports: [
     ModalDataMasterComponent, 

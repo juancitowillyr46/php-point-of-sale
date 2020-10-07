@@ -8,7 +8,12 @@ import { ModalsModule } from './components/modals/modals.module';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faSpinner, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faSignInAlt, faBan } from '@fortawesome/free-solid-svg-icons';
+import { MeObservable } from '../shared/observables/me.observable';
+import { GridSimpleObservable } from '../shared/components/grid-simple/grid-simple.observable';
+import { GridSimpleService } from '../shared/components/grid-simple/grid-simple.service';
+import { ModalDataObservable } from '../shared/components/modals/modal-data.observable';
+import { CommonRolesObservable } from '../shared/observables/common-roles.observable';
 
 @NgModule({
   declarations: [GridSimpleComponent, SideNavComponent, FooterComponent, MenuComponent],
@@ -16,7 +21,8 @@ import { faSpinner, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
     CommonModule,
     ModalsModule,
     RouterModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    // MeObservable
   ],
   exports: [
     GridSimpleComponent, 
@@ -24,15 +30,24 @@ import { faSpinner, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
     FooterComponent, 
     MenuComponent, 
     ModalsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    // MeObservable
   ],
+  providers: [
+    MeObservable,
+    GridSimpleObservable,
+    GridSimpleService,
+    ModalDataObservable,
+    CommonRolesObservable
+  ]
 })
 export class SharedModule { 
 
   constructor(private library: FaIconLibrary) {
     library.addIcons(
       faSpinner,
-      faSignInAlt
+      faSignInAlt,
+      faBan
     )
   }
 

@@ -5,24 +5,24 @@ import { SecurityRepository } from "../repository/security.repository";
 import { SignInDto } from "../model/signin.dto";
 import { AccessTokenDto } from "../model/access-token.dto"; 
 import { map } from 'rxjs/operators';
+import { MeDto } from '../model/me.dto';
 
 @Injectable({
     providedIn: 'root'
 })
-export class SignInUseCase implements UseCase<SignInDto, AccessTokenDto> {
+export class MeUseCase implements UseCase<any, MeDto> {
 
     constructor(private securityRepository: SecurityRepository) {
 
     }
 
-    public execute(signInDto: SignInDto): Observable<AccessTokenDto> {
+    public execute(): Observable<MeDto> {
         const that = this;
-        let accessTokenData: AccessTokenDto = new AccessTokenDto();
+        let meDto: MeDto;
 
-        return that.securityRepository.signIn(signInDto).pipe(map(res => {
-            console.log(res);
-            accessTokenData.token = res.data.token;
-            return accessTokenData;
+        return that.securityRepository.me().pipe(map(res => {
+            meDto = res.data;
+            return meDto;
         }));
     }
 

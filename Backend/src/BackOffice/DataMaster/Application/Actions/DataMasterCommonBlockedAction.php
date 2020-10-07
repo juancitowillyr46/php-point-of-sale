@@ -1,15 +1,15 @@
 <?php
-namespace App\BackOffice\Roles\Application\Actions;
+namespace App\BackOffice\DataMaster\Application\Actions;
 
 use Exception;
 use Psr\Http\Message\ResponseInterface as Response;
 
-class RoleCommonAction extends RoleAction
+class DataMasterCommonBlockedAction extends DataMasterAction
 {
     protected function action(): Response
     {
         try {
-            return $this->commandSuccess($this->roleFindAllService->executeCommon());
+            return $this->commandSuccess($this->dataMasterFindAllService->executeCommonBlockedUser());
         } catch (Exception $ex) {
             return $this->commandError($ex);
         }

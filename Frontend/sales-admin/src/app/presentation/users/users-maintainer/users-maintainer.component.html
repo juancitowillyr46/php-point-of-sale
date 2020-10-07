@@ -19,8 +19,8 @@
             <div class="col-12 box-margin">
                 <div class="card">
                     <div class="card-body">
-                        <button type="button" class="btn-add btn btn-success mb-2 mr-2"><i class="ti-plus"></i> Crear</button>
-                        <button type="button" class="btn btn-primary mb-2 mr-2"><i class="ti-reload"></i> Refrescar</button>
+                        <button type="button" class="btn-add btn btn-success mb-2 mr-2" (click)="onClickAdd()"><i class="ti-plus"></i> Crear</button>
+                        <button type="button" class="btn btn-primary mb-2 mr-2" (click)="onClickRefresh()"><i class="ti-reload"></i> Refrescar</button>
                         <app-grid-simple></app-grid-simple>
                         <app-modal-users></app-modal-users>
                     </div>

@@ -81,4 +81,18 @@ class DataMasterRepository extends BaseRepository implements DataMasterRepositor
                                 ->where('uuid', '!=', $uuid)->count();
 
     }
+
+    public function commonData(string $type): array
+    {
+        try {
+
+            return $this->dataMasterModel::all()
+                ->where('active', '=', true)
+                ->where('type', '=', $type)
+                ->toArray();
+
+        } catch (Exception $ex) {
+            throw new Exception($ex->getMessage(), $ex->getCode());
+        }
+    }
 }

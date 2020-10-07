@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SignInDto } from 'src/app/domain/security/model/signin.dto';
 import { SignInUseCase } from '../../domain/security/usecase/signin.usecase';
+import { MeUseCase } from '../../domain/security/usecase/me.usecase';
 
 @Component({
   selector: 'app-login',
@@ -21,6 +22,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   constructor(
     private signInUseCase: SignInUseCase,
+    private meUseCase: MeUseCase,
     private formBuilder: FormBuilder,
     private router: Router
   ) { 
@@ -52,10 +54,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
     }).subscribe(res => {
       that.submit = false;
       if(res.token != ''){
+        localStorage.setItem('accessToken', res.token);
         that.formGroup.reset();
         that.router.navigateByUrl('modules/users/maintainer');
       }
-      console.log(res);
     }, (error) => {
       that.formGroup.reset();
       that.submit = false;

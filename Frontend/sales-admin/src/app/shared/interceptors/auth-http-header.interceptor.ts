@@ -13,7 +13,7 @@ export class AuthHttpHeaderInterceptor implements HttpInterceptor {
             let cloneRequest = request.clone({
                 setHeaders: {
                     'Content-type': 'application/json',
-                    'Authorization': 'Bearer' + accessToken
+                    'Authorization': 'Bearer ' + accessToken
                 }
             });
             return next.handle(cloneRequest);

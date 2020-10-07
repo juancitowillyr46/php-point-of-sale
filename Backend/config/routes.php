@@ -85,12 +85,11 @@ return function (App $app) {
             $group->delete('/{uuid}', \App\BackOffice\Roles\Application\Actions\RoleRemoveAction::class);
         })->add(AuthValidateTokenMiddleware::class);
 
-
         $group->group('/commons', function (RouteCollectorProxy $group) {
             $group->get('/roles', \App\BackOffice\Roles\Application\Actions\RoleCommonAction::class);
+            $group->get('/audit-status', \App\BackOffice\DataMaster\Application\Actions\DataMasterCommonAuditAction::class);
+            $group->get('/blocked-user', \App\BackOffice\DataMaster\Application\Actions\DataMasterCommonBlockedAction::class);
         })->add(AuthValidateTokenMiddleware::class);
-
-
 
     });
 
