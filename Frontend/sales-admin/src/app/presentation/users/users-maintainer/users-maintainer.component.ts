@@ -40,10 +40,11 @@ export class UsersMaintainerComponent implements OnInit {
       size: 10,
       columns: [
         { "data": "id", "title": "Correo", "width": '20%', "visible": false},
-        { "data": "email", "title": "Correo", "width": '20%'},
+        { "data": "fullName", "title": "Nombres", "width": '20%'},
         { "data": "username", "title": "Usuario", "width": '20%'},
-        { "data": "userType", "title": "Role", "width": '20%'},
-        { "data": "active", "title": "Estado", "width": '10%'},
+        { "data": "roleName", "title": "Role", "width": '20%'},
+        { "data": "activeName", "title": "Estado", "width": '10%'},
+        { "data": "blockedName", "title": "Bloqueado", "width": '10%'},
         { 
           "data": null, 
           "title": "", 

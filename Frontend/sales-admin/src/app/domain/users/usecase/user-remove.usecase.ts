@@ -4,12 +4,13 @@ import { Observable } from "rxjs";
 import { UserRepository } from "../repository/user.repository";
 // import { AccessTokenDto } from "../model/access-token.dto"; 
 import { map } from 'rxjs/operators';
-import { UserDto } from '../model/user.dto';
+// import { UserDto } from '../model/user.dto';
+import { UserStoreDto } from '../model/user-store.dto';
 
 @Injectable({
     providedIn: 'root'
 })
-export class UserGetUseCase implements UseCase<string, any> {
+export class UserRemoveUseCase implements UseCase<string, any> {
 
     constructor(private userRepository: UserRepository) {
 
@@ -17,11 +18,13 @@ export class UserGetUseCase implements UseCase<string, any> {
 
     public execute(id: string): Observable<any> {
         const that = this;
-        let userDto: UserDto;
+        // let userDto: UserDto;
 
-        return that.userRepository.get(id).pipe(map(res => {
-            userDto = res.data;
-            return userDto;
+        return that.userRepository.remove(id).pipe(map(res => {
+            console.log(res);
+            return res;
+            // userDto = res.data;
+            // return userDto;
         }));
     }
 

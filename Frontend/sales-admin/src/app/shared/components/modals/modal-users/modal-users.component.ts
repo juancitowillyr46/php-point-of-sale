@@ -10,22 +10,24 @@ import { ModalDataObservable } from '../modal-data.observable';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { UserGetUseCase } from '../../../../domain/users/usecase/user-get.usecase';
+import { UserAddUseCase } from '../../../../domain/users/usecase/user-add.usercase';
+import { UserEditUseCase } from '../../../../domain/users/usecase/user-edit.usecase';
+
+import { BaseModalComponent } from '../base-modal.component';
+import { UserStoreDto } from 'src/app/domain/users/model/user-store.dto';
 
 @Component({
   selector: 'app-modal-users',
   templateUrl: './modal-users.component.html',
   styleUrls: ['./modal-users.component.css']
 })
-export class ModalUsersComponent implements OnInit {
+export class ModalUsersComponent extends BaseModalComponent implements OnInit  {
 
   public modalDataSub: Subscription;
   public dataModal: any;
-
-  public formGroup: FormGroup = null;
   public submit: any = null;
 
   public commonRoles: CommonDto[] = [];
-  public commonAuditStatus: CommonDto[] = [];
   public commonBlockedUser: CommonDto[] = [];
 
   constructor(
@@ -33,73 +35,110 @@ export class ModalUsersComponent implements OnInit {
     private modalDataObservable: ModalDataObservable,
     private commonRolesUseCase: CommonRolesUseCase,
     private commonBlockedUserUseCase: CommonBlockedUserUseCase,
-    private commonAuditStatusUseCase: CommonAuditStatusUseCase,
-
     private userGetUseCase: UserGetUseCase,
-    private formBuilder: FormBuilder,
+    private userAddUseCase: UserAddUseCase,
+    private userEditUseCase: UserEditUseCase,
+    public commonAuditStatusUseCase: CommonAuditStatusUseCase,
+    public formBuilder: FormBuilder
   ) { 
+    super(formBuilder, commonAuditStatusUseCase);
     const that = this;
   }
 
   ngOnInit(): void {
     const that = this;
 
+    that.loadCommonUser();
+    that.buildingFormUser();
     
-    that.formGroup = that.formBuilder.group({
+    that.modalDataSub = that.modalDataObservable.currentData.subscribe(res => {
+      that.dataModal = null;
+      that.submit = false;
+      that.resetFormUser();
+      if(res !== null){
+        that.dataModal = JSON.parse(res);
+        that.userGetUseCase.execute(that.dataModal.id).subscribe( res => {
+          that.submit = false;
+          that.editValues(res);
+        });
+      } else {
+        that.newValues();
+      }
+    });
+  }
+
+  loadCommonUser(): void {
+    const that = this;
+    that.commonRolesUseCase.execute().subscribe(res => {
+      that.commonRoles = res;
+    });
+    that.commonBlockedUserUseCase.execute().subscribe( res => {
+      that.commonBlockedUser = res;
+    });
+  }
+
+  buildingFormUser(): void {
+    const that = this;
+    that.formGroup = that.buildingForm({
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       username: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       roleId: ['', [Validators.required]],
-      blocked: ['', [Validators.required]],
-      active: ['', [Validators.required]],
-    });
-
-    that.loadCommon();
-
-    that.modalDataSub = that.modalDataObservable.currentData.subscribe(res => {
-      that.dataModal = res;
-      if(that.dataModal !== null){
-
-        let dataModal = JSON.parse(this.dataModal);
-
-        that.userGetUseCase.execute(dataModal.id).subscribe( res => {
-          console.log(res);
-          that.formGroup.patchValue(res);
-        });
-        
-        console.log('Obtener registro');
-      } else {
-        console.log('Nuevo registro');
-      }
+      blocked: [false, [Validators.required]],
+      active: [true, [Validators.required]],
     });
   }
 
-  loadCommon(): void {
+  resetFormUser() {
     const that = this;
-    that.commonRolesUseCase.execute().subscribe(res => {
-      that.commonRoles = res;
-    });
-
-    that.commonAuditStatusUseCase.execute().subscribe(res => {
-      that.commonAuditStatus = res;
-    });
-
-    that.commonBlockedUserUseCase.execute().subscribe( res => {
-      that.commonBlockedUser = res;
+    that.resetForm({
+      firstName: '',
+      lastName: '',
+      email: '',
+      username: '',
+      password: '',
+      roleId: '',
+      blocked: false,
+      active: true,
     });
   }
 
   onClickClose() {
     const that = this;
-    that.gridSimpleService.closeModal();
+    
+    that.gridSimpleService.reload();
   }
 
   onClickDone() {
     const that = this;
-    // that.gridSimpleService.closeModal();
-    console.log(that.formGroup.value);
+    
+    let object: UserStoreDto = that.formGroup.value;
+    object.active = (that.formGroup.controls.active.value == 'true')? true : false;
+    object.blocked = (that.formGroup.controls.blocked.value == 'true')? true : false;
+
+    if(that.dataModal !== null){
+      object.id = that.dataModal.id;
+      that.userEditUseCase.execute(object).subscribe( res => {
+        console.log(res);
+        that.submit = false;
+        that.gridSimpleService.closeModal();
+        that.gridSimpleService.reload();
+      }, (error) => {
+        alert(error);
+        that.submit = false;
+      });
+    } else {
+      
+      that.userAddUseCase.execute(object).subscribe( res => {
+        console.log(res);
+        that.submit = false;
+        that.gridSimpleService.closeModal();
+        that.gridSimpleService.reload();
+      });
+    }
+    
     that.submit = true;
   }
 

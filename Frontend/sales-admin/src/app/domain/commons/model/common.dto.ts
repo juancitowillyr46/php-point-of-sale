@@ -1,4 +1,4 @@
 export interface CommonDto {
-    value: string;
+    value: string | boolean;
     text: string;
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { GridSimpleObservable } from './grid-simple.observable';
-import { GridSimpleService } from './grid-simple.service';
+// import { GridSimpleObservable } from './grid-simple.observable';
+// import { GridSimpleService } from './grid-simple.service';
 declare var $: any;
 
 @Component({
@@ -16,8 +16,8 @@ export class GridSimpleComponent implements OnInit {
   public grisSubscribe: Subscription;
   
   constructor(
-    private gridSimpleObservable: GridSimpleObservable,
-    private gridSimpleService: GridSimpleService
+    // private gridSimpleObservable: GridSimpleObservable,
+    // private gridSimpleService: GridSimpleService
   ) { }
 
   ngOnInit(): void {
