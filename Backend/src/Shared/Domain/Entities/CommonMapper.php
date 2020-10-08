@@ -31,5 +31,15 @@ class CommonMapper
         })->forMember('text', function ($source) {
             return $source['name'];
         });
+
+        $this->config->registerMapping('array', CommonBooleanDto::class)->withNamingConventions(
+            new SnakeCaseNamingConvention(),
+            new CamelCaseNamingConvention()
+        )->forMember('value', function ($source) {
+            return $source['id_register'];
+        })->forMember('text', function ($source) {
+            return $source['name'];
+        });
+
     }
 }

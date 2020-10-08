@@ -2,6 +2,7 @@
 namespace App\BackOffice\Users\Domain\Services;
 
 use App\BackOffice\DataMaster\Domain\Entities\DataMasterModel;
+use App\BackOffice\Roles\Domain\Entities\RoleModel;
 use App\BackOffice\Users\Domain\Entities\UserModel;
 use App\Shared\Exception\Commands\EditActionException;
 use Exception;
@@ -11,13 +12,9 @@ class UserEditService extends UserService
     public function executeArgWithBodyParsed(string $uuid, object $bodyParsed): object {
         try {
 
-            // $findResourceUserType = $this->findResourceByUuid(new DataMasterModel(), $bodyParsed->userTypeId);
-
-            $findUserType = $this->findResourceByUuidReturnIdRegister($bodyParsed->userTypeId);
-
             $findUser = $this->findResourceByUuid(new UserModel(), $uuid);
-
-            $this->userEntity->setUserTypeId($findUserType);
+            $findRole = $this->findResourceByUuid(new RoleModel(), $bodyParsed->roleId);
+            $this->userEntity->setRoleId($findRole);
             $this->userEntity->payload($bodyParsed);
             $this->validateDuplicate();
 

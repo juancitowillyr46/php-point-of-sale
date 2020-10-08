@@ -2,6 +2,7 @@
 namespace App\BackOffice\DataMaster\Domain\Services;
 
 use App\BackOffice\DataMaster\Domain\Entities\DataMasterDto;
+use App\Shared\Domain\Entities\CommonBooleanDto;
 use App\Shared\Domain\Entities\CommonDto;
 use App\Shared\Domain\Entities\CommonMapper;
 use Exception;
@@ -32,7 +33,7 @@ class DataMasterFindAllService extends DataMasterService
     {
         try {
 
-            return $this->commonSetItems('TABLE_STATE_AUDIT');
+            return $this->commonSetItems('TABLE_STATE_AUDIT', CommonBooleanDto::class);
 
         } catch (Exception $ex) {
             throw new Exception($ex->getMessage(), $ex->getCode());
@@ -42,20 +43,20 @@ class DataMasterFindAllService extends DataMasterService
     public function executeCommonBlockedUser(): array {
         try {
 
-            return $this->commonSetItems('TABLE_BLOCKED_USER');
+            return $this->commonSetItems('TABLE_BLOCKED_USER', CommonBooleanDto::class);
 
         } catch (Exception $ex) {
             throw new Exception($ex->getMessage(), $ex->getCode());
         }
     }
 
-    private function commonSetItems(string $type): array {
+    private function commonSetItems(string $type, $dto): array {
         try {
 
             $findCommonAll = $this->dataMasterRepository->commonData($type);
             $listCommon = [];
             foreach ($findCommonAll as $common) {
-                $listCommon[] = $this->commonMapper->autoMapper->map($common, CommonDto::class);
+                $listCommon[] = $this->commonMapper->autoMapper->map($common, $dto);
             }
 
             return $listCommon;

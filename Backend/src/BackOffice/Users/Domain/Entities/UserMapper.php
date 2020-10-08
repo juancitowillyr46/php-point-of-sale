@@ -24,7 +24,7 @@ class UserMapper
             new SnakeCaseNamingConvention(),
             new CamelCaseNamingConvention()
         )->forMember('activeName', function ($source) {
-            return ($source['active'] == true)? 'ACTIVE' : 'NO ACTIVE';
+            return ($source['active'] == true)? 'SI' : 'NO';
         })->forMember('createdAt', function ($source) {
             $time = strtotime($source['created_at']); // Y-m-d H:m:s
             return date('d/m/Y H:m:s', $time);
@@ -36,10 +36,16 @@ class UserMapper
             return $source['uuid'];
         })->forMember('blocked', function($source){
             return ($source['blocked'])? true : false;
+        })->forMember('blockedName', function($source){
+            return ($source['blocked'] == true)? 'SI' : 'NO';
         })->forMember('firstName', function($source){
             return ($source['first_name'])? $source['first_name'] : '';
         })->forMember('lastName', function($source){
             return ($source['last_name'])? $source['last_name'] : '';
+        })->forMember('fullName', function($source){
+            $last_name = ($source['last_name'])? $source['last_name'] : '' ;
+            $first_name = ($source['first_name'])? $source['first_name'] : '' ;
+            return $first_name . " " . $last_name;
         });
 
         $this->config->registerMapping('array', UserInfoDto::class)->withNamingConventions(
