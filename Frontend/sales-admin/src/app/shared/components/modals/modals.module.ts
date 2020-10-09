@@ -10,6 +10,7 @@ import { ModalRepresentativeComponent } from './modal-representative/modal-repre
 import { ModalCustomersComponent } from './modal-customers/modal-customers.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ModalRolesComponent } from './modal-roles/modal-roles.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ModalPurchasesComponent, 
     ModalProvidersComponent, 
     ModalRepresentativeComponent, 
-    ModalCustomersComponent,
+    ModalCustomersComponent, 
+    ModalRolesComponent
   ],
   imports: [
     CommonModule,
@@ -36,7 +38,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ModalPurchasesComponent, 
     ModalProvidersComponent, 
     ModalRepresentativeComponent,
-    ModalCustomersComponent
+    ModalCustomersComponent,
+    ModalRolesComponent
   ]
 })
 export class ModalsModule { }

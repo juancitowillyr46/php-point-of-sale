@@ -4,11 +4,11 @@ import { GridSimpleService } from 'src/app/shared/components/grid-simple/grid-si
 import { ModalDataObservable } from 'src/app/shared/components/modals/modal-data.observable';
 
 @Component({
-  selector: 'app-users-maintainer',
-  templateUrl: './users-maintainer.component.html',
-  styleUrls: ['./users-maintainer.component.css']
+  selector: 'app-roles-maintainer',
+  templateUrl: './roles-maintainer.component.html',
+  styleUrls: ['./roles-maintainer.component.css']
 })
-export class UsersMaintainerComponent implements OnInit {
+export class RolesMaintainerComponent implements OnInit {
 
   public data: any;
   public progress: any;
@@ -65,5 +65,4 @@ export class UsersMaintainerComponent implements OnInit {
     // that.gridSimpleService.reload();
     that.modalDataObservable.changeData(null);
   }
-
 }

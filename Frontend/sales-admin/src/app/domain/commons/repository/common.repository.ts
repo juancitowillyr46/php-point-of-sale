@@ -28,5 +28,18 @@ export class CommonRepository {
         return that.dataService.get(that.resource + 'blocked-user');
     }
 
+    getCommonCategories(): Observable<ResponseDataDto<CommonDto[]>> {
+        const that = this;
+        return that.dataService.get(that.resource + 'categories');
+    }
 
+    getCommonProviders(): Observable<ResponseDataDto<CommonDto[]>> {
+        const that = this;
+        return that.dataService.get(that.resource + 'providers');
+    }
+
+    getCommonUnitMeasurement(): Observable<ResponseDataDto<CommonDto[]>> {
+        const that = this;
+        return that.dataService.get(that.resource + 'unit-measurement');
+    }
 }

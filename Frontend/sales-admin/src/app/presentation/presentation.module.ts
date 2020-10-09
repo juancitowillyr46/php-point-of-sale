@@ -15,6 +15,7 @@ import { UsersModule } from '../presentation/users/users.module';
 import { PurchasesModule } from '../presentation/purchases/purchases.module';
 import { ProvidersModule } from '../presentation/providers/providers.module';
 import { EmployeesModule } from '../presentation/employees/employees.module';
+// import { RolesModule } from '../presentation/roles/roles.module';
 
 // import { ProvidersComponent } from './providers/providers.component';
 
@@ -32,7 +33,8 @@ import { EmployeesModule } from '../presentation/employees/employees.module';
     UsersModule,
     PurchasesModule,
     ProvidersModule,
-    EmployeesModule
+    EmployeesModule,
+    // RolesModule
   ]
 })
 export class PresentationModule { }
