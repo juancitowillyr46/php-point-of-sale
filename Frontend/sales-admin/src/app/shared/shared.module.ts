@@ -12,7 +12,10 @@ import { faSpinner, faSignInAlt, faBan } from '@fortawesome/free-solid-svg-icons
 import { MeObservable } from '../shared/observables/me.observable';
 import { GridSimpleObservable } from '../shared/components/grid-simple/grid-simple.observable';
 import { GridSimpleService } from '../shared/components/grid-simple/grid-simple.service';
+
 import { ModalDataObservable } from '../shared/components/modals/modal-data.observable';
+import { ModalDataRemoveObservable } from '../shared/components/modals/modal-data-remove.observable';
+
 import { CommonRolesObservable } from '../shared/observables/common-roles.observable';
 
 @NgModule({
@@ -38,6 +41,7 @@ import { CommonRolesObservable } from '../shared/observables/common-roles.observ
     GridSimpleObservable,
     GridSimpleService,
     ModalDataObservable,
+    ModalDataRemoveObservable,
     CommonRolesObservable
   ]
 })

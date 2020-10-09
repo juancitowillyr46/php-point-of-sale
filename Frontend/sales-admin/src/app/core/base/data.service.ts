@@ -43,7 +43,7 @@ export class DataService {
 
   delete<T>(path: string, id: string | number): Observable<any> {
     const that = this;
-    let url = this.getUrl(path);
+    let url = this.getUrl(path, id);
     return this.authHttpGatewayService.delete(url);
   }
 

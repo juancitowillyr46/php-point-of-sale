@@ -6,25 +6,23 @@ import { UserRepository } from "../repository/user.repository";
 import { map } from 'rxjs/operators';
 // import { UserDto } from '../model/user.dto';
 import { UserStoreDto } from '../model/user-store.dto';
+import { ResponseIdDataDto } from 'src/app/core/entities/response-id-data.dto';
 
 @Injectable({
     providedIn: 'root'
 })
-export class UserEditUseCase implements UseCase<UserStoreDto, any> {
+export class UserEditUseCase implements UseCase<UserStoreDto, ResponseIdDataDto> {
 
     constructor(private userRepository: UserRepository) {
 
     }
 
-    public execute(object: UserStoreDto): Observable<any> {
+    public execute(object: UserStoreDto): Observable<ResponseIdDataDto> {
         const that = this;
-        // let userDto: UserDto;
-
+        let responseIdDataDto: ResponseIdDataDto;
         return that.userRepository.edit(object.id, object).pipe(map(res => {
-            console.log(res);
-            return res;
-            // userDto = res.data;
-            // return userDto;
+            responseIdDataDto = res.data;
+            return responseIdDataDto;
         }));
     }
 

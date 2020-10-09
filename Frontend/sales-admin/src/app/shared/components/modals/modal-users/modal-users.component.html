@@ -83,7 +83,7 @@
                             <option value="">--SELECCIONE--</option>
                             <option value [value]="item.value" *ngFor="let item of commonAuditStatus">{{item.text}}</option>
                         </select>
-                        <label *ngIf="formGroup.controls.active.errors && formGroup.controls.active.value" id="blocked" class="error mt-2 text-danger" for="blocked">Campo obligatorio.</label>
+                        <label *ngIf="formGroup.controls.active.errors && formGroup.controls.active.value" id="active" class="error mt-2 text-danger" for="active">Campo obligatorio.</label>
                     </div>
 
                 </form>

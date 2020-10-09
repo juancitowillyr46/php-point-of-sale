@@ -12,9 +12,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserGetUseCase } from '../../../../domain/users/usecase/user-get.usecase';
 import { UserAddUseCase } from '../../../../domain/users/usecase/user-add.usercase';
 import { UserEditUseCase } from '../../../../domain/users/usecase/user-edit.usecase';
+import { UserRemoveUseCase } from '../../../../domain/users/usecase/user-remove.usecase';
 
 import { BaseModalComponent } from '../base-modal.component';
 import { UserStoreDto } from 'src/app/domain/users/model/user-store.dto';
+import { ModalDataRemoveObservable } from '../modal-data-remove.observable';
 
 @Component({
   selector: 'app-modal-users',
@@ -33,11 +35,13 @@ export class ModalUsersComponent extends BaseModalComponent implements OnInit  {
   constructor(
     private gridSimpleService: GridSimpleService,
     private modalDataObservable: ModalDataObservable,
+    private modalDataRemoveObservable: ModalDataRemoveObservable,
     private commonRolesUseCase: CommonRolesUseCase,
     private commonBlockedUserUseCase: CommonBlockedUserUseCase,
     private userGetUseCase: UserGetUseCase,
     private userAddUseCase: UserAddUseCase,
     private userEditUseCase: UserEditUseCase,
+    private userRemoveUserCase: UserRemoveUseCase,
     public commonAuditStatusUseCase: CommonAuditStatusUseCase,
     public formBuilder: FormBuilder
   ) { 
@@ -65,6 +69,17 @@ export class ModalUsersComponent extends BaseModalComponent implements OnInit  {
         that.newValues();
       }
     });
+
+    that.modalDataRemoveObservable.currentData.subscribe( res => {
+      if(res !== null){
+        that.dataModal = JSON.parse(res);
+        that.userRemoveUserCase.execute(that.dataModal.id).subscribe( response => {
+          that.modalDataRemoveObservable.changeData(null);
+          that.gridSimpleService.reload();
+        });
+      }
+    });
+
   }
 
   loadCommonUser(): void {
@@ -108,20 +123,20 @@ export class ModalUsersComponent extends BaseModalComponent implements OnInit  {
   onClickClose() {
     const that = this;
     
-    that.gridSimpleService.reload();
+    that.gridSimpleService.closeModal();
   }
 
   onClickDone() {
     const that = this;
     
     let object: UserStoreDto = that.formGroup.value;
-    object.active = (that.formGroup.controls.active.value == 'true')? true : false;
-    object.blocked = (that.formGroup.controls.blocked.value == 'true')? true : false;
+    
+    object.active = (that.formGroup.controls.active.value == 'true' || that.formGroup.controls.active.value == true)? true : false;
+    object.blocked = (that.formGroup.controls.blocked.value == 'true' || that.formGroup.controls.blocked.value == true)? true : false;
 
     if(that.dataModal !== null){
       object.id = that.dataModal.id;
       that.userEditUseCase.execute(object).subscribe( res => {
-        console.log(res);
         that.submit = false;
         that.gridSimpleService.closeModal();
         that.gridSimpleService.reload();
@@ -130,7 +145,6 @@ export class ModalUsersComponent extends BaseModalComponent implements OnInit  {
         that.submit = false;
       });
     } else {
-      
       that.userAddUseCase.execute(object).subscribe( res => {
         console.log(res);
         that.submit = false;

@@ -12,8 +12,13 @@ class UserEditService extends UserService
     public function executeArgWithBodyParsed(string $uuid, object $bodyParsed): object {
         try {
 
+            // $findResourceUserType = $this->findResourceByUuid(new DataMasterModel(), $bodyParsed->userTypeId);
+
+
+
             $findUser = $this->findResourceByUuid(new UserModel(), $uuid);
             $findRole = $this->findResourceByUuid(new RoleModel(), $bodyParsed->roleId);
+            //$this->userEntity->setUserTypeId($findUserType);
             $this->userEntity->setRoleId($findRole);
             $this->userEntity->payload($bodyParsed);
             $this->validateDuplicate();

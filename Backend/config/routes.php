@@ -85,6 +85,14 @@ return function (App $app) {
             $group->delete('/{uuid}', \App\BackOffice\Roles\Application\Actions\RoleRemoveAction::class);
         })->add(AuthValidateTokenMiddleware::class);
 
+        $group->group('/permissions', function (RouteCollectorProxy $group) {
+            $group->post('', \App\BackOffice\Permissions\Application\Actions\PermissionAddAction::class);
+            $group->get('/{uuid}', \App\BackOffice\Permissions\Application\Actions\PermissionFindAction::class);
+            $group->get('', \App\BackOffice\Permissions\Application\Actions\PermissionFindAllAction::class);
+            $group->put('/{uuid}', \App\BackOffice\Permissions\Application\Actions\PermissionEditAction::class);
+            $group->delete('/{uuid}', \App\BackOffice\Permissions\Application\Actions\PermissionRemoveAction::class);
+        })->add(AuthValidateTokenMiddleware::class);
+
         $group->group('/commons', function (RouteCollectorProxy $group) {
             $group->get('/roles', \App\BackOffice\Roles\Application\Actions\RoleCommonAction::class);
             $group->get('/audit-status', \App\BackOffice\DataMaster\Application\Actions\DataMasterCommonAuditAction::class);

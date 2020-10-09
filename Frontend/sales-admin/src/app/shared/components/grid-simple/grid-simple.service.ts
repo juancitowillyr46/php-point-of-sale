@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { ModalDataObservable } from '../modals/modal-data.observable';
+import { ModalDataRemoveObservable } from '../modals/modal-data-remove.observable';
+
 import { GridPaginateDto } from './grid-paginate.dto';
 declare var $: any;
 
@@ -16,7 +18,10 @@ export class GridSimpleService {
     public dataModal: any;
     public dataStr: any;
 
-    constructor(private modalDataObservable: ModalDataObservable) {
+    constructor(
+        private modalDataObservable: ModalDataObservable,
+        private modalDataRemoveObservable: ModalDataRemoveObservable
+    ) {
 
     }
 
@@ -106,7 +111,12 @@ export class GridSimpleService {
             });
         
             $('#basic-datatable tbody').on( 'click', '.btn-remove', function () {
+                var data = that.dataTable.row( $(this).parents('tr') ).data();
                 var alert = confirm('¿Estás seguro que deseas eliminar?');
+                if(alert == true) {
+                    that.dataStr = JSON.stringify(data);
+                    that.modalDataRemoveObservable.changeData(that.dataStr);
+                }
             });
         
             $(document).on( 'click', '.btn-add', function () { 

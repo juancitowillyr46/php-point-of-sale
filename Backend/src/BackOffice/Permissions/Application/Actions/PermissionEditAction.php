@@ -1,10 +1,10 @@
 <?php
-namespace App\BackOffice\Roles\Application\Actions;
+namespace App\BackOffice\Permissions\Application\Actions;
 
 use Exception;
 use Psr\Http\Message\ResponseInterface as Response;
 
-class RoleEditAction extends RoleAction
+class PermissionEditAction extends PermissionAction
 {
 
     protected function action(): Response
@@ -12,7 +12,7 @@ class RoleEditAction extends RoleAction
         try {
             $argUuid = $this->resolveArg('uuid');
             $bodyParsed = $this->getFormData();
-            return $this->commandSuccess($this->roleEditService->executeArgWithBodyParsed($argUuid, $bodyParsed));
+            return $this->commandSuccess($this->permissionEditService->executeArgWithBodyParsed($argUuid, $bodyParsed));
         } catch (Exception $ex) {
             return $this->commandError($ex);
         }
