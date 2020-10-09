@@ -97,6 +97,9 @@ return function (App $app) {
             $group->get('/roles', \App\BackOffice\Roles\Application\Actions\RoleCommonAction::class);
             $group->get('/audit-status', \App\BackOffice\DataMaster\Application\Actions\DataMasterCommonAuditAction::class);
             $group->get('/blocked-user', \App\BackOffice\DataMaster\Application\Actions\DataMasterCommonBlockedAction::class);
+            $group->get('/categories', \App\BackOffice\Categories\Application\Actions\CategoryCommonAction::class);
+            $group->get('/providers', \App\BackOffice\Providers\Application\Actions\ProviderCommonAction::class);
+            $group->get('/unit-measurement', \App\BackOffice\DataMaster\Application\Actions\DataMasterCommonUnitMeasurement::class);
         })->add(AuthValidateTokenMiddleware::class);
 
     });

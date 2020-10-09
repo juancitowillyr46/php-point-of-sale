@@ -9,9 +9,12 @@ class ProductEntity extends Audit
 {
     public string $name;
     public string $description;
-    public int  $id_category;
-    public int  $id_unit_measurent;
+    public int $category_id;
+    public int $provider_id;
+    public int $unit_measurent_id;
+
     public string $code;
+
 
     /**
      * @return string
@@ -48,34 +51,52 @@ class ProductEntity extends Audit
     /**
      * @return int
      */
-    public function getIdCategory(): int
+    public function getCategoryId(): int
     {
-        return $this->id_category;
+        return $this->category_id;
     }
 
     /**
-     * @param int $id_category
+     * @param int $category_id
      */
-    public function setIdCategory(int $id_category): void
+    public function setCategoryId(int $category_id): void
     {
-        $this->id_category = $id_category;
+        $this->category_id = $category_id;
     }
 
     /**
      * @return int
      */
-    public function getIdUnitMeasurent(): int
+    public function getProviderId(): int
     {
-        return $this->id_unit_measurent;
+        return $this->provider_id;
     }
 
     /**
-     * @param int $id_unit_measurent
+     * @param int $provider_id
      */
-    public function setIdUnitMeasurent(int $id_unit_measurent): void
+    public function setProviderId(int $provider_id): void
     {
-        $this->id_unit_measurent = $id_unit_measurent;
+        $this->provider_id = $provider_id;
     }
+
+    /**
+     * @return int
+     */
+    public function getUnitMeasurentId(): int
+    {
+        return $this->unit_measurent_id;
+    }
+
+    /**
+     * @param int $unit_measurent_id
+     */
+    public function setUnitMeasurentId(int $unit_measurent_id): void
+    {
+        $this->unit_measurent_id = $unit_measurent_id;
+    }
+
+
 
     /**
      * @return string
@@ -93,6 +114,7 @@ class ProductEntity extends Audit
         $this->code = $code;
     }
 
+
     public function payload(object $formData): void {
 
         try {
@@ -100,9 +122,8 @@ class ProductEntity extends Audit
             $validate = new ProductActionRequestSchema();
             $validate->getMessages((array)$formData);
             $this->identifiedResource($formData);
-            $this->setCode($formData->code);
             $this->setName($formData->name);
-            $this->setDescription($formData->name);
+            $this->setDescription($formData->description);
             $this->setActive($formData->active);
 
         } catch(Exception $ex) {

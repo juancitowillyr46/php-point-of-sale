@@ -14,11 +14,12 @@ class ProductFindAllService extends ProductService
 
             $findProductAll = $this->productRepository->allProduct($query);
             $listProduct = [];
-            foreach ($findProductAll->registers as $product) {
-                $product['measure_unit'] = $this->findNameResourceByUIdRegister($product['id_unit_measurent'], 'TABLE_UNIT_MEASUREMENT');
+            foreach ($findProductAll->rows as $product) {
+                $product['measure_unit'] = $this->findNameResourceByUIdRegister($product['unit_measurent_id'], 'TABLE_UNIT_MEASUREMENT');
+                $product['measure_unit_id'] = $this->getUuidDataMaster($product['unit_measurent_id'], 'TABLE_UNIT_MEASUREMENT');
                 $listProduct[] = $this->productMapper->autoMapper->map($product, ProductDto::class);
             }
-            $findProductAll->registers = $listProduct;
+            $findProductAll->rows = $listProduct;
             return $findProductAll;
 
         } catch (Exception $ex) {

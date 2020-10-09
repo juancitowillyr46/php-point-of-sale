@@ -24,14 +24,24 @@ class ProductMapper
             new SnakeCaseNamingConvention(),
             new CamelCaseNamingConvention()
         )->forMember('active', function ($source) {
+            return $source['active'];
+        })->forMember('activeName', function ($source) {
             return ($source['active'] == true)? 'ACTIVE' : 'NO ACTIVE';
         })->forMember('createdAt', function ($source) {
             $time = strtotime($source['created_at']); // Y-m-d H:m:s
             return date('d/m/Y H:m:s', $time);
-        })->forMember('category', function ($source) {
+        })->forMember('categoryName', function ($source) {
             return $source['category']['name'];
-        })->forMember('measureUnit', function ($source) {
-            return $source['measure_unit'];
+        })->forMember('categoryId', function ($source) {
+            return $source['category']['uuid'];
+        })->forMember('measureUnitName', function ($source) {
+            return ($source['measure_unit'])? $source['measure_unit'] : '';
+        })->forMember('measureUnitId', function ($source) {
+            return $source['measure_unit_id']? $source['measure_unit_id'] : '';
+        })->forMember('providerName', function($source){
+            return (is_null($source['provider']))? '' :  $source['provider']['business_name'];
+        })->forMember('providerId', function($source){
+            return (is_null($source['provider']))? '' :  $source['provider']['uuid'];
         })->forMember('id', function($source){
             return $source['uuid'];
         });

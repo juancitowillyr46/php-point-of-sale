@@ -12,4 +12,6 @@ interface ProductRepositoryInterface
     public function removeProduct(int $id): bool;
 
     public function allProduct(array $query): object;
+
+    public function countProducts(): int;
 }

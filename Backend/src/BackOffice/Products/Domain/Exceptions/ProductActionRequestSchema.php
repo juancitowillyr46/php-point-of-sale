@@ -16,13 +16,13 @@ class ProductActionRequestSchema extends BaseValidatorRequest
             'id' => [
                 new Optional(),
             ],
-            'code' => [
+            /*'code' => [
                 new Required(),
                 new Length([
                     'min' => 1,
                     'max' => 50
                 ])
-            ],
+            ],*/
             'name' => [
                 new Required(),
                 new Length([
@@ -48,8 +48,11 @@ class ProductActionRequestSchema extends BaseValidatorRequest
                 new Required(),
                 new Length([
                     'min' => 1,
-                    'max' => 50
+                    'max' => 100
                 ])
+            ],
+            'providerId' => [
+                new Required()
             ],
             /*'stock' => [
                 new Required(),

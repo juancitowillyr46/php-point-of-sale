@@ -72,4 +72,5 @@ class PermissionRepository extends BaseRepository implements PermissionRepositor
         }
     }
 
+
 }

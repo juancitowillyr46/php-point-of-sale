@@ -59,4 +59,16 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
         return $this->paginateModel($query, $this->categoryModel);
     }
 
+    public function commonCategory(): array
+    {
+        try {
+
+            return $this->categoryModel::all()
+                ->where('active', '=', true)
+                ->toArray();
+
+        } catch (Exception $ex) {
+            throw new Exception($ex->getMessage(), $ex->getCode());
+        }
+    }
 }

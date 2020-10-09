@@ -60,4 +60,8 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     {
         return $this->paginateModel($query, $this->productModel);
     }
+
+    public function countProducts(): int {
+        return $this->productModel::all()->count();
+    }
 }

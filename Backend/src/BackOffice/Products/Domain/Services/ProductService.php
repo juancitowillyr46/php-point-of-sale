@@ -39,4 +39,9 @@ class ProductService extends BaseService
     {
         return [];
     }
+
+    function getCode($prefix = ''): string {
+        $lastRecord = $this->productRepository->countProducts();
+        return $prefix.$lastRecord;
+    }
 }

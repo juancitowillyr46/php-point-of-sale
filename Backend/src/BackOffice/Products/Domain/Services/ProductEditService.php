@@ -7,6 +7,7 @@ namespace App\BackOffice\Products\Domain\Services;
 use App\BackOffice\Categories\Domain\Entities\CategoryModel;
 use App\BackOffice\DataMaster\Domain\Entities\DataMasterModel;
 use App\BackOffice\Products\Domain\Entities\ProductModel;
+use App\BackOffice\Providers\Domain\Entities\ProviderModel;
 use App\Shared\Exception\Commands\EditActionException;
 use Exception;
 
@@ -20,13 +21,13 @@ class ProductEditService extends ProductService
 
             $findProduct = $this->findResourceByUuid(new ProductModel(), $uuid);
 
-            $idCategory = $this->findResourceByUuid(new CategoryModel(), $bodyParsed->categoryId);
+            $categoryIdEdit = $this->findResourceByUuid(new CategoryModel(), $bodyParsed->categoryId);
+            $providerIdEdit = $this->findResourceByUuid(new ProviderModel(), $bodyParsed->providerId);
+            $measureUnitIdEdit = $this->findResourceByUuidReturnIdRegister($bodyParsed->measureUnitId);
 
-            $idMeasureUnit = $this->findResourceByUuidReturnIdRegister($bodyParsed->measureUnitId);
-//            $idMeasureUnit = $this->findResourceByUuid(new DataMasterModel(), $bodyParsed->measureUnitId);
-
-            $this->productEntity->setIdCategory($idCategory);
-            $this->productEntity->setIdUnitMeasurent($idMeasureUnit);
+            $this->productEntity->setCategoryId($categoryIdEdit);
+            $this->productEntity->setUnitMeasurentId($measureUnitIdEdit);
+            $this->productEntity->setProviderId($providerIdEdit);
             $this->productEntity->payload($bodyParsed);
 
             $success = $this->productRepository->editProduct($findProduct, ((array) $this->productEntity));

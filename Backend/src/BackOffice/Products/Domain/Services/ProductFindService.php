@@ -14,7 +14,8 @@ class ProductFindService extends ProductService
 
             $findResourceId = $this->findResourceByUuid(new ProductModel(), $uuid);
             $findProduct = $this->productRepository->findProduct($findResourceId);
-            $findProduct['measure_unit'] = $this->findNameResourceByUIdRegister($findProduct['id_unit_measurent'], 'TABLE_UNIT_MEASUREMENT');
+            $findProduct['measure_unit'] = $this->findNameResourceByUIdRegister($findProduct['unit_measurent_id'], 'TABLE_UNIT_MEASUREMENT');
+            $findProduct['measure_unit_id'] = $this->getUuidDataMaster($findProduct['unit_measurent_id'], 'TABLE_UNIT_MEASUREMENT');
             return $this->productMapper->autoMapper->map($findProduct, ProductDto::class);
 
         } catch (Exception $ex) {

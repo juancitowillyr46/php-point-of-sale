@@ -1,12 +1,16 @@
 <?php
-namespace App\BackOffice\Employees\Domain\Entities;
 
+
+namespace App\BackOffice\Providers\Domain\Entities;
+
+
+use App\Shared\Domain\Entities\CommonDto;
 use AutoMapperPlus\AutoMapperInterface;
 use AutoMapperPlus\Configuration\AutoMapperConfigInterface;
 use AutoMapperPlus\NameConverter\NamingConvention\CamelCaseNamingConvention;
 use AutoMapperPlus\NameConverter\NamingConvention\SnakeCaseNamingConvention;
 
-class EmployeeMapper
+class ProviderCommonMapper
 {
     public AutoMapperInterface $autoMapper;
     public AutoMapperConfigInterface $config;
@@ -20,16 +24,13 @@ class EmployeeMapper
 
     public function registerMapping()
     {
-        $this->config->registerMapping('array', EmployeeDto::class)->withNamingConventions(
+        $this->config->registerMapping('array', CommonDto::class)->withNamingConventions(
             new SnakeCaseNamingConvention(),
             new CamelCaseNamingConvention()
-        )->forMember('active', function ($source) {
-            return ($source['active'] == true)? 'ACTIVE' : 'NO ACTIVE';
-        })->forMember('createdAt', function ($source) {
-            $time = strtotime($source['created_at']); // Y-m-d H:m:s
-            return date('d/m/Y H:m:s', $time);
-        })->forMember('id', function($source){
+        )->forMember('text', function ($source) {
+            return $source['business_name'];
+        })->forMember('value', function($source){
             return $source['uuid'];
-        });;
+        });
     }
 }

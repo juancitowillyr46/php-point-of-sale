@@ -160,6 +160,16 @@ abstract class BaseService
         return $find->getAttribute('name');
     }
 
+    public function getUuidDataMaster(int $idRegister, string $type): string
+    {
+        $dataModel = new DataMasterModel();
+        $find = $dataModel::all()->where('id_register', '=' ,$idRegister)->where('type', '=' ,$type)->first();
+        if(!$find)
+            throw new FindActionException();
+
+        return $find->getAttribute('uuid');
+    }
+
     abstract function execute(object $bodyParsed): object;
 
     abstract function executeArg(string $uuid): object;

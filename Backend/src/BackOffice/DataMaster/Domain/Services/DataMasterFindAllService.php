@@ -50,6 +50,16 @@ class DataMasterFindAllService extends DataMasterService
         }
     }
 
+    public function executeCommonUnitMeasurement(): array {
+        try {
+
+            return $this->commonSetItems('TABLE_UNIT_MEASUREMENT', CommonDto::class);
+
+        } catch (Exception $ex) {
+            throw new Exception($ex->getMessage(), $ex->getCode());
+        }
+    }
+
     private function commonSetItems(string $type, $dto): array {
         try {
 

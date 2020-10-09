@@ -11,28 +11,28 @@ use Psr\Log\LoggerInterface;
 
 abstract class ProvidersAction extends Action
 {
-    public ProviderAddService $ProviderAddService;
-    public ProviderEditService $ProviderEditService;
-    public ProviderFindService $ProviderFindService;
-    public ProviderFindAllService $ProviderFindAllService;
-    public ProviderRemoveService $ProviderRemoveService;
+    public ProviderAddService $providerAddService;
+    public ProviderEditService $providerEditService;
+    public ProviderFindService $providerFindService;
+    public ProviderFindAllService $providerFindAllService;
+    public ProviderRemoveService $providerRemoveService;
 
     public LoggerInterface $logger;
 
     public function __construct(
         LoggerInterface $logger,
-        ProviderAddService $ProviderAddService,
-        ProviderEditService $ProviderEditService,
-        ProviderFindService $ProviderFindService,
-        ProviderFindAllService $ProviderFindAllService,
-        ProviderRemoveService $ProviderRemoveService
+        ProviderAddService $providerAddService,
+        ProviderEditService $providerEditService,
+        ProviderFindService $providerFindService,
+        ProviderFindAllService $providerFindAllService,
+        ProviderRemoveService $providerRemoveService
     )
     {
-        $this->ProviderAddService = $ProviderAddService;
-        $this->ProviderEditService = $ProviderEditService;
-        $this->ProviderFindService = $ProviderFindService;
-        $this->ProviderFindAllService = $ProviderFindAllService;
-        $this->ProviderRemoveService = $ProviderRemoveService;
+        $this->providerAddService = $providerAddService;
+        $this->providerEditService = $providerEditService;
+        $this->providerFindService = $providerFindService;
+        $this->providerFindAllService = $providerFindAllService;
+        $this->providerRemoveService = $providerRemoveService;
         parent::__construct($logger);
     }
 }
