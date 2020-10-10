@@ -6,6 +6,7 @@ use App\BackOffice\DataMaster\Domain\Repository\DataMasterRepositoryInterface;
 use App\Shared\Exception\Database\ExceptionEloquent;
 use App\Shared\Infrastructure\Persistence\BaseRepository;
 use Exception;
+use Illuminate\Database\Capsule\Manager as DB;
 
 class DataMasterRepository extends BaseRepository implements DataMasterRepositoryInterface
 {
@@ -95,4 +96,30 @@ class DataMasterRepository extends BaseRepository implements DataMasterRepositor
             throw new Exception($ex->getMessage(), $ex->getCode());
         }
     }
+
+    public function getAssignedId(string $type): int
+    {
+        try {
+
+            $countRows = $this->dataMasterModel::all()->where('type', '=', $type)->count();
+
+            $assignedId = 1;
+
+            if($countRows > 0) {
+                $dataMaster = $this->dataMasterModel::withTrashed()->select("type", DB::raw("(MAX(id_register) + 1) as id"))
+                    ->groupBy('type')
+                    ->where('type', '=', $type)
+                    ->first();
+                $assignedId = $dataMaster->id;
+            }
+
+            return $assignedId;
+
+        } catch (Exception $ex) {
+            throw new Exception($ex->getMessage(), $ex->getCode());
+        }
+
+    }
+
+
 }

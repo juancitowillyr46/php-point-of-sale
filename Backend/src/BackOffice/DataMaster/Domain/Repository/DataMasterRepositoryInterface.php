@@ -14,4 +14,6 @@ interface DataMasterRepositoryInterface
     public function allDataMaster(array $query): object;
 
     public function commonData(string $type): array;
+
+    public function getAssignedId(string $type): int;
 }

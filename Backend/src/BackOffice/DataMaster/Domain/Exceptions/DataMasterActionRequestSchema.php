@@ -17,9 +17,9 @@ class DataMasterActionRequestSchema extends BaseValidatorRequest
             'id' => [
                 new Optional(),
             ],
-            'idRegister' => [
-                new Required(),
-            ],
+//            'idRegister' => [
+//                new Required(),
+//            ],
             'type' => [
                 new Required(),
             ],

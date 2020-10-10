@@ -9,8 +9,10 @@ class DataMasterAddService extends DataMasterService
     public function execute(object $bodyParsed): object {
         try {
 
+            $assignedId = $this->getAssignedId($bodyParsed->type);
+            //$this->validateDuplicate($bodyParsed->type, $assignedId, $this->dataMasterEntity->getUuid());
+            $this->dataMasterEntity->setIdRegister($assignedId);
             $this->dataMasterEntity->payload($bodyParsed);
-            $this->validateDuplicate($bodyParsed->type, $bodyParsed->idRegister, $this->dataMasterEntity->getUuid());
             $success = $this->dataMasterRepository->addDataMaster((array) $this->dataMasterEntity);
             if(!$success) {
                 throw new AddActionException();

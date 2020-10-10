@@ -54,5 +54,9 @@ class DataMasterService extends BaseService
     {
         return [];
     }
+
+    function getAssignedId(string $type): int {
+        return $this->dataMasterRepository->getAssignedId($type);
+    }
     
 }

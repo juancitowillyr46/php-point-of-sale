@@ -12,7 +12,7 @@ class DataMasterEditService extends DataMasterService
 
             $findDataMaster = $this->findResourceByUuid(new DataMasterModel(), $uuid);
             $this->dataMasterEntity->payload($bodyParsed);
-            $this->validateDuplicate($bodyParsed->type, $bodyParsed->idRegister, $this->dataMasterEntity->getUuid());
+            //$this->validateDuplicate($bodyParsed->type, $bodyParsed->idRegister, $this->dataMasterEntity->getUuid());
             $success = $this->dataMasterRepository->editDataMaster((int) $findDataMaster, (array) $this->dataMasterEntity);
             if(!$success) {
                 throw new EditActionException();

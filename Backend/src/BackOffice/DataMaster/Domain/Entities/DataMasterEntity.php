@@ -83,7 +83,6 @@ class DataMasterEntity extends Audit
             $validate = new DataMasterActionRequestSchema();
             $validate->getMessages((array)$formData);
             $this->identifiedResource($formData);
-            $this->setIdRegister($formData->idRegister);
             $this->setName($formData->name);
             $this->setDescription($formData->description);
             $this->setType($formData->type);

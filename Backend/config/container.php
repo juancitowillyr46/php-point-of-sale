@@ -28,6 +28,8 @@ return [
         $capsule->setAsGlobal();
         $capsule->bootEloquent();
 
+
+
         return $app;
     },
     LoggerInterface::class => function (ContainerInterface $c) {

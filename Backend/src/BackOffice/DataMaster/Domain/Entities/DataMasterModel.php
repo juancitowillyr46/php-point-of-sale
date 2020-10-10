@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DataMasterModel extends Model
 {
+    const UPDATED_AT = null;
+
     protected $table = "table_master";
+
+    public $timestamps = ["created_at", "updated_at", "deleted_at"];
 
     protected $fillable = [
         'id',
@@ -19,10 +23,11 @@ class DataMasterModel extends Model
         'created_by',
         'updated_at',
         'updated_by',
+        'deleted_at',
+        'deleted_by',
         'active'
     ];
 
     use SoftDeletes;
 
-    const UPDATED_AT = null;
 }

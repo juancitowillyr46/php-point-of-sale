@@ -17,11 +17,11 @@ class DataMasterFindAllService extends DataMasterService
 
             $findDataMasterAll = $this->dataMasterRepository->allDataMaster($query);
             $listDataMaster = [];
-            foreach ($findDataMasterAll->registers as $dataMaster) {
+            foreach ($findDataMasterAll->rows as $dataMaster) {
                 $listDataMaster[] = $this->dataMasterMapper->autoMapper->map($dataMaster, DataMasterDto::class);
             }
 
-            $findDataMasterAll->registers = $listDataMaster;
+            $findDataMasterAll->rows = $listDataMaster;
             return $findDataMasterAll;
 
         } catch (Exception $ex) {
