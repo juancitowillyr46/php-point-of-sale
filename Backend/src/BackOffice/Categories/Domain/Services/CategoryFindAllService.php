@@ -13,10 +13,10 @@ class CategoryFindAllService extends CategoryService
 
             $findUserAll = $this->categoryRepository->allCategories($query);
             $listCategory = [];
-            foreach ($findUserAll->registers as $userType) {
+            foreach ($findUserAll->rows as $userType) {
                 $listCategory[] = $this->categoryMapper->autoMapper->map($userType, CategoryDto::class);
             }
-            $findUserAll->registers = $listCategory;
+            $findUserAll->rows = $listCategory;
             return $findUserAll;
 
         } catch (Exception $ex) {

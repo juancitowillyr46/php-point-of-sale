@@ -1,7 +1,7 @@
 <?php
 namespace App\BackOffice\Categories\Domain\Services;
 
-use App\BackOffice\UsersType\Domain\Entities\UserTypeModel;
+use App\BackOffice\Categories\Domain\Entities\CategoryModel;
 use App\Shared\Exception\Commands\EditActionException;
 use Exception;
 
@@ -13,7 +13,7 @@ class CategoryEditService extends CategoryService
 
             $this->findCompareIdWithArg($uuid, $bodyParsed->id);
 
-            $findCategory = $this->findResourceByUuid(new UserTypeModel(), $uuid);
+            $findCategory = $this->findResourceByUuid(new CategoryModel(), $uuid);
 
             $this->categoryEntity->payload($bodyParsed);
             $success = $this->categoryRepository->editCategory($findCategory, ((array) $this->categoryEntity));

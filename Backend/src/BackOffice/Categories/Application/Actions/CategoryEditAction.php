@@ -12,7 +12,7 @@ class CategoryEditAction extends CategoriesAction
         try {
             $argUuid = $this->resolveArg('uuid');
             $bodyParsed = $this->getFormData();
-            return $this->commandSuccess($this->categoryFindService->executeArgWithBodyParsed($argUuid, $bodyParsed));
+            return $this->commandSuccess($this->categoryEditService->executeArgWithBodyParsed($argUuid, $bodyParsed));
         } catch (Exception $ex) {
             return $this->commandError($ex);
         }

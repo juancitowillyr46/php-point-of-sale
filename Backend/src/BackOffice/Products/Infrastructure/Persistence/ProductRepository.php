@@ -62,6 +62,6 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     }
 
     public function countProducts(): int {
-        return $this->productModel::all()->count();
+        return $this->productModel::withTrashed()->count();
     }
 }

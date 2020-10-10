@@ -2,7 +2,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Categoria</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Categoria <fa-icon [icon]="['fas', 'spinner']" class="mr-1" [pulse]="true" *ngIf="loadData"></fa-icon></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -10,33 +10,43 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 col-xs-12">
-                        <form>
+                        <form [formGroup]="formGroup" class="needs-validation">
                             <div class="form-group">
                                 <label for="name">Nombre:</label>
-                                <input type="text" class="form-control" id="name" placeholder="Ingrese nombre">
+                                <input type="text" class="form-control" id="name" placeholder="Ingrese nombre"
+                                formControlName="name" 
+                                [ngClass]="[
+                                            (formGroup.controls.name.errors && formGroup.controls.name.value != '')? 'is-invalid' : 
+                                            (formGroup.controls.name.value != '')? 'is-valid' : ''
+                                        ]" 
+                                >
                             </div>
                             <div class="form-group">
                                 <label for="description">Descripción:</label>
-                                <textarea class="form-control" id="description" placeholder="Ingrese descripción" rows="4"></textarea>
+                                <textarea class="form-control" id="description" placeholder="Ingrese descripción" rows="4"
+                                formControlName="description" 
+                                [ngClass]="[
+                                            (formGroup.controls.description.errors && formGroup.controls.description.value != '')? 'is-invalid' : 
+                                            (formGroup.controls.description.value != '')? 'is-valid' : ''
+                                        ]" 
+                                ></textarea>
                             </div>
                             
                             <div class="form-group">
                                 <label for="active">Activo:</label>
-                                <select id="active" class="form-control mb-3">
-                                    <option disabled selected>-- SELECCIONE --</option>
-                                    <option value="1">ACTIVO</option>
-                                    <option value="2">NO ACTIVO</option>
+                                <select id="active" class="form-control" formControlName="active">
+                                    <option value="">--SELECCIONE--</option>
+                                    <option value [value]="item.value" *ngFor="let item of commonAuditStatus">{{item.text}}</option>
                                 </select>
+                                <label *ngIf="formGroup.controls.active.errors && formGroup.controls.active.value" id="active" class="error mt-2 text-danger" for="active">Campo obligatorio.</label>
                             </div>
-                            <button type="submit" class="btn btn-success mr-2 mt-15">
-                                <i class="ti-save mr-2"></i>Actualizar
+                            <button type="button" class="btn btn-primary mr-2 mt-15" (click)="onClickDone()" [disabled]="formGroup.invalid || submit === true">
+                                <fa-icon [icon]="['fas', 'spinner']" class="mr-1" [pulse]="true" *ngIf="submit"></fa-icon>
+                                <!-- <fa-icon [icon]="['fas', 'ban']" class="mr-1" *ngIf="!submit && !formGroup.invalid"></fa-icon> -->
+                                Guardar
                             </button>
-                            <button type="submit" class="btn btn-primary mr-2 mt-15">
-                                <i class="ti-save mr-2"></i>Guardar
-                            </button>
-                            <button type="submit" class="btn btn-danger mt-15">
-                                <i class="ti-close mr-2"></i>Cancelar
-                            </button>
+                            <button type="button" (click)="onClickClose()" class="btn btn-danger mt-15">Cancelar</button>
+                         
                         </form>
                     </div>
                 </div>

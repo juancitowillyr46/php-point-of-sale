@@ -149,6 +149,8 @@ export class ModalProductsComponent extends BaseModalComponent implements OnInit
         that.submit = false;
         that.gridSimpleService.closeModal();
         that.gridSimpleService.reload();
+      }, (error) => {
+        that.submit = false;
       });
     }
     
