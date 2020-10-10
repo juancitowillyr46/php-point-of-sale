@@ -42,4 +42,9 @@ export class CommonRepository {
         const that = this;
         return that.dataService.get(that.resource + 'unit-measurement');
     }
+
+    getCommonDataMasterType(): Observable<ResponseDataDto<CommonDto[]>> {
+        const that = this;
+        return that.dataService.get(that.resource + 'data-master-type');
+    }
 }

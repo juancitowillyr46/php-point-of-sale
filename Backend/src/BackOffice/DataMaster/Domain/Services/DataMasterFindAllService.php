@@ -76,4 +76,20 @@ class DataMasterFindAllService extends DataMasterService
         }
     }
 
+    public function executeCommonDataType(): array {
+        try {
+
+            $findCommonAll = $this->dataMasterRepository->commonDataType();
+            $listCommon = [];
+            foreach ($findCommonAll as $common) {
+                $listCommon[] = $this->commonMapper->autoMapper->map($common, CommonDto::class);
+            }
+
+            return $listCommon;
+
+        } catch (Exception $ex) {
+            throw new Exception($ex->getMessage(), $ex->getCode());
+        }
+    }
+
 }

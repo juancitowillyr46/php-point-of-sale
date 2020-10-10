@@ -100,6 +100,7 @@ return function (App $app) {
             $group->get('/categories', \App\BackOffice\Categories\Application\Actions\CategoryCommonAction::class);
             $group->get('/providers', \App\BackOffice\Providers\Application\Actions\ProviderCommonAction::class);
             $group->get('/unit-measurement', \App\BackOffice\DataMaster\Application\Actions\DataMasterCommonUnitMeasurement::class);
+            $group->get('/data-master-type', \App\BackOffice\DataMaster\Application\Actions\DataMasterCommonTypeAction::class);
         })->add(AuthValidateTokenMiddleware::class);
 
     });

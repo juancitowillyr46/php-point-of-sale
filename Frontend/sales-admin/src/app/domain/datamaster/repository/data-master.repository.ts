@@ -3,36 +3,36 @@ import { Observable } from 'rxjs';
 import { DataService } from "../../../core/base/data.service";
 import { ResponseDataDto } from '../../../core/base/response-data.dto';
 import { ResponseIdDataDto } from '../../../core/entities/response-id-data.dto';
-import { UserDto } from '../model/user.dto';
-import { UserStoreDto } from '../model/user-store.dto';
+import { DataMasterDto } from '../model/data-master.dto';
+import { DataMasterStoreDto } from '../model/data-master-store.dto';
 
 @Injectable({
     providedIn: 'root'
 })
-export class UserRepository {
+export class DataMasterRepository {
 
-    private resource = 'users';
+    private resource = 'data-master';
 
     constructor(private dataService: DataService){
 
     }
 
-    getAll(): Observable<ResponseDataDto<UserDto[]>> {
+    getAll(): Observable<ResponseDataDto<DataMasterDto[]>> {
         const that = this;
         return that.dataService.get(that.resource + '?size=10&page=1');
     }
     
-    get(id: string): Observable<ResponseDataDto<UserDto>> {
+    get(id: string): Observable<ResponseDataDto<DataMasterDto>> {
         const that = this;
         return that.dataService.get(that.resource, id);
     }
 
-    edit(id: string, object: UserStoreDto): Observable<ResponseDataDto<ResponseIdDataDto>> {
+    edit(id: string, object: DataMasterStoreDto): Observable<ResponseDataDto<ResponseIdDataDto>> {
         const that = this;
         return that.dataService.put(that.resource, id, object);
     }
 
-    add(object: UserStoreDto): Observable<ResponseDataDto<ResponseIdDataDto>> {
+    add(object: DataMasterStoreDto): Observable<ResponseDataDto<ResponseIdDataDto>> {
         const that = this;
         return that.dataService.post(that.resource, object);
     }

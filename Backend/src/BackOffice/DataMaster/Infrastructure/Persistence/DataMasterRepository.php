@@ -121,5 +121,24 @@ class DataMasterRepository extends BaseRepository implements DataMasterRepositor
 
     }
 
+    public function commonDataType(): array
+    {
+        try {
+
+            $countRows = $this->dataMasterModel::all()->count();
+
+            if($countRows > 0) {
+                $dataMaster = $this->dataMasterModel::select(DB::raw("(type) as name"), "uuid")
+                    ->groupBy('type')
+                    ->get();
+                return $dataMaster->toArray();
+            } else {
+                return [];
+            }
+
+        } catch (Exception $ex) {
+            throw new Exception($ex->getMessage(), $ex->getCode());
+        }
+    }
 
 }
