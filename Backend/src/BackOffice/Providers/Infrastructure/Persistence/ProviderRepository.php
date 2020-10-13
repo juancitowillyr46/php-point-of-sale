@@ -17,21 +17,21 @@ class ProviderRepository extends BaseRepository implements ProviderRepositoryInt
         $this->setModel($providerModel);
     }
 
-    public function addProvider(array $Provider): bool
+    public function addProvider(array $provider): bool
     {
         try {
-            $addProvider = $this->providerModel::create($Provider);
+            $addProvider = $this->providerModel::create($provider);
             return $addProvider->save();
         } catch (Exception $ex) {
             throw new ExceptionEloquent($ex->getMessage(), $ex->getCode());
         }
     }
 
-    public function editProvider(int $id, array $userType): bool
+    public function editProvider(int $id, array $provider): bool
     {
         try {
             $editProvider = $this->providerModel::all()->find($id);
-            return $editProvider->update($userType);
+            return $editProvider->update($provider);
         } catch (Exception $ex) {
             throw new ExceptionEloquent($ex->getMessage(), $ex->getCode());
         }
@@ -54,16 +54,9 @@ class ProviderRepository extends BaseRepository implements ProviderRepositoryInt
         }
     }
 
-    public function allProviders(array $query): array
+    public function allProviders(array $query): object
     {
-        $findAllProvider = $this->providerModel::all();
-        $getQuery = [];
-        if(count($query)) {
-            $getQuery = $findAllProvider->where('active', '=', (boolean) $query['active'])->toArray();
-        } else {
-            $getQuery = $findAllProvider->toArray();
-        }
-        return $getQuery;
+        return $this->paginateModel($query, $this->providerModel);
     }
 
     public function commonProviders(): array

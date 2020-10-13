@@ -60,6 +60,16 @@ class DataMasterFindAllService extends DataMasterService
         }
     }
 
+    public function executeCommonDocumentTypes(): array {
+        try {
+
+            return $this->commonSetItems('TABLE_DOCUMENT_TYPE', CommonDto::class);
+
+        } catch (Exception $ex) {
+            throw new Exception($ex->getMessage(), $ex->getCode());
+        }
+    }
+
     private function commonSetItems(string $type, $dto): array {
         try {
 

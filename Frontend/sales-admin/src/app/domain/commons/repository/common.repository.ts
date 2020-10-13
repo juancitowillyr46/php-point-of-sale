@@ -47,4 +47,24 @@ export class CommonRepository {
         const that = this;
         return that.dataService.get(that.resource + 'data-master-type');
     }
+
+    getCommonUbigeoDepartments(): Observable<ResponseDataDto<CommonDto[]>> {
+        const that = this;
+        return that.dataService.get(that.resource + 'ubigeo/departments');
+    }
+
+    getCommonUbigeoProvinces(departmentId: string): Observable<ResponseDataDto<CommonDto[]>> {
+        const that = this;
+        return that.dataService.get(that.resource + 'ubigeo/departments/'+departmentId+'/provinces');
+    }
+
+    getCommonUbigeoDistricts(departmentId: string, provinceId: string): Observable<ResponseDataDto<CommonDto[]>> {
+        const that = this;
+        return that.dataService.get(that.resource + 'ubigeo/departments/'+departmentId+'/provinces/'+provinceId+'/districts');
+    }
+
+    getCommonDocumentTypes(): Observable<ResponseDataDto<CommonDto[]>> {
+        const that = this;
+        return that.dataService.get(that.resource + 'document-types');
+    }
 }

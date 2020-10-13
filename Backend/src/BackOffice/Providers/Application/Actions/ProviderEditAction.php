@@ -1,10 +1,10 @@
 <?php
-namespace App\BackOffice\Categories\Application\Actions;
+namespace App\BackOffice\Providers\Application\Actions;
 
 use Exception;
 use Psr\Http\Message\ResponseInterface as Response;
 
-class ProviderEditAction extends CategoriesAction
+class ProviderEditAction extends ProvidersAction
 {
 
     protected function action(): Response
@@ -12,7 +12,7 @@ class ProviderEditAction extends CategoriesAction
         try {
             $argUuid = $this->resolveArg('uuid');
             $bodyParsed = $this->getFormData();
-            return $this->commandSuccess($this->providerFindService->executeArgWithBodyParsed($argUuid, $bodyParsed));
+            return $this->commandSuccess($this->providerEditService->executeArgWithBodyParsed($argUuid, $bodyParsed));
         } catch (Exception $ex) {
             return $this->commandError($ex);
         }

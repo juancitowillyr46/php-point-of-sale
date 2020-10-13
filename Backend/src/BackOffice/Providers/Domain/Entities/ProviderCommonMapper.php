@@ -28,7 +28,7 @@ class ProviderCommonMapper
             new SnakeCaseNamingConvention(),
             new CamelCaseNamingConvention()
         )->forMember('text', function ($source) {
-            return $source['business_name'];
+            return $source['name'];
         })->forMember('value', function($source){
             return $source['uuid'];
         });

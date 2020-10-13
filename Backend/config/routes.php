@@ -93,6 +93,22 @@ return function (App $app) {
             $group->delete('/{uuid}', \App\BackOffice\Permissions\Application\Actions\PermissionRemoveAction::class);
         })->add(AuthValidateTokenMiddleware::class);
 
+        $group->group('/providers', function (RouteCollectorProxy $group) {
+            $group->post('', \App\BackOffice\Providers\Application\Actions\ProviderAddAction::class);
+            $group->get('/{uuid}', \App\BackOffice\Providers\Application\Actions\ProviderFindAction::class);
+            $group->get('', \App\BackOffice\Providers\Application\Actions\ProviderFindAllAction::class);
+            $group->put('/{uuid}', \App\BackOffice\Providers\Application\Actions\ProviderEditAction::class);
+            $group->delete('/{uuid}', \App\BackOffice\Providers\Application\Actions\ProviderRemoveAction::class);
+        })->add(AuthValidateTokenMiddleware::class);
+
+        $group->group('/customers', function (RouteCollectorProxy $group) {
+            $group->post('', \App\BackOffice\Customers\Application\Actions\CustomerAddAction::class);
+            $group->get('/{uuid}', \App\BackOffice\Customers\Application\Actions\CustomerFindAction::class);
+            $group->get('', \App\BackOffice\Customers\Application\Actions\CustomerFindAllAction::class);
+            $group->put('/{uuid}', \App\BackOffice\Customers\Application\Actions\CustomerEditAction::class);
+            $group->delete('/{uuid}', \App\BackOffice\Customers\Application\Actions\CustomerRemoveAction::class);
+        })->add(AuthValidateTokenMiddleware::class);
+
         $group->group('/commons', function (RouteCollectorProxy $group) {
             $group->get('/roles', \App\BackOffice\Roles\Application\Actions\RoleCommonAction::class);
             $group->get('/audit-status', \App\BackOffice\DataMaster\Application\Actions\DataMasterCommonAuditAction::class);
@@ -101,6 +117,10 @@ return function (App $app) {
             $group->get('/providers', \App\BackOffice\Providers\Application\Actions\ProviderCommonAction::class);
             $group->get('/unit-measurement', \App\BackOffice\DataMaster\Application\Actions\DataMasterCommonUnitMeasurement::class);
             $group->get('/data-master-type', \App\BackOffice\DataMaster\Application\Actions\DataMasterCommonTypeAction::class);
+            $group->get('/document-types', \App\BackOffice\DataMaster\Application\Actions\DataMasterCommonDocumentTypeAction::class);
+            $group->get('/ubigeo/departments', \App\BackOffice\Ubigeo\Application\Actions\UbigeoCommonDepartment::class);
+            $group->get('/ubigeo/departments/{department_id}/provinces', \App\BackOffice\Ubigeo\Application\Actions\UbigeoCommonProvince::class);
+            $group->get('/ubigeo/departments/{department_id}/provinces/{province_id}/districts', \App\BackOffice\Ubigeo\Application\Actions\UbigeoCommonDistrict::class);
         })->add(AuthValidateTokenMiddleware::class);
 
     });

@@ -1,10 +1,11 @@
 <?php
-namespace App\BackOffice\Categories\Application\Actions;
+namespace App\BackOffice\Providers\Application\Actions;
 
+use App\BackOffice\Providers\Application\Actions\ProvidersAction;
 use Exception;
 use Psr\Http\Message\ResponseInterface as Response;
 
-class ProviderAddAction extends CategoriesAction
+class ProviderAddAction extends ProvidersAction
 {
 
     protected function action(): Response

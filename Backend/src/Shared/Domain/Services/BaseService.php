@@ -127,11 +127,29 @@ abstract class BaseService
 
     public function findResourceByUuid(Model $model, string $uuid): ?int
     {
-        $find = $model::all()->where('uuid', '=' ,$uuid)->first();
+        $find = $model::select('id')->where('uuid', '=' ,$uuid)->first();
         if(!$find)
             throw new FindActionException();
 
         return $find->getAttribute('id');
+    }
+
+    public function getAttributeByUuid(Model $model, string $uuid, string $attr = '')
+    {
+        $find = $model::select('id','uuid','name')->where('uuid', '=' ,$uuid)->first();
+        if(!$find)
+            throw new FindActionException();
+
+        return $find->getAttribute($attr);
+    }
+
+    public function getAttributeById(Model $model, string $id, string $attr = ''): ?string
+    {
+        $find = $model::select('id','uuid')->where('id', '=' ,$id)->first();
+        if(!$find)
+            throw new FindActionException();
+
+        return $find->getAttribute($attr);
     }
 
     public function findCompareIdWithArg(string $uuid, string $id): void {

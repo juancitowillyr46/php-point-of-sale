@@ -39,7 +39,7 @@ class ProductMapper
         })->forMember('measureUnitId', function ($source) {
             return $source['measure_unit_id']? $source['measure_unit_id'] : '';
         })->forMember('providerName', function($source){
-            return (is_null($source['provider']))? '' :  $source['provider']['business_name'];
+            return (is_null($source['provider']))? '' :  $source['provider']['name'];
         })->forMember('providerId', function($source){
             return (is_null($source['provider']))? '' :  $source['provider']['uuid'];
         })->forMember('id', function($source){

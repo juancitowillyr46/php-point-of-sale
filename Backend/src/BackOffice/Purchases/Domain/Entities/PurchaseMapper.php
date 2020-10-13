@@ -31,7 +31,7 @@ class PurchaseMapper
         })->forMember('id', function($source){
             return $source['uuid'];
         })->forMember('provider', function($source){
-            return $source['provider']['business_name'];
+            return $source['provider']['name'];
         })->forMember('employee', function($source){
             return $source['employee']['user']['username'];
         });

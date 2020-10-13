@@ -11,7 +11,7 @@ interface ProviderRepositoryInterface
 
     public function removeProvider(int $id): bool;
 
-    public function allProviders(array $query): array;
+    public function allProviders(array $query): object;
 
     public function commonProviders(): array;
 }

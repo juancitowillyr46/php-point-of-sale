@@ -2,7 +2,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Cliente</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Cliente <fa-icon [icon]="['fas', 'spinner']" class="mr-1" [pulse]="true" *ngIf="loadData"></fa-icon></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -10,77 +10,134 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 col-xs-12">
-                        <form>
+                        <form [formGroup]="formGroup" class="needs-validation">
                             <div class="form-group">
-                                <label for="name">Nombres:</label>
-                                <input type="text" class="form-control" id="name" placeholder="Ingrese nombres">
+                                <label for="firstName">Nombres:</label>
+                                <input type="text" class="form-control" id="firstName" placeholder="Ingrese nombres"
+                                formControlName="firstName"
+                                [ngClass]="[
+                                (formGroup.controls.firstName.errors && formGroup.controls.firstName.value != '')? 'is-invalid' : 
+                                (formGroup.controls.firstName.value != '')? 'is-valid' : ''
+                            ]" 
+                                >
                             </div>
                             <div class="form-group">
-                                <label for="name">Apellidos:</label>
-                                <input type="text" class="form-control" id="name" placeholder="Ingrese apellidos">
+                                <label for="lastName">Apellidos:</label>
+                                <input type="text" class="form-control" id="lastName" placeholder="Ingrese apellidos"
+                                formControlName="lastName"
+                                [ngClass]="[
+                                (formGroup.controls.lastName.errors && formGroup.controls.lastName.value != '')? 'is-invalid' : 
+                                (formGroup.controls.lastName.value != '')? 'is-valid' : ''
+                            ]" 
+                            >
                             </div>
                             <div class="form-group">
-                                <label for="tipodocumento">Tipo documento:</label>
-                                <select class="form-control mb-3" id="tipodocumento">
-                                    <option value="1">Documento Nacional de Identidad (DNI)</option>
-                                    <option value="2">Carnet de Extranjería (CE)</option>
+                                <label for="documentTypeId">Tipo documento:</label>
+                                <select class="form-control mb-3" id="documentTypeId" formControlName="documentTypeId">
+                                        <option value="">--SELECCIONE--</option>
+                                        <option value [value]="item.value" *ngFor="let item of commonDocumentTypes">{{item.text}}</option>
                                 </select>
+                                <label *ngIf="formGroup.controls.documentTypeId.errors && formGroup.controls.documentTypeId.value" id="active" class="error mt-2 text-danger" for="active">Campo obligatorio.</label>
                             </div>
                             <div class="form-group">
-                                <label for="numerodocumento">Número de documento:</label>
-                                <input id="numerodocumento" type="text" class="form-control" placeholder="Ingrese número de documento">
+                                <label for="documentNumber">Número de documento:</label>
+                                <input id="documentNumber" type="text" class="form-control" placeholder="Ingrese número de documento"
+                                formControlName="documentNumber"
+                                [ngClass]="[
+                                (formGroup.controls.documentNumber.errors && formGroup.controls.documentNumber.value != '')? 'is-invalid' : 
+                                (formGroup.controls.documentNumber.value != '')? 'is-valid' : ''
+                            ]" 
+                                >
                             </div>
                             <div class="form-group">
-                                <label for="name">Teléfono fijo:</label>
-                                <input type="text" class="form-control" id="name" placeholder="Ingrese teléfono fijo">
+                                <label for="homePhoneNumber">Teléfono fijo:</label>
+                                <input type="text" class="form-control" id="homePhoneNumber" placeholder="Ingrese teléfono fijo"
+                                
+                                formControlName="homePhoneNumber"
+                                [ngClass]="[
+                                (formGroup.controls.homePhoneNumber.errors && formGroup.controls.homePhoneNumber.value != '')? 'is-invalid' : 
+                                (formGroup.controls.homePhoneNumber.value != '')? 'is-valid' : ''
+                            ]" 
+                                >
                             </div>
                             <div class="form-group">
-                                <label for="name">Número de celular:</label>
-                                <input type="text" class="form-control" id="name" placeholder="Ingrese número de celular">
+                                <label for="cellPhoneNumber">Número de celular:</label>
+                                <input type="text" class="form-control" id="cellPhoneNumber" placeholder="Ingrese número de celular"
+                                
+                                formControlName="cellPhoneNumber"
+                                [ngClass]="[
+                                (formGroup.controls.cellPhoneNumber.errors && formGroup.controls.cellPhoneNumber.value != '')? 'is-invalid' : 
+                                (formGroup.controls.cellPhoneNumber.value != '')? 'is-valid' : ''
+                            ]" 
+
+                                >
                             </div>
                             <div class="form-group">
-                                <label for="name">Correo:</label>
-                                <input type="text" class="form-control" id="name" placeholder="Ingrese correo eletrónico">
+                                <label for="email">Correo:</label>
+                                <input type="text" class="form-control" id="email" placeholder="Ingrese correo eletrónico"
+                                formControlName="email"
+                                [ngClass]="[
+                                (formGroup.controls.email.errors && formGroup.controls.email.value != '')? 'is-invalid' : 
+                                (formGroup.controls.email.value != '')? 'is-valid' : ''
+                            ]" 
+
+                                >
                             </div>
                             <div class="form-group">
-                                <label for="name">Dirección:</label>
-                                <textarea class="form-control" id="description" placeholder="Ingrese dirección" rows="4"></textarea>
+                                <label for="address">Dirección:</label>
+                                <textarea class="form-control" id="description" placeholder="Ingrese dirección" rows="4"
+                                formControlName="address"
+                                [ngClass]="[
+                                (formGroup.controls.address.errors && formGroup.controls.address.value != '')? 'is-invalid' : 
+                                (formGroup.controls.address.value != '')? 'is-valid' : ''
+                            ]" 
+
+                                ></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="name">Departamento:</label>
-                                <select id="active" class="form-control mb-3">
-                                    <option disabled selected>-- SELECCIONE --</option>
-                                    <option value="1">ACTIVO</option>
-                                    <option value="2">NO ACTIVO</option>
+                                <label for="departmentId">Departamento:</label>
+                                <select id="departmentId" class="form-control mb-3" (change)="onChangeDepartament($event.target.value)"
+                                
+                                formControlName="departmentId">
+                                    <option value="">--SELECCIONE--</option>
+                                    <option value [value]="item.value" *ngFor="let item of commonUbigeoDepartments">{{item.text}}</option>
                                 </select>
+                                <label *ngIf="formGroup.controls.departmentId.errors && formGroup.controls.departmentId.value" id="active" class="error mt-2 text-danger" for="active">Campo obligatorio.</label>
                             </div>
                             <div class="form-group">
-                                <label for="name">Provincia:</label>
-                                <select id="active" class="form-control mb-3">
-                                    <option disabled selected>-- SELECCIONE --</option>
-                                    <option value="1">ACTIVO</option>
-                                    <option value="2">NO ACTIVO</option>
+                                <label for="provinceId">Provincia:</label>
+                                <select id="provinceId" class="form-control mb-3" (change)="onChangeProvince($event.target.value)"
+                                formControlName="provinceId"
+                                >
+                                    <option value="">--SELECCIONE--</option>
+                                    <option value [value]="item.value" *ngFor="let item of commonUbigeoProvinces">{{item.text}}</option>
                                 </select>
+                                <label *ngIf="formGroup.controls.provinceId.errors && formGroup.controls.provinceId.value" id="active" class="error mt-2 text-danger" for="active">Campo obligatorio.</label>
                             </div>
                             <div class="form-group">
-                                <label for="name">Distrito:</label>
-                                <select id="active" class="form-control mb-3">
-                                    <option disabled selected>-- SELECCIONE --</option>
-                                    <option value="1">ACTIVO</option>
-                                    <option value="2">NO ACTIVO</option>
+                                <label for="districtId">Distrito:</label>
+                                <select id="districtId" class="form-control mb-3" (change)="onChangeDistrict($event.target.value)"
+                                formControlName="districtId"
+                                >
+                                    <option value="">--SELECCIONE--</option>
+                                    <option value [value]="item.value" *ngFor="let item of commonUbigeoDistricts">{{item.text}}</option>
                                 </select>
                             </div>
                             
                             <div class="form-group">
                                 <label for="active">Activo:</label>
-                                <select id="active" class="form-control mb-3">
-                                    <option disabled selected>-- SELECCIONE --</option>
-                                    <option value="1">ACTIVO</option>
-                                    <option value="2">NO ACTIVO</option>
+                                <select id="active" class="form-control" formControlName="active">
+                                    <option value="">--SELECCIONE--</option>
+                                    <option value [value]="item.value" *ngFor="let item of commonAuditStatus">{{item.text}}</option>
                                 </select>
+                                <label *ngIf="formGroup.controls.active.errors && formGroup.controls.active.value" id="active" class="error mt-2 text-danger" for="active">Campo obligatorio.</label>
                             </div>
-                            <button type="submit" class="btn btn-primary mr-2 mt-15">Guardar</button>
-                            <button type="submit" class="btn btn-danger mt-15">Cancelar</button>
+                            <button type="button" class="btn btn-primary mr-2 mt-15" (click)="onClickDone()" [disabled]="formGroup.invalid || submit === true">
+                                <fa-icon [icon]="['fas', 'spinner']" class="mr-1" [pulse]="true" *ngIf="submit"></fa-icon>
+                                <!-- <fa-icon [icon]="['fas', 'ban']" class="mr-1" *ngIf="!submit && !formGroup.invalid"></fa-icon> -->
+                                Guardar
+                            </button>
+                            <button type="button" (click)="onClickClose()" class="btn btn-danger mt-15">Cancelar</button>  
                         </form>
                     </div>
                 </div>

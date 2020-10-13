@@ -18,11 +18,26 @@ class ProviderActionRequestSchema extends BaseValidatorRequest
                 new Optional(),
             ],
             'name' => [
+                new Required()
+            ],
+            'ruc' => [
                 new Required(),
                 new Length([
                     'min' => 1,
                     'max' => 50
                 ])
+            ],
+            'departmentId' => [
+                new Required(),
+            ],
+            'provinceId' => [
+                new Required(),
+            ],
+            'districtId' => [
+                new Required(),
+            ],
+            'address' => [
+                new Required()
             ],
             'description' => [
                 new Required(),
@@ -31,6 +46,15 @@ class ProviderActionRequestSchema extends BaseValidatorRequest
                     'max' => 50
                 ])
             ],
+            'homePhoneNumber' => [
+                new Required()
+            ],
+            'cellPhoneNumber' => [
+                new Required()
+            ],
+//            'representativeId' => [
+//                new Required()
+//            ],
             'active' => [
                 new Type('bool')
             ]

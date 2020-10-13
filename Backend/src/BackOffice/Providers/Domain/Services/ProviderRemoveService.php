@@ -11,12 +11,12 @@ class ProviderRemoveService extends ProviderService
         try {
 
             $findUser = $this->findResourceByUuid(new ProviderModel(), $uuid);
-            $success = $this->ProviderRepository->removeProvider((int) $findUser);
+            $success = $this->providerRepository->removeProvider((int) $findUser);
             if(!$success) {
                 throw new RemoveActionException();
             }
-            $this->ProviderEntity->setUuid($uuid);
-            return $this->ProviderEntity->getResponseDataId();
+            $this->providerEntity->setUuid($uuid);
+            return $this->providerEntity->getResponseDataId();
 
         } catch (Exception $ex) {
             throw new Exception($ex->getMessage(), $ex->getCode());
