@@ -85,7 +85,6 @@
                         </select>
                         <label *ngIf="formGroup.controls.active.errors && formGroup.controls.active.value" id="active" class="error mt-2 text-danger" for="active">Campo obligatorio.</label>
                     </div>
-
                 </form>
                 <button type="button" class="btn btn-primary mr-2 mt-15" (click)="onClickDone()" [disabled]="formGroup.invalid || submit === true">
                     <fa-icon [icon]="['fas', 'spinner']" class="mr-1" [pulse]="true" *ngIf="submit"></fa-icon>

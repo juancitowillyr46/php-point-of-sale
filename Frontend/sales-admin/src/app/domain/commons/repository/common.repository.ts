@@ -67,4 +67,14 @@ export class CommonRepository {
         const that = this;
         return that.dataService.get(that.resource + 'document-types');
     }
+
+    getCommonTypeTaxDocument(): Observable<ResponseDataDto<CommonDto[]>> {
+        const that = this;
+        return that.dataService.get(that.resource + 'type-tax-document');
+    }
+
+    getCommonStatusPurchase(): Observable<ResponseDataDto<CommonDto[]>> {
+        const that = this;
+        return that.dataService.get(that.resource + 'status-purchase');
+    }
 }

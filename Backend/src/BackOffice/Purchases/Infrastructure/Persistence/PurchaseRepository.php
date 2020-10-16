@@ -6,13 +6,13 @@ use App\BackOffice\Purchases\Domain\Repository\PurchaseRepositoryInterface;
 use App\Shared\Exception\Database\ExceptionEloquent;
 use App\Shared\Infrastructure\Persistence\BaseRepository;
 use Exception;
+use Psr\Log\LoggerInterface;
 
 class PurchaseRepository extends BaseRepository implements PurchaseRepositoryInterface
 {
     private PurchaseModel $purchaseModel;
 
-    public function __construct(PurchaseModel $purchaseModel)
-    {
+    public function __construct(PurchaseModel $purchaseModel) {
         $this->purchaseModel = $purchaseModel;
         $this->setModel($purchaseModel);
     }

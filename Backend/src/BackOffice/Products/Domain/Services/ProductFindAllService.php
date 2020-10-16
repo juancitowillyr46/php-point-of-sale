@@ -5,6 +5,8 @@ namespace App\BackOffice\Products\Domain\Services;
 
 
 use App\BackOffice\Products\Domain\Entities\ProductDto;
+use App\BackOffice\Providers\Domain\Entities\ProviderModel;
+use App\Shared\Domain\Entities\CommonDto;
 use Exception;
 
 class ProductFindAllService extends ProductService
@@ -27,4 +29,21 @@ class ProductFindAllService extends ProductService
         }
 
     }
+
+    public function executeGetProductsByProvider(string $providerId) {
+        try {
+            $id = $this->findResourceByUuid(new ProviderModel(), $providerId);
+            $findProviderAll = $this->productRepository->getProductsByProvider($id);
+
+            $listProvider = [];
+            foreach ($findProviderAll as $provider) {
+                $listProvider[] = $this->productMapper->autoMapper->map($provider, CommonDto::class);
+            }
+            return $listProvider;
+        } catch (Exception $ex) {
+            throw new Exception($ex->getMessage(), $ex->getCode());
+        }
+    }
+
+
 }

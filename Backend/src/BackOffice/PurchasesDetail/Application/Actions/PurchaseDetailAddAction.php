@@ -16,7 +16,7 @@ class PurchaseDetailAddAction extends PurchasesDetailAction
 
             return $this->commandSuccess($this->purchaseDetailAddService->executeWithIdRef($purchaseId, $bodyParsed));
         } catch (Exception $ex) {
-            $this->logger->error('Message:'.$ex->getMessage().'|Code:'. $ex->getCode().'|Line:'. $ex->getLine().'|File:'. $ex->getFile());
+//            $this->logger->error('Message:'.$ex->getMessage().'|Code:'. $ex->getCode().'|Line:'. $ex->getLine().'|File:'. $ex->getFile());
             return $this->commandError($ex);
         }
     }

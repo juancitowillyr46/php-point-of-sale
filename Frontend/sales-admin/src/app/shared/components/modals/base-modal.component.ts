@@ -51,8 +51,10 @@ export class BaseModalComponent {
 
     commonAuditStatusLoad() {
         const that = this;
+        that.loadData = true;
         that.commonAuditStatusUseCase.execute().subscribe(res => {
             that.commonAuditStatus = res;
+            that.loadData = false;
         });
     }
 

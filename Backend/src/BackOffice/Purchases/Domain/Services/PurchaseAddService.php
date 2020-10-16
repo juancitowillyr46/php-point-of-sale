@@ -23,16 +23,7 @@ class PurchaseAddService extends PurchaseService
     {
         try {
 
-            $documentTypeId = $this->findResourceByUuidReturnIdRegister($bodyParsed->documentTypeId);
-            $statusId = $this->findResourceByUuidReturnIdRegister($bodyParsed->documentTypeId);
-            $providerId = $this->findResourceByUuid(new ProviderModel(), $bodyParsed->providerId);
-            $employeeId = $this->findResourceByUuid(new EmployeeModel(), $bodyParsed->employeeId);
-
-            $this->purchaseEntity->setDocumentTypeId($documentTypeId);
-            $this->purchaseEntity->setStatusId($statusId);
-            $this->purchaseEntity->setProviderId($providerId);
-            $this->purchaseEntity->setEmployeeId($employeeId);
-            $this->purchaseEntity->payload($bodyParsed);
+            $this->executePayLoad($bodyParsed);
 
             $success = $this->purchaseRepository->addPurchase(((array) $this->purchaseEntity));
 

@@ -7,49 +7,28 @@ use Exception;
 
 class PurchaseEntity extends Audit
 {
-    public string $name;
-    public int $document_type_id;
-    public string $num_document;
-    public string $serie_document;
     public int $provider_id;
-    public int $status_id;
+    public int $document_type_id;
+    public string $document_number;
     public string $date;
     public float $total;
     public float $tax;
-    public int $employee_id;
-    public array $detail;
+    public string $note;
 
     /**
      * @return int
      */
-    public function getStatusId(): int
+    public function getProviderId(): int
     {
-        return $this->status_id;
+        return $this->provider_id;
     }
 
     /**
-     * @param int $status_id
+     * @param int $provider_id
      */
-    public function setStatusId(int $status_id): void
+    public function setProviderId(int $provider_id): void
     {
-        $this->status_id = $status_id;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
+        $this->provider_id = $provider_id;
     }
 
     /**
@@ -71,49 +50,17 @@ class PurchaseEntity extends Audit
     /**
      * @return string
      */
-    public function getNumDocument(): string
+    public function getDocumentNumber(): string
     {
-        return $this->num_document;
+        return $this->document_number;
     }
 
     /**
-     * @param string $num_document
+     * @param string $document_number
      */
-    public function setNumDocument(string $num_document): void
+    public function setDocumentNumber(string $document_number): void
     {
-        $this->num_document = $num_document;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSerieDocument(): string
-    {
-        return $this->serie_document;
-    }
-
-    /**
-     * @param string $serie_document
-     */
-    public function setSerieDocument(string $serie_document): void
-    {
-        $this->serie_document = $serie_document;
-    }
-
-    /**
-     * @return int
-     */
-    public function getProviderId(): int
-    {
-        return $this->provider_id;
-    }
-
-    /**
-     * @param int $provider_id
-     */
-    public function setProviderId(int $provider_id): void
-    {
-        $this->provider_id = $provider_id;
+        $this->document_number = $document_number;
     }
 
     /**
@@ -165,51 +112,27 @@ class PurchaseEntity extends Audit
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getEmployeeId(): int
+    public function getNote(): string
     {
-        return $this->employee_id;
+        return $this->note;
     }
 
     /**
-     * @param int $employee_id
+     * @param string $note
      */
-    public function setEmployeeId(int $employee_id): void
+    public function setNote(string $note): void
     {
-        $this->employee_id = $employee_id;
+        $this->note = $note;
     }
 
-    /**
-     * @return array
-     */
-    public function getDetail(): array
-    {
-        return $this->detail;
-    }
-
-    /**
-     * @param array $detail
-     */
-    public function setDetail(array $detail): void
-    {
-        $this->detail = $detail;
-    }
-
-    public function payload(object $formData): void {
+    public function validateBodyParsed(object $formData): void {
 
         try {
 
             $validate = new PurchaseActionRequestSchema();
             $validate->getMessages((array) $formData);
-
-            $this->identifiedResource($formData);
-
-            $this->setNumDocument($formData->numDocument);
-            $this->setSerieDocument($formData->serieDocument);
-            $this->setDate($formData->date);
-            $this->setTotal($formData->total);
-            $this->setActive($formData->active);
 
         } catch(Exception $ex) {
             throw new Exception($ex->getMessage(), $ex->getCode());

@@ -5,3 +5,7 @@
 .modal-lg {
     max-width: 950px !important;
 } */
+
+.product-td{
+    vertical-align: middle;
+}

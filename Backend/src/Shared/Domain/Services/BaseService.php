@@ -145,7 +145,7 @@ abstract class BaseService
 
     public function getAttributeById(Model $model, string $id, string $attr = ''): ?string
     {
-        $find = $model::select('id','uuid')->where('id', '=' ,$id)->first();
+        $find = $model::select('id','uuid','name')->where('id', '=' ,$id)->first();
         if(!$find)
             throw new FindActionException();
 
@@ -171,7 +171,7 @@ abstract class BaseService
     public function findNameResourceByUIdRegister(int $idRegister, string $type): string
     {
         $dataModel = new DataMasterModel();
-        $find = $dataModel::all()->where('id_register', '=' ,$idRegister)->where('type', '=' ,$type)->first();
+        $find = $dataModel::select("name")->where('id_register', '=' ,$idRegister)->where('type', '=' ,$type)->first();
         if(!$find)
             throw new FindActionException();
 
@@ -181,7 +181,7 @@ abstract class BaseService
     public function getUuidDataMaster(int $idRegister, string $type): string
     {
         $dataModel = new DataMasterModel();
-        $find = $dataModel::all()->where('id_register', '=' ,$idRegister)->where('type', '=' ,$type)->first();
+        $find = $dataModel::select("uuid")->where('id_register', '=' ,$idRegister)->where('type', '=' ,$type)->first();
         if(!$find)
             throw new FindActionException();
 

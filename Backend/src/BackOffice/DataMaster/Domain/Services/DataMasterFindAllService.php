@@ -70,6 +70,26 @@ class DataMasterFindAllService extends DataMasterService
         }
     }
 
+    public function executeCommonTypeTaxDocument(): array {
+        try {
+
+            return $this->commonSetItems('TABLE_DOCUMENT_TYPE_TAX', CommonDto::class);
+
+        } catch (Exception $ex) {
+            throw new Exception($ex->getMessage(), $ex->getCode());
+        }
+    }
+
+    public function executeCommonStatusPurchase(): array {
+        try {
+
+            return $this->commonSetItems('TABLE_STATUS_PURCHASE', CommonDto::class);
+
+        } catch (Exception $ex) {
+            throw new Exception($ex->getMessage(), $ex->getCode());
+        }
+    }
+
     private function commonSetItems(string $type, $dto): array {
         try {
 

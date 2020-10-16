@@ -107,6 +107,8 @@ abstract class Action
 
         $error = new ActionError($messageError, $message);
         $payLoad = new ActionPayload($statusCode, null, $error);
+
+        $this->logger->error($e->getMessage()."|".$e->getCode());
         return $this->respond($payLoad);
     }
 

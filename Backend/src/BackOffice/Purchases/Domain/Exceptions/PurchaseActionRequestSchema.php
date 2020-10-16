@@ -16,22 +16,13 @@ class PurchaseActionRequestSchema extends BaseValidatorRequest
             'id' => [
                 new Optional(),
             ],
-            'documentTypeId' => [
-                new Required(),
-            ],
-            'numDocument' => [
-                new Required(),
-            ],
-            'serieDocument' => [
-                new Required(),
-            ],
             'providerId' => [
                 new Required(),
             ],
-            'employeeId' => [
+            'documentTypeId' => [
                 new Required(),
             ],
-            'statusId' => [
+            'documentNumber' => [
                 new Required(),
             ],
             'date' => [
@@ -39,10 +30,9 @@ class PurchaseActionRequestSchema extends BaseValidatorRequest
             ],
             'total' => [
                 new Required(),
-                new Length([
-                    'min' => 1,
-                    'max' => 50
-                ])
+            ],
+            'note' => [
+                new Required(),
             ],
             'active' => [
                 new Type('bool')

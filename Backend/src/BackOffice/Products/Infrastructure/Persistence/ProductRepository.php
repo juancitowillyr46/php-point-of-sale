@@ -64,4 +64,18 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     public function countProducts(): int {
         return $this->productModel::withTrashed()->count();
     }
+
+    public function getProductsByProvider(int $providerId): array
+    {
+        try {
+
+            return $this->productModel::all()
+                ->where('active', '=', true)
+                ->where('provider_id', '=', $providerId)
+                ->toArray();
+
+        } catch (Exception $ex) {
+            throw new Exception($ex->getMessage(), $ex->getCode());
+        }
+    }
 }

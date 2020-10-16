@@ -1,6 +1,7 @@
 <?php
 namespace App\Shared\Infrastructure\Persistence;
 
+use App\BackOffice\Purchases\Domain\Entities\PurchaseModel;
 use App\Shared\Domain\Entities\PaginateEntity;
 use App\Shared\Domain\Repository\RepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
@@ -11,8 +12,14 @@ use Throwable;
 
 class BaseRepository implements RepositoryInterface
 {
+//    private LoggerInterface $loggerInterface;
+
     private Model $model;
 
+//    public function __construct(LoggerInterface $loggerInterface)
+//    {
+//        $this->loggerInterface = $loggerInterface;
+//    }
     /**
      * @return Model
      */

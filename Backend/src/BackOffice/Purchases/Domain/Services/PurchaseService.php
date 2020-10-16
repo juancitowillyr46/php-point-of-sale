@@ -2,6 +2,7 @@
 namespace App\BackOffice\Purchases\Domain\Services;
 
 use App\BackOffice\DataMaster\Domain\Services\DataMasterService;
+use App\BackOffice\Providers\Domain\Entities\ProviderModel;
 use App\BackOffice\Purchases\Domain\Entities\PurchaseEntity;
 use App\BackOffice\Purchases\Domain\Entities\PurchaseDto;
 use App\BackOffice\Purchases\Domain\Entities\PurchaseMapper;
@@ -42,5 +43,31 @@ class PurchaseService extends BaseService
     public function executeCollection(array $query): array
     {
         return [];
+    }
+
+    public function executePayLoad(object $bodyParsed): void {
+
+        try {
+
+            $this->purchaseEntity->validateBodyParsed($bodyParsed);
+            $this->purchaseEntity->identifiedResource($bodyParsed);
+
+            $this->purchaseEntity->setProviderId($this->findResourceByUuid(new ProviderModel(), $bodyParsed->providerId));
+            $this->purchaseEntity->setDocumentTypeId($this->findResourceByUuidReturnIdRegister($bodyParsed->documentTypeId));
+            $this->purchaseEntity->setDocumentNumber($bodyParsed->documentNumber);
+
+            $time = strtotime($bodyParsed->date . '00:00:00');
+            $this->purchaseEntity->setDate(date('Y-m-d H:i:s', $time));
+
+//            $this->purchaseEntity->setDate($bodyParsed->date);
+            $this->purchaseEntity->setTotal($bodyParsed->total);
+            $this->purchaseEntity->setTax(0);
+            $this->purchaseEntity->setNote($bodyParsed->note);
+            $this->purchaseEntity->setActive($bodyParsed->active);
+
+        } catch (Exception $ex) {
+            throw new Exception($ex->getMessage(), $ex->getCode());
+        }
+
     }
 }

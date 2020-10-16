@@ -14,4 +14,6 @@ interface ProductRepositoryInterface
     public function allProduct(array $query): object;
 
     public function countProducts(): int;
+
+    public function getProductsByProvider(int $providerId): array;
 }

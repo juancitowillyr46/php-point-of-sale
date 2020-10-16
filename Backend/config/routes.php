@@ -45,13 +45,13 @@ return function (App $app) {
             $group->delete('/{uuid}', \App\BackOffice\Products\Application\Actions\ProductRemoveAction::class);
         })->add(AuthValidateTokenMiddleware::class);
 
-        $group->group('/persons', function (RouteCollectorProxy $group) {
-            $group->post('', \App\BackOffice\Persons\Application\Actions\PersonAddAction::class);
-            $group->get('/{uuid}', \App\BackOffice\Persons\Application\Actions\PersonFindAction::class);
-            $group->get('', \App\BackOffice\Persons\Application\Actions\PersonFindAllAction::class);
-            $group->put('/{uuid}', \App\BackOffice\Persons\Application\Actions\PersonEditAction::class);
-            $group->delete('/{uuid}', \App\BackOffice\Persons\Application\Actions\PersonRemoveAction::class);
-        })->add(AuthValidateTokenMiddleware::class);
+//        $group->group('/persons', function (RouteCollectorProxy $group) {
+//            $group->post('', \App\BackOffice\Persons\Application\Actions\PersonAddAction::class);
+//            $group->get('/{uuid}', \App\BackOffice\Persons\Application\Actions\PersonFindAction::class);
+//            $group->get('', \App\BackOffice\Persons\Application\Actions\PersonFindAllAction::class);
+//            $group->put('/{uuid}', \App\BackOffice\Persons\Application\Actions\PersonEditAction::class);
+//            $group->delete('/{uuid}', \App\BackOffice\Persons\Application\Actions\PersonRemoveAction::class);
+//        })->add(AuthValidateTokenMiddleware::class);
 
         $group->group('/purchases', function (RouteCollectorProxy $group) {
             $group->post('', \App\BackOffice\Purchases\Application\Actions\PurchaseAddAction::class);
@@ -99,6 +99,7 @@ return function (App $app) {
             $group->get('', \App\BackOffice\Providers\Application\Actions\ProviderFindAllAction::class);
             $group->put('/{uuid}', \App\BackOffice\Providers\Application\Actions\ProviderEditAction::class);
             $group->delete('/{uuid}', \App\BackOffice\Providers\Application\Actions\ProviderRemoveAction::class);
+            $group->get('/{providerId}/products', \App\BackOffice\Products\Application\Actions\ProductCommonAction::class);
         })->add(AuthValidateTokenMiddleware::class);
 
         $group->group('/customers', function (RouteCollectorProxy $group) {
@@ -121,6 +122,8 @@ return function (App $app) {
             $group->get('/ubigeo/departments', \App\BackOffice\Ubigeo\Application\Actions\UbigeoCommonDepartment::class);
             $group->get('/ubigeo/departments/{department_id}/provinces', \App\BackOffice\Ubigeo\Application\Actions\UbigeoCommonProvince::class);
             $group->get('/ubigeo/departments/{department_id}/provinces/{province_id}/districts', \App\BackOffice\Ubigeo\Application\Actions\UbigeoCommonDistrict::class);
+            $group->get('/type-tax-document', \App\BackOffice\DataMaster\Application\Actions\DataMasterCommonTypeTaxDocumentAction::class);
+            $group->get('/status-purchase', \App\BackOffice\DataMaster\Application\Actions\DataMasterCommonStatusPurchaseAction::class);
         })->add(AuthValidateTokenMiddleware::class);
 
     });

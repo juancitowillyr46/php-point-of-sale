@@ -4,15 +4,16 @@ namespace App\BackOffice\Purchases\Domain\Entities;
 class PurchaseDto
 {
     public string $id;
-    public string $documentType;
-    public string $numDocument;
-    public string $serieDocument;
-    public string $status;
+    public string $documentTypeName;
+    public string $documentTypeId;
+    public string $documentNumber;
     public string $date;
-    public float $total;
-    public string $provider;
-    public string $employee;
+    public string $total;
+    public string $providerId;
+    public string $providerName;
+    public string $createdAtName;
     public string $createdAt;
-    public string $active;
-    public string $detail;
+    public string $activeName;
+    public bool $active;
+    public string $note;
 }
