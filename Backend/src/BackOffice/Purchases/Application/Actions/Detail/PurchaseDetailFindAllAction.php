@@ -1,5 +1,5 @@
 <?php
-namespace App\BackOffice\PurchasesDetail\Application\Actions;
+namespace App\BackOffice\Purchases\Application\Actions\Detail;
 
 use App\Shared\Action\ActionCommandFindAll;
 use Exception;
@@ -8,12 +8,13 @@ use Psr\Log\LoggerInterface;
 
 class PurchaseDetailFindAllAction extends PurchasesDetailAction
 {
+
     protected function action(): Response
     {
         try {
             $query = $this->request->getQueryParams();
-            $idRef = $this->resolveArg('purchaseId');
-            return $this->commandSuccess($this->purchaseDetailFindAllService->executeCollectionDetail($idRef, $query));
+            $purchaseId = $this->resolveArg('purchaseId');
+            return $this->commandSuccess($this->purchaseDetailFindAllService->executeCollectionPagination($purchaseId, $query));
         } catch (Exception $ex) {
             return $this->commandError($ex);
         }

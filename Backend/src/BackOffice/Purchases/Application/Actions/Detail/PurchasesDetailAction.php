@@ -1,13 +1,11 @@
 <?php
-namespace App\BackOffice\PurchasesDetail\Application\Actions;
+namespace App\BackOffice\Purchases\Application\Actions\Detail;
 
-use App\BackOffice\PurchasesDetail\Domain\Exceptions\PurchaseDetailValidateSchema;
-use App\BackOffice\PurchasesDetail\Domain\Services\PurchaseDetailAddService;
-use App\BackOffice\PurchasesDetail\Domain\Services\PurchaseDetailEditService;
-use App\BackOffice\PurchasesDetail\Domain\Services\PurchaseDetailFindAllService;
-use App\BackOffice\PurchasesDetail\Domain\Services\PurchaseDetailFindService;
-use App\BackOffice\PurchasesDetail\Domain\Services\PurchaseDetailRemoveService;
-use App\BackOffice\PurchasesDetail\Domain\Services\PurchaseDetailService;
+use App\BackOffice\Purchases\Domain\Services\Detail\PurchaseDetailAddService;
+use App\BackOffice\Purchases\Domain\Services\Detail\PurchaseDetailEditService;
+use App\BackOffice\Purchases\Domain\Services\Detail\PurchaseDetailFindAllService;
+use App\BackOffice\Purchases\Domain\Services\Detail\PurchaseDetailFindService;
+use App\BackOffice\Purchases\Domain\Services\Detail\PurchaseDetailRemoveService;
 use App\Shared\Action\Action;
 use Psr\Log\LoggerInterface;
 
@@ -38,4 +36,3 @@ abstract class PurchasesDetailAction extends Action
         parent::__construct($logger);
     }
 }
-

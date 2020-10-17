@@ -1,23 +1,23 @@
 <?php
-namespace App\BackOffice\PurchasesDetail\Domain\Services;
 
+
+namespace App\BackOffice\Purchases\Domain\Services\Detail;
+
+
+use App\BackOffice\Purchases\Domain\Entities\Detail\PurchaseDetailModel;
 use App\BackOffice\Purchases\Domain\Entities\PurchaseModel;
-use App\BackOffice\PurchasesDetail\Domain\Entities\PurchaseDetailModel;
 use App\Shared\Exception\Commands\RemoveActionException;
 use Exception;
 
 class PurchaseDetailRemoveService extends PurchaseDetailService
 {
-    public function executeArgDetail(string $purchaseId, string $purchaseDetailId): object {
+    public function executeArgs(string $purchaseDetailId, string $purchaseId): object {
         try {
 
-            // Purchase
             $this->findResourceByUuid(new PurchaseModel(), $purchaseId);
 
-            // Detail
-            $findPurchaseDetailId = $this->findResourceByUuid(new PurchaseDetailModel(), $purchaseDetailId);
-
-            $success = $this->purchaseDetailRepository->removePurchaseDetail((int) $findPurchaseDetailId);
+            $findUser = $this->findResourceByUuid(new PurchaseDetailModel(), $purchaseDetailId);
+            $success = $this->purchaseDetailRepository->removePurchaseDetail((int) $findUser);
             if(!$success) {
                 throw new RemoveActionException();
             }

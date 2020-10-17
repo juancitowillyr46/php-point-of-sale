@@ -38,7 +38,7 @@ class PurchaseMapper
         })->forMember('provider', function($source){
             return $source['provider']['name'];
         })->forMember('total', function($source){
-            return "S/ " . $source['total'];
+            return "S/" . $source['total'];
         });
     }
 }

@@ -45,14 +45,6 @@ return function (App $app) {
             $group->delete('/{uuid}', \App\BackOffice\Products\Application\Actions\ProductRemoveAction::class);
         })->add(AuthValidateTokenMiddleware::class);
 
-//        $group->group('/persons', function (RouteCollectorProxy $group) {
-//            $group->post('', \App\BackOffice\Persons\Application\Actions\PersonAddAction::class);
-//            $group->get('/{uuid}', \App\BackOffice\Persons\Application\Actions\PersonFindAction::class);
-//            $group->get('', \App\BackOffice\Persons\Application\Actions\PersonFindAllAction::class);
-//            $group->put('/{uuid}', \App\BackOffice\Persons\Application\Actions\PersonEditAction::class);
-//            $group->delete('/{uuid}', \App\BackOffice\Persons\Application\Actions\PersonRemoveAction::class);
-//        })->add(AuthValidateTokenMiddleware::class);
-
         $group->group('/purchases', function (RouteCollectorProxy $group) {
             $group->post('', \App\BackOffice\Purchases\Application\Actions\PurchaseAddAction::class);
             $group->get('/{uuid}', \App\BackOffice\Purchases\Application\Actions\PurchaseFindAction::class);
@@ -61,12 +53,12 @@ return function (App $app) {
             $group->delete('/{uuid}', \App\BackOffice\Purchases\Application\Actions\PurchaseRemoveAction::class);
         })->add(AuthValidateTokenMiddleware::class);
 
-        $group->group('/purchases/{purchaseId}/items', function (RouteCollectorProxy $group) {
-            $group->post('', \App\BackOffice\PurchasesDetail\Application\Actions\PurchaseDetailAddAction::class);
-            $group->get('/{id}', \App\BackOffice\PurchasesDetail\Application\Actions\PurchaseDetailFindAction::class);
-            $group->get('', \App\BackOffice\PurchasesDetail\Application\Actions\PurchaseDetailFindAllAction::class);
-            $group->put('/{id}', \App\BackOffice\PurchasesDetail\Application\Actions\PurchaseDetailEditAction::class);
-            $group->delete('/{id}', \App\BackOffice\PurchasesDetail\Application\Actions\PurchaseDetailRemoveAction::class);
+        $group->group('/purchases/{purchaseId}/detail', function (RouteCollectorProxy $group) {
+            $group->post('', \App\BackOffice\Purchases\Application\Actions\Detail\PurchaseDetailAddAction::class);
+            $group->put('/{id}', \App\BackOffice\Purchases\Application\Actions\Detail\PurchaseDetailEditAction::class);
+            $group->get('/{id}', \App\BackOffice\Purchases\Application\Actions\Detail\PurchaseDetailFindAction::class);
+            $group->get('', \App\BackOffice\Purchases\Application\Actions\Detail\PurchaseDetailFindAllAction::class);
+            $group->delete('/{id}', \App\BackOffice\Purchases\Application\Actions\Detail\PurchaseDetailRemoveAction::class);
         })->add(AuthValidateTokenMiddleware::class);
 
         $group->group('/data-master', function (RouteCollectorProxy $group) {

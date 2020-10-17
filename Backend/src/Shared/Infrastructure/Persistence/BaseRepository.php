@@ -119,4 +119,27 @@ class BaseRepository implements RepositoryInterface
         }
 
     }
+
+    public function paginateModelParent(Model $model, array $query, int $parentId, string $parentCondition): object {
+
+        try {
+
+            $findAll = $model::all()
+                ->where('purchase_id', '=', 1)
+                ->sortByDesc('id')
+                ->skip(((int)$query['page'] - 1) * $query['size'])
+                ->take((int)$query['size'])
+                ->toArray();
+
+            $paginate = new PaginateEntity();
+            $paginate->setRows($findAll);
+            $paginate->setTotalRows($model::all()->count());
+            $paginate->setTotalPages(ceil($model::all()->count()/(int)$query['size']));
+            return $paginate;
+
+        } catch (Exception $ex) {
+            throw new Exception($ex->getMessage(), $ex->getCode());
+        }
+
+    }
 }

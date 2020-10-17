@@ -143,9 +143,9 @@ abstract class BaseService
         return $find->getAttribute($attr);
     }
 
-    public function getAttributeById(Model $model, string $id, string $attr = ''): ?string
+    public function getAttributeById(Model $model, int $id, string $attr = '')
     {
-        $find = $model::select('id','uuid','name')->where('id', '=' ,$id)->first();
+        $find = $model::select($attr)->where('id', '=' ,$id)->first();
         if(!$find)
             throw new FindActionException();
 

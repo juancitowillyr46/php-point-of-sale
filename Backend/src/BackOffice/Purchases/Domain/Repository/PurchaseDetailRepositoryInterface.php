@@ -1,5 +1,6 @@
 <?php
-namespace App\BackOffice\PurchasesDetail\Domain\Repository;
+namespace App\BackOffice\Purchases\Domain\Repository;
+
 
 interface PurchaseDetailRepositoryInterface
 {
@@ -11,5 +12,5 @@ interface PurchaseDetailRepositoryInterface
 
     public function removePurchaseDetail(int $id): bool;
 
-    public function allPurchasesDetails(int $purchaseId, array $query): array;
+    public function allPurchasesDetail(array $query): object;
 }

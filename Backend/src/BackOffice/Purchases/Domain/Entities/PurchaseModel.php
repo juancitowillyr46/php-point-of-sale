@@ -35,11 +35,6 @@ class PurchaseModel extends Model
 
     protected $with = ['provider'];
 
-    // public function detail()
-    // {
-    //  return $this->hasMany(PurchaseDetailModel::class, 'buy_id', 'id');
-    // }
-
     public function provider()
     {
         return $this->belongsTo(ProviderModel::class, 'provider_id', 'id');

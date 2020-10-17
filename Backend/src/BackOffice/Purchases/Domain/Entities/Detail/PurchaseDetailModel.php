@@ -1,27 +1,34 @@
 <?php
-namespace App\BackOffice\PurchasesDetail\Domain\Entities;
+
+
+namespace App\BackOffice\Purchases\Domain\Entities\Detail;
+
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PurchaseDetailModel extends Model
 {
-    protected $table = "buy_detail";
+    protected $table = "purchase_detail";
 
     protected $fillable = [
         'id',
         'uuid',
-        'buy_id',
+        'purchase_id',
         'product_id',
         'quantity',
         'price',
-        'active',
+        'subtotal',
         'created_at',
-        'created_by'
+        'created_by',
+        'updated_at',
+        'updated_by',
+        'deleted_at',
+        'deleted_by',
+        'active'
     ];
 
     use SoftDeletes;
 
     const UPDATED_AT = null;
-
 }

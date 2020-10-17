@@ -1,8 +1,10 @@
 <?php
-namespace App\BackOffice\PurchasesDetail\Application\Actions;
+namespace App\BackOffice\Purchases\Application\Actions\Detail;
+
 
 use Exception;
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Log\LoggerInterface;
 
 class PurchaseDetailFindAction extends PurchasesDetailAction
 {
@@ -10,11 +12,10 @@ class PurchaseDetailFindAction extends PurchasesDetailAction
     {
         try {
 
+            $purchaseDetailId = $this->resolveArg('id');
             $purchaseId = $this->resolveArg('purchaseId');
 
-            $purchaseDetailId = $this->resolveArg('id');
-
-            return $this->commandSuccess($this->purchaseDetailFindService->executeArgDetail($purchaseId, $purchaseDetailId));
+            return $this->commandSuccess($this->purchaseDetailFindService->executeArgs($purchaseDetailId, $purchaseId));
         } catch (Exception $ex) {
             return $this->commandError($ex);
         }

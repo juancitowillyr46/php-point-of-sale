@@ -1,8 +1,8 @@
 <?php
-namespace App\BackOffice\PurchasesDetail\Infrastructure\Persistence;
+namespace App\BackOffice\Purchases\Infrastructure\Persistence;
 
-use App\BackOffice\PurchasesDetail\Domain\Entities\PurchaseDetailModel;
-use App\BackOffice\PurchasesDetail\Domain\Repository\PurchaseDetailRepositoryInterface;
+use App\BackOffice\Purchases\Domain\Entities\Detail\PurchaseDetailModel;
+use App\BackOffice\Purchases\Domain\Repository\PurchaseDetailRepositoryInterface;
 use App\Shared\Exception\Database\ExceptionEloquent;
 use App\Shared\Infrastructure\Persistence\BaseRepository;
 use Exception;
@@ -11,27 +11,26 @@ class PurchaseDetailRepository extends BaseRepository implements PurchaseDetailR
 {
     private PurchaseDetailModel $purchaseDetailModel;
 
-    public function __construct(PurchaseDetailModel $purchaseDetailModel)
-    {
+    public function __construct(PurchaseDetailModel $purchaseDetailModel) {
         $this->purchaseDetailModel = $purchaseDetailModel;
         $this->setModel($purchaseDetailModel);
     }
 
-    public function addPurchaseDetail(array $purchaseDetail): bool
+    public function addPurchaseDetail(array $purchase): bool
     {
         try {
-            $addPurchaseDetail = $this->purchaseDetailModel::create($purchaseDetail);
+            $addPurchaseDetail = $this->purchaseDetailModel::create($purchase);
             return $addPurchaseDetail->save();
         } catch (Exception $ex) {
             throw new ExceptionEloquent($ex->getMessage(), $ex->getCode());
         }
     }
 
-    public function editPurchaseDetail(int $id, array $purchaseDetail): bool
+    public function editPurchaseDetail(int $id, array $purchase): bool
     {
         try {
             $editPurchaseDetail = $this->purchaseDetailModel::all()->find($id);
-            return $editPurchaseDetail->update($purchaseDetail);
+            return $editPurchaseDetail->update($purchase);
         } catch (Exception $ex) {
             throw new ExceptionEloquent($ex->getMessage(), $ex->getCode());
         }
@@ -54,19 +53,8 @@ class PurchaseDetailRepository extends BaseRepository implements PurchaseDetailR
         }
     }
 
-    public function allPurchasesDetails(int $purchaseId, array $query): array
+    public function allPurchasesDetail(array $query): object
     {
-        $findAllPurchaseDetail = $this->purchaseDetailModel::all();
-
-        $getQuery = [];
-        if(count($query)) {
-            $getQuery = $findAllPurchaseDetail
-                ->where('buy_id', '=', $purchaseId)
-                ->where('active', '=', (boolean) $query['active'])
-                ->toArray();
-        } else {
-            $getQuery = $findAllPurchaseDetail->where('buy_id', '=', $purchaseId)->toArray();
-        }
-        return $getQuery;
+        return $this->paginateModel($query, $this->purchaseDetailModel);
     }
 }
