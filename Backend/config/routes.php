@@ -102,6 +102,22 @@ return function (App $app) {
             $group->delete('/{uuid}', \App\BackOffice\Customers\Application\Actions\CustomerRemoveAction::class);
         })->add(AuthValidateTokenMiddleware::class);
 
+        $group->group('/sales', function (RouteCollectorProxy $group) {
+            $group->post('', \App\BackOffice\Sales\Application\Actions\SaleAddAction::class);
+            $group->get('/{uuid}', \App\BackOffice\Sales\Application\Actions\SaleFindAction::class);
+            $group->get('', \App\BackOffice\Sales\Application\Actions\SaleFindAllAction::class);
+            $group->put('/{uuid}', \App\BackOffice\Sales\Application\Actions\SaleEditAction::class);
+            $group->delete('/{uuid}', \App\BackOffice\Sales\Application\Actions\SaleRemoveAction::class);
+        })->add(AuthValidateTokenMiddleware::class);
+
+        $group->group('/sales/{saleId}/detail', function (RouteCollectorProxy $group) {
+            $group->post('', \App\BackOffice\Sales\Application\Actions\Detail\SaleDetailAddAction::class);
+            $group->put('/{id}', \App\BackOffice\Sales\Application\Actions\Detail\SaleDetailEditAction::class);
+            $group->get('/{id}', \App\BackOffice\Sales\Application\Actions\Detail\SaleDetailFindAction::class);
+            $group->get('', \App\BackOffice\Sales\Application\Actions\Detail\SaleDetailFindAllAction::class);
+            $group->delete('/{id}', \App\BackOffice\Sales\Application\Actions\Detail\SaleDetailRemoveAction::class);
+        })->add(AuthValidateTokenMiddleware::class);
+
         $group->group('/commons', function (RouteCollectorProxy $group) {
             $group->get('/roles', \App\BackOffice\Roles\Application\Actions\RoleCommonAction::class);
             $group->get('/audit-status', \App\BackOffice\DataMaster\Application\Actions\DataMasterCommonAuditAction::class);
