@@ -1,122 +1,125 @@
-<div class="modal fade example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" data-dismiss="modal" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Compra <fa-icon [icon]="['fas', 'spinner']" class="mr-1" [pulse]="true" *ngIf="loadData"></fa-icon></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-sm-12 col-xs-12">
-                        <form [formGroup]="formGroup">
-                            <div class="form-group">
-                                <label for="providerId">Proveedor:</label>
-                                <select id="providerId" class="form-control mb-3" (change)="onChangeProductByProvider($event.target.value)" formControlName="providerId">
-                                    <option disabled selected>-- SELECCIONE --</option>
-                                    <option value [value]="item.value" *ngFor="let item of commonProviders">{{item.text}}</option>
-                                </select>
-                                <label *ngIf="formGroup.controls.providerId.errors && formGroup.controls.providerId.value" id="providerId" class="error mt-2 text-danger" for="providerId">Campo obligatorio.</label>
-                            </div>
-                            <div class="form-group">
-                                <label for="documentTypeId">Tipo de documento:</label>
-                                <select id="documentTypeId" class="form-control mb-3" formControlName="documentTypeId" >
-                                    <option disabled selected>-- SELECCIONE --</option>
-                                    <option value [value]="item.value" *ngFor="let item of commonTypeTaxDocument">{{item.text}}</option>
-                                </select>
-                                <label *ngIf="formGroup.controls.documentTypeId.errors && formGroup.controls.documentTypeId.value" id="providerId" class="error mt-2 text-danger" for="providerId">Campo obligatorio.</label>
-                            </div>
-                            <div class="form-group">
-                                <label for="documentNumber">Número documento:</label>
-                                <input type="text" autocomplete="false" class="form-control" id="documentNumber" placeholder="Ingrese numero de documento"
-                                formControlName="documentNumber" 
-                                [ngClass]="[
-                                            (formGroup.controls.documentNumber.errors && formGroup.controls.documentNumber.value != '')? 'is-invalid' : 
-                                            (formGroup.controls.documentNumber.value != '')? 'is-valid' : ''
-                                        ]" 
-                                >
-                            </div>
-                            <div class="form-group">
-                                <label for="date">Fecha</label>
-                                <input type="text" class="form-control" autocomplete="false" id="date" placeholder="Ingrese fecha" data-provide="datepicker" data-date-format="dd-mm-yyyy" data-date-autoclose="true"
-                                formControlName="date" 
-                                [ngClass]="[
-                                            (formGroup.controls.date.errors && formGroup.controls.date.value != '')? 'is-invalid' : 
-                                            (formGroup.controls.date.value != '')? 'is-valid' : ''
-                                        ]" 
-                                >
-                            </div>
-   
-                            <h6 class="modal-title" id="exampleModalLabel">Detalle</h6><br>
-
-                            <div class="form-group">
-                                <label for="productId">Elegir Producto:</label>
-                                <select id="productId" class="form-control mb-3"
-                                [disabled]="loadData"
-                                (change)="onChangeProductId($event.target.value)"
-                                [(ngModel)]="selectedProduct"
-                                [ngModelOptions]="{standalone: true}"
-                                >
-                                    <option disabled selected>-- SELECCIONE --</option>
-                                    <option value [value]="item.value" *ngFor="let item of providerGetProducts">{{item.text}}</option>
-                                </select>
-                            </div>
-                            <table class="table">
-                                <tr>
-                                    <td width="55%">Producto</td>
-                                    <td width="15%" align="center">Cantidad</td>
-                                    <td width="15%" align="center">Precio</td>
-                                    <td width="15%" align="center">Subtotal</td>
-                                    <td></td>
-                                </tr>
-                                <tr *ngFor="let product of purchase.detail; let i = index;">
-                                    <td class="product-td">{{ product.productName }}</td>
-                                    <td class="product-td"><input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="product.quantity" class="form-control" [value]="product.quantity" /></td>
-                                    <td class="product-td"><input type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="product.price" class="form-control" [value]="product.price" /></td>
-                                    <td align="center" class="product-td">{{ product.subTotal | currency:'S/ ' }}</td>
-                                    <td class="product-td"><a href="javascript:void(0)" (click)="onClickRemove(i)"><i class="ti-close"></i></a></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td align="center">Total</td>
-                                    <td align="center">{{ purchase.total | currency:'S/ ' }}</td>
-                                </tr>
-                            </table>
-                            
-                            <div class="form-group">
-                                <label for="note">Nota:</label>
-                                <textarea class="form-control" id="note" name="note" placeholder="Ingrese una descripción" rows="4"
-                                formControlName="note" 
-                                [ngClass]="[
-                                            (formGroup.controls.note.errors && formGroup.controls.note.value != '')? 'is-invalid' : 
-                                            (formGroup.controls.note.value != '')? 'is-valid' : ''
-                                        ]" 
-                                ></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="active">Activo:</label>
-                                <select id="active" class="form-control" formControlName="active">
-                                    <option value="">--SELECCIONE--</option>
-                                    <option value [value]="item.value" *ngFor="let item of commonAuditStatus">{{item.text}}</option>
-                                </select>
-                                <label *ngIf="formGroup.controls.active.errors && formGroup.controls.active.value" id="active" class="error mt-2 text-danger" for="active">Campo obligatorio.</label>
-                            </div>
-                        </form>
-                        <button type="button" class="btn btn-primary mr-2 mt-15" (click)="onClickDone()" [disabled]="formGroup.invalid || submit === true">
-                            <fa-icon [icon]="['fas', 'spinner']" class="mr-1" [pulse]="true" *ngIf="submit"></fa-icon>
-                            <!-- <fa-icon [icon]="['fas', 'ban']" class="mr-1" *ngIf="!submit && !formGroup.invalid"></fa-icon> -->
-                            Guardar
-                        </button>
-                        <button type="button" (click)="onClickClose()" class="btn btn-danger mt-15">Cancelar</button>
-                    </div>
-                </div>
-            </div>
-            <!-- <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div> -->
-        </div>
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">Compra 
+    <fa-icon [icon]="['fas', 'spinner']" class="mr-1" [pulse]="true" *ngIf="loadData"></fa-icon>
+  </h5>
+  <button type="button" class="close" (click)="closeModal('CLOSE')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="formGroup" novalidate >
+    <div class="form-group">
+        <label for="providerId">Proveedor:</label>
+        <select id="providerId" class="form-control mb-3" (change)="onChangeProductByProvider($event.target.value)" formControlName="providerId">
+            <option disabled selected>-- SELECCIONE --</option>
+            <option value [value]="item.value" *ngFor="let item of commonProviders">{{item.text}}</option>
+        </select>
+        <label *ngIf="formGroup.get('providerId').errors && formGroup.get('providerId').value" id="providerId" class="error mt-2 text-danger" for="providerId">Campo obligatorio.</label>
     </div>
+    <div class="form-group">
+        <label for="documentTypeId">Tipo de documento:</label>
+        <select id="documentTypeId" class="form-control mb-3" formControlName="documentTypeId" >
+            <option disabled selected>-- SELECCIONE --</option>
+            <option value [value]="item.value" *ngFor="let item of commonTypeTaxDocument">{{item.text}}</option>
+        </select>
+        <label *ngIf="formGroup.get('documentTypeId').errors && formGroup.get('documentTypeId').value" id="providerId" class="error mt-2 text-danger" for="providerId">Campo obligatorio.</label>
+    </div>
+    <div class="form-group">
+        <label for="documentNumber">Número documento:</label>
+        <input type="text" class="form-control" id="documentNumber" placeholder="Ingrese numero de documento"
+        formControlName="documentNumber" 
+        [ngClass]="[   
+        (
+            formGroup.get('documentNumber').errors == null && 
+            (formGroup.get('documentNumber').value != null || formGroup.get('documentNumber').value != '')
+        )? 'is-valid' : ''
+        ]" 
+        >
+    </div>
+    <div class="form-group">
+        <label for="date">Fecha:</label>
+        <input type="text" class="form-control" id="date" placeholder="Ingrese fecha" data-provide="datepicker" data-date-format="dd-mm-yyyy" data-date-autoclose="true"
+        formControlName="date" 
+        [ngClass]="[   
+        (
+          formGroup.get('date').errors == null && 
+          (formGroup.get('date').value != null || formGroup.get('date').value != '')
+        )? 'is-valid' : ''
+        ]" 
+        >
+    </div>
+
+    
+
+    <div class="form-group">
+        <label for="selectedProduct">Elegir Producto:</label>
+        <select id="selectedProduct" class="form-control mb-3"
+        [disabled]="loadData"
+        (change)="onChangeProductId($event.target.value)"
+        [(ngModel)]="selectedProduct"
+        [ngModelOptions]="{standalone: true}"
+        >
+            <option disabled selected>-- SELECCIONE --</option>
+            <option [value]="item.value" *ngFor="let item of providerGetProducts">{{item.text}}</option>
+        </select>
+    </div>
+    <h6 class="modal-title" id="exampleModalLabel">Orden</h6>
+    <table class="table" id="grid-local">
+        <tr>
+            <td width="55%">Producto</td>
+            <td width="15%" align="center">Cantidad</td>
+            <td width="15%" align="center">Precio costo</td>
+            <td width="15%" align="center">Subtotal</td>
+            <td>
+                <fa-icon [icon]="['fas', 'trash']" class="mr-1" ></fa-icon>
+            </td>
+        </tr>
+        <tr *ngFor="let product of purchase.detail; let i = index;">
+            <td class="product-td">{{ product.productName }}</td>
+            <td class="product-td"><input type="number" [ngModelOptions]="{standalone: true}" ngOnSelectInput [(ngModel)]="product.quantity" class="form-control" /></td>
+            <td class="product-td"><input [ngModelOptions]="{standalone: true}" ngOnSelectInput currencyMask [options]="{ prefix: '', thousands: ',', decimal: '.', precision: 2 }" [(ngModel)]="product.price" class="form-control" /></td>
+            <td align="right" class="product-td">{{ product.subTotal | currency:'S/ ' }}</td>
+            <td align="right" class="product-td">
+                <a href="javascript:void(0)" (click)="onClickRemove(i)" placement="bottom" ngbTooltip="Eliminar">
+                    <fa-icon [icon]="['fas', 'trash']" class="mr-1" ></fa-icon>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td align="center">Total</td>
+            <td align="right">{{ purchase.total | currency:'S/ ' }}</td>
+            <td></td>
+        </tr>
+    </table>
+
+    <div class="form-group">
+        <label for="note">Nota:</label>
+        <textarea class="form-control" id="note" name="note" placeholder="Ingrese una descripción" rows="4"
+        formControlName="note" 
+        [ngClass]="[   
+        (
+            formGroup.get('note').errors == null && 
+            (formGroup.get('note').value != null || formGroup.get('note').value != '')
+        )? 'is-valid' : ''
+        ]" 
+        ></textarea>
+    </div>
+    <div class="form-group">
+        <label for="active">Activo:</label>
+        <select id="active" class="form-control" formControlName="active">
+            <option value="">--SELECCIONE--</option>
+            <option value [value]="item.value" *ngFor="let item of commonAuditStatus">{{item.text}}</option>
+        </select>
+        <label *ngIf="formGroup.controls.active.errors && formGroup.controls.active.value" id="active" class="error mt-2 text-danger" for="active">Campo obligatorio.</label>
+    </div>
+  </form>
+  <button type="button" class="btn btn-primary mr-2 mt-15" (click)="onClickDone()" [disabled]="(formGroup.invalid || submit === true || validateOrder)">
+      <fa-icon [icon]="['fas', 'spinner']" class="mr-1" [pulse]="true" *ngIf="submit"></fa-icon>
+      Guardar
+  </button>
+  <button type="button" (click)="onClickClose()" class="btn btn-danger mt-15">
+      Cancelar
+  </button>
 </div>

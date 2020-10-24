@@ -4,13 +4,13 @@ import { DataService } from "../../../core/base/data.service";
 import { ResponseDataDto } from '../../../core/base/response-data.dto';
 import { ResponseIdDataDto } from '../../../core/entities/response-id-data.dto';
 import { PurchaseDto } from '../model/purchase.dto';
-import { PurchaseStoreDto } from '../model/purchase-store.dto';
+import { PurchaseDetailStoreDto } from '../model/purchase-detail-store.dto';
 import { CommonDto } from '../../commons/model/common.dto';
 
 @Injectable({
     providedIn: 'root'
 })
-export class PurchaseRepository {
+export class PurchaseDetailRepository {
 
     private resource = 'purchases';
 
@@ -18,9 +18,9 @@ export class PurchaseRepository {
 
     }
 
-    getAll(obj: any): Observable<ResponseDataDto<PurchaseDto[]>> {
+    getAll(purchaseId: string): Observable<ResponseDataDto<PurchaseDto[]>> {
         const that = this;
-        return that.dataService.get(that.resource + '?size='+ obj.size  +'&page=' + obj.page);
+        return that.dataService.get(that.resource +'/'+ purchaseId +'/detail' + '?size=10&page=1');
     }
     
     get(id: string): Observable<ResponseDataDto<PurchaseDto>> {
@@ -28,19 +28,19 @@ export class PurchaseRepository {
         return that.dataService.get(that.resource, id);
     }
 
-    edit(id: string, object: PurchaseStoreDto): Observable<ResponseDataDto<ResponseIdDataDto>> {
+    edit(id: string, object: PurchaseDetailStoreDto): Observable<ResponseDataDto<ResponseIdDataDto>> {
         const that = this;
-        return that.dataService.put(that.resource, id, object);
+        return that.dataService.put(that.resource +'/'+ object.purchaseId +'/detail', id, object);
     }
 
-    add(object: PurchaseStoreDto): Observable<ResponseDataDto<ResponseIdDataDto>> {
+    add(object: PurchaseDetailStoreDto): Observable<ResponseDataDto<ResponseIdDataDto>> {
         const that = this;
-        return that.dataService.post(that.resource, object);
+        return that.dataService.post(that.resource +'/'+ object.purchaseId +'/detail', object);
     }
 
-    remove(id: string): Observable<ResponseDataDto<ResponseIdDataDto>> { 
+    remove(id: string, object: PurchaseDetailStoreDto): Observable<ResponseDataDto<ResponseIdDataDto>> { 
         const that = this;
-        return that.dataService.delete(that.resource, id);
+        return that.dataService.delete(that.resource +'/'+ object.purchaseId +'/detail', id);
     }
 
     getProducts(prodiverId: string): Observable<ResponseDataDto<CommonDto[]>> { 

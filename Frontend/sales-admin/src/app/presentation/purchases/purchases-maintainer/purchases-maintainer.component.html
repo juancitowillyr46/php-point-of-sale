@@ -6,7 +6,7 @@
                     <h4 class="mb-0 font-18">{{ data.title }}</h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item" ><a href="javascript: void(0);">Maestro</a></li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Maestro</a></li>
                             <li class="breadcrumb-item active">Compras</li>
                         </ol>
                     </div>
@@ -17,10 +17,83 @@
             <div class="col-12 box-margin">
                 <div class="card">
                     <div class="card-body">
-                        <button type="button" class="btn-add btn btn-success mb-2 mr-2" (click)="onClickAdd()"><i class="ti-plus"></i> Crear</button>
-                        <button type="button" class="btn btn-primary mb-2 mr-2" (click)="onClickRefresh()"><i class="ti-reload"></i> Refrescar</button>
-                        <app-grid-simple></app-grid-simple>
-                        <app-modal-purchases></app-modal-purchases>
+                      <!-- (click)="onClickAdd()"  -->
+                      <div class="d-flex pb-2">
+                        <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic"> 
+                          <label class="btn-primary" ngbButtonLabel placement="top" ngbTooltip="Crear" (click)="onClickModalStore('')">
+                            <a href="javascript:void(0)" class="text-white" ngbButton > 
+                              <i class="ti-plus"></i>
+                            </a>
+                          </label>
+                          <label class="btn-primary" ngbButtonLabel placement="top" ngbTooltip="Actualizar">
+                            <a href="javascript:void(0)" class="text-white" ngbButton (click)="onClickRefresh()"> 
+                              <fa-icon [icon]="['fas', 'sync']" class="mr-1" [pulse]="loadData"></fa-icon>
+                            </a>
+                          </label>
+                          <!-- <label class="btn-primary" ngbButtonLabel ngbTooltip="Exportar">
+                            <a href="javascript:void(0)" class="text-white" ngbButton> 
+                              <fa-icon [icon]="['fas', 'download']" class="mr-1" ></fa-icon>
+                            </a>
+                          </label> -->
+                        </div>
+                      </div>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                              <th scope="col">Tipo</th>
+                              <th scope="col">Número documento</th>
+                              <th scope="col">Fecha</th>
+                              <th scope="col">Total</th>
+                              <th scope="col">Proveedor</th>
+                              <th scope="col">Fecha creación</th>
+                              <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let purchase of dataRows">
+                              <td width="14%">
+                                {{ purchase.documentTypeName }}
+                              </td>
+                              <td width="14%">
+                                {{ purchase.documentNumber }}
+                              </td>
+                              <td width="14%">
+                                {{ purchase.date }}
+                              </td>
+                              <td width="14%">
+                                {{ purchase.total }}
+                              </td>
+                              <td width="18%">
+                                {{ purchase.providerName }}
+                              </td>
+                              <td width="14%">
+                                {{ purchase.createdAt }}
+                              </td>
+                              <td width="10%" align="center">
+                                <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic"> 
+                                  <label class="btn-primary" ngbButtonLabel placement="top" ngbTooltip="Editar" (click)="onClickModalStore(purchase.id)">
+                                    <a href="javascript:void(0)" ngbButton class="text-white">
+                                      <fa-icon [icon]="['fas', 'pencil-alt']" class="mr-1"></fa-icon>
+                                    </a>
+                                  </label>
+                                  <label class="btn-primary" ngbButtonLabel placement="top" ngbTooltip="Eliminar" (click)="onClickRemove(purchase.id)">
+                                    <a href="javascript:void(0)" ngbButton class="text-white">
+                                      <fa-icon [icon]="['fas', 'trash']" class="mr-1" ></fa-icon>
+                                    </a>
+                                  </label>
+                                </div>
+                              </td>
+                            </tr>
+                            </tbody>
+                          </table>
+                        
+                          <div class="d-flex justify-content-between p-2">
+                            <ngb-pagination
+                              [collectionSize]="totalRows" [(page)]="currentPage" [pageSize]="totalPages" (pageChange)="onClickPageChange($event)">
+                            </ngb-pagination>
+                          </div>
+
+                        <!-- <app-modal-purchases></app-modal-purchases> -->
                     </div>
                 </div>
             </div>

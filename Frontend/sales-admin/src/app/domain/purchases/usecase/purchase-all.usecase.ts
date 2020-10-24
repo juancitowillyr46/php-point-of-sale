@@ -3,6 +3,8 @@ import { UseCase } from '../../../core/base/use-case';
 import { Observable } from "rxjs";
 import { PurchaseRepository } from "../repository/purchase.repository";
 import { map } from 'rxjs/operators';
+import { PurchaseStoreDto } from '../model/purchase-store.dto';
+import { PurchaseDto } from '../model/purchase.dto';
 
 @Injectable({
     providedIn: 'root'
@@ -13,11 +15,11 @@ export class PurchaseAllUseCase implements UseCase<any, any> {
 
     }
 
-    public execute(): Observable<any> {
+    public execute(obj: any): Observable<any> {
         const that = this;
-        //let accessTokenData: AccessTokenDto = new AccessTokenDto();
+        // let accessTokenData: AccessTokenDto = new AccessTokenDto();
 
-        return that.providerRepository.getAll().pipe(map(res => {
+        return that.providerRepository.getAll(obj).pipe(map(res => {
             console.log(res);
             return res;
             // accessTokenData.token = res.data.token;

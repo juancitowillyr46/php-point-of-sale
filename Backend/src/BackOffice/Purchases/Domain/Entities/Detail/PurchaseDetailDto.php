@@ -8,8 +8,10 @@ class PurchaseDetailDto
     public string $productId;
     public string $productName;
     public int $quantity;
-    public string $price;
-    public string $subtotal;
+    public string $priceName;
+    public float $price;
+    public string $subtotalName;
+    public float $subtotal;
     public bool $active;
     public bool $activeName;
     public string $createdAt;

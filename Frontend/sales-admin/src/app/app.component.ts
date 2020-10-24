@@ -22,10 +22,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     const that = this;
-    // that.route.data.subscribe( res => {
-    //   console.log(res);
-    //   that.data = res;
-    // });
+    that.route.data.subscribe( res => {
+      that.data = res;
+    });
   }
 
 

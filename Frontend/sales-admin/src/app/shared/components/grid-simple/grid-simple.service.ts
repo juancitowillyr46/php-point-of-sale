@@ -31,6 +31,13 @@ export class GridSimpleService {
         that.ajaxUrl = `${that.restApi}${res.endoPoint}?page=${res.page}&size=${res.size}`; 
     }
 
+    /**
+     * name
+     */
+    public loadGridLocal() {
+        $("#grid-local").DataTable();
+    }
+
     public loadGrid(res: GridPaginateDto): void {
 
         const that = this;
@@ -96,19 +103,20 @@ export class GridSimpleService {
                 //  }
             });
 
-            $('#basic-datatable tbody').on( 'click', '.btn-edit', function () {
-                var data = that.dataTable.row( $(this).parents('tr') ).data();
-                // alert(JSON.stringify(data));
-                // console.log(data);
-                //that.data(JSON.stringify(data));
-                that.dataStr = JSON.stringify(data);
-                $('#exampleModal').modal({
-                    backdrop: 'static',
-                    show: true
-                });
+            // $('#basic-datatable tbody').on( 'click', '.btn-edit', function () {
+            //     var data = that.dataTable.row( $(this).parents('tr') ).data();
+            //     // alert(JSON.stringify(data));
+            //     // console.log(data);
+            //     //that.data(JSON.stringify(data));
+            //     // that.dataStr = JSON.stringify(data);
 
-                that.modalDataObservable.changeData(JSON.stringify(data));
-            });
+            //     $('#exampleModal').modal({
+            //         backdrop: 'static',
+            //         show: true
+            //     });
+
+            //     that.modalDataObservable.changeData(JSON.stringify(data));
+            // });
         
             $('#basic-datatable tbody').on( 'click', '.btn-remove', function () {
                 var data = that.dataTable.row( $(this).parents('tr') ).data();

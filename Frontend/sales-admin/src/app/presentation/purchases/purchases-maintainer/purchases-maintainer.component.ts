@@ -1,67 +1,83 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { GridSimpleService } from 'src/app/shared/components/grid-simple/grid-simple.service';
-import { ModalDataObservable } from 'src/app/shared/components/modals/modal-data.observable';
+
+import { PurchaseAllUseCase } from '../../../domain/purchases/usecase/purchase-all.usecase';
+import { PurchaseRemoveUseCase } from '../../../domain/purchases/usecase/purchase-remove.usecase';
+
+import { PurchaseDto } from '../../../domain/purchases/model/purchase.dto';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalPurchasesComponent } from '../../../shared/components/modals/modal-purchases/modal-purchases.component';
+import { BaseTableComponent } from '../../../shared/components/tables/base-table.component';
 
 @Component({
   selector: 'app-purchases-maintainer',
   templateUrl: './purchases-maintainer.component.html',
   styleUrls: ['./purchases-maintainer.component.css']
 })
-export class PurchasesMaintainerComponent implements OnInit {
+export class PurchasesMaintainerComponent extends BaseTableComponent implements OnInit {
 
-  public data: any;
-  public progress: any;
+  public dataRows: PurchaseDto[] = [];
 
   constructor(
-    private route: ActivatedRoute,
-    private gridSimpleService: GridSimpleService,
-    private modalDataObservable: ModalDataObservable
-  ) { }
+    public route: ActivatedRoute,
+    private purchaseAllUseCase: PurchaseAllUseCase,
+    private purchaseRemoveUseCase: PurchaseRemoveUseCase,
+    public modalService: NgbModal
+  ) { 
+    super(modalService, route);
+    const that = this;
+    that.modalComponent = ModalPurchasesComponent;
+  }
 
   ngOnInit(): void {
     const that = this;
-    that.route.data.subscribe( res => {
-      console.log(res);
-      that.data = res;
+    that.getDataRoute();
+    that.getActionStoreAndRemove();
+  }
+
+
+  getActionStoreAndRemove(): void {
+    const that = this;
+    that.currentActionStore.subscribe( res => {
+      if(res === true){
+        that.getPaginatedRows(that.currentPage);
+      }
+    });
+    that.currentActionRemove.subscribe( res => {
+      if(res){
+        that.deleteRow(res);
+      }
     });
   }
 
-  ngAfterViewInit(): void {
+
+  getPaginatedRows(page: number): void {
     const that = this;
-    that.gridSimpleService.loadGrid({
-      endoPoint: '/purchases',
-      page: 1,
-      size: 10,
-      columns: [
-        { "data": "id", "title": "Correo", "width": '20%', "visible": false},
-        { "data": "documentTypeName", "title": "Tipo", "width": '20%'},
-        { "data": "documentNumber", "title": "Número documento", "width": '20%'},
-        { "data": "date", "title": "Fecha", "width": '20%'},
-        { "data": "total", "title": "Total", "width": '20%'},
-        { "data": "providerName", "title": "Proveedor", "width": '10%'},
-        { "data": "createdAt", "title": "Fecha creación", "width": '10%'},
-        { 
-          "data": null, 
-          "title": "", 
-          "defaultContent": '<div style="text-align:right"><button type="button" class="btn btn-edit btn-primary btn-circle mb-2 mr-1"><i class="ti-pencil"></i> </button><button type="button" class="btn-remove btn btn-danger btn-circle mb-2"><i class="ti-trash"></i> </button></div>', 
-          "width": '20%'
-        }
-      ]
+    that.loadData = true;
+    that.purchaseAllUseCase.execute({
+      page: page,
+      size: that.totalPages
+    }).subscribe(res => {
+      that.loadData = false;
+      that.dataRows = res.data.rows;
+      that.currentPage = page;
+      that.totalRows = res.data.totalRows;
+      that.actionStore.next(null);
+    }, (error) => {
+      that.loadData = false;
     });
   }
 
-  onClickRefresh(): void {
+  deleteRow(idPurchase: string): void {
     const that = this;
-    that.progress = true;
-    that.gridSimpleService.reload();
-  }
-
-  onClickAdd(): void {
-    const that = this;
-    that.progress = true;
-    // that.gridSimpleService.reload();
-    that.modalDataObservable.changeData(null);
+    that.loadData = true;
+    that.purchaseRemoveUseCase.execute(idPurchase).subscribe( res => {
+      that.loadData = false;
+      that.actionRemove.next(null);
+      that.getPaginatedRows(that.currentPage);
+    }, (error) => {
+      that.loadData = false;
+    });
   }
 
 }

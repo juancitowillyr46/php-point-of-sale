@@ -21,6 +21,7 @@ import { AuthHttpHeaderInterceptor } from './shared/interceptors/auth-http-heade
 import { AuthHttpErrorsInterceptor } from './shared/interceptors/auth-http-errors.interceptor';
 
 import { CoreModule } from './core/core.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { CoreModule } from './core/core.module';
     
     SecurityModule,
     PresentationModule,
+    // NgbModule,
     
   ],
   providers: [

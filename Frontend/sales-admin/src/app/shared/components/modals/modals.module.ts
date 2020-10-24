@@ -11,6 +11,9 @@ import { ModalCustomersComponent } from './modal-customers/modal-customers.compo
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ModalRolesComponent } from './modal-roles/modal-roles.component';
+import { InputSelectDirective } from '../../directives/input-select.directive';
+import { NgxCurrencyModule } from 'ngx-currency';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -22,13 +25,15 @@ import { ModalRolesComponent } from './modal-roles/modal-roles.component';
     ModalProvidersComponent, 
     ModalRepresentativeComponent, 
     ModalCustomersComponent, 
-    ModalRolesComponent
+    ModalRolesComponent,
+    InputSelectDirective
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    NgxCurrencyModule,
   ],
   exports: [
     ModalDataMasterComponent, 

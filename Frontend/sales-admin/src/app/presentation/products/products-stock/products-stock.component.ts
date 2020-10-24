@@ -16,8 +16,7 @@ export class ProductsStockComponent implements OnInit {
 
   ngOnInit(): void {
     const that = this;
-    that.route.data.subscribe( res => {
-      console.log(res);
+    that.route.data.subscribe( res => {      
       that.data = res;
     });
   }

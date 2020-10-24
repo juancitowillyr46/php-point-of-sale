@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { UseCase } from '../../../core/base/use-case';
+import { UseCase } from '../../../../core/base/use-case';
 import { Observable } from "rxjs";
-import { PurchaseRepository } from "../repository/purchase.repository";
+import { PurchaseRepository } from "../../repository/purchase.repository";
 import { map } from 'rxjs/operators';
-import { PurchaseDto } from '../model/purchase.dto';
+import { PurchaseDto } from '../../model/purchase.dto';
 
 @Injectable({
     providedIn: 'root'
 })
-export class PurchaseGetUseCase implements UseCase<string, any> {
+export class PurchaseDetailGetUseCase implements UseCase<string, any> {
 
     constructor(private providerRepository: PurchaseRepository) {
 
@@ -16,11 +16,11 @@ export class PurchaseGetUseCase implements UseCase<string, any> {
 
     public execute(id: string): Observable<PurchaseDto> {
         const that = this;
-        let purchaseDto: PurchaseDto;
-        console.log(id);
+        let ProductDto: PurchaseDto;
+
         return that.providerRepository.get(id).pipe(map(res => {
-            purchaseDto = res.data;
-            return purchaseDto;
+            ProductDto = res.data;
+            return ProductDto;
         }));
     }
 

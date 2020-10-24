@@ -40,9 +40,9 @@ class PurchaseDetailMapper
             return $source['product_uuid'];
         })->forMember('quantity', function($source){
             return $source['quantity'];
-        })->forMember('price', function($source){
+        })->forMember('priceName', function($source){
             return "S/" . $source['price'];
-        })->forMember('subtotal', function($source){
+        })->forMember('subtotalName', function($source){
             return "S/" . $source['subtotal'];
         });
     }

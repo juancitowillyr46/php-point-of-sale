@@ -8,7 +8,7 @@ import { ModalsModule } from './components/modals/modals.module';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faSpinner, faSignInAlt, faBan } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faSignInAlt, faBan, faSync, faDownload, faTrash, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { MeObservable } from '../shared/observables/me.observable';
 import { GridSimpleObservable } from '../shared/components/grid-simple/grid-simple.observable';
 import { GridSimpleService } from '../shared/components/grid-simple/grid-simple.service';
@@ -16,7 +16,10 @@ import { GridSimpleService } from '../shared/components/grid-simple/grid-simple.
 import { ModalDataObservable } from '../shared/components/modals/modal-data.observable';
 import { ModalDataRemoveObservable } from '../shared/components/modals/modal-data-remove.observable';
 
-import { CommonRolesObservable } from '../shared/observables/common-roles.observable';
+import { CommonRolesObservable } from './observables/common-roles.observable';
+import { NgxCurrencyModule } from 'ngx-currency';
+
+// import { InputSelectDirective } from './directives/input-select.directive';
 
 @NgModule({
   declarations: [GridSimpleComponent, SideNavComponent, FooterComponent, MenuComponent],
@@ -25,7 +28,8 @@ import { CommonRolesObservable } from '../shared/observables/common-roles.observ
     ModalsModule,
     RouterModule,
     FontAwesomeModule,
-    // MeObservable
+    // MeObservable,
+    NgxCurrencyModule
   ],
   exports: [
     GridSimpleComponent, 
@@ -42,7 +46,8 @@ import { CommonRolesObservable } from '../shared/observables/common-roles.observ
     GridSimpleService,
     ModalDataObservable,
     ModalDataRemoveObservable,
-    CommonRolesObservable
+    CommonRolesObservable,
+    
   ]
 })
 export class SharedModule { 
@@ -51,7 +56,11 @@ export class SharedModule {
     library.addIcons(
       faSpinner,
       faSignInAlt,
-      faBan
+      faBan,
+      faSync,
+      faDownload,
+      faTrash,
+      faPencilAlt
     )
   }
 

@@ -1,15 +1,15 @@
 export interface PurchaseDto {
     id: string;
-    description: string;
-    name: string;
+    providerId: string;
+    providerName: string;
+    documentTypeName: string;
+    documentTypeId: string;
+    documentNumber: string;
+    date: string;
+    total: number;
+    note: string;
     active: boolean;
-    activeName: string;
+    createdAtName: string;
     createdAt: string;
-    ruc: string;
-    homePhoneNumber: string;
-    cellPhoneNumber: string;
-    address: string;
-    departmentId: string;
-    provinceId: string;
-    districtId: string;
+    activeName: string;
 }

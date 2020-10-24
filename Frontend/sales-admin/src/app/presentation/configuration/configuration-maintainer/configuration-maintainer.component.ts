@@ -22,7 +22,6 @@ export class ConfigurationMaintainerComponent implements OnInit {
   ngOnInit(): void {
     const that = this;
     that.route.data.subscribe( res => {
-      console.log(res);
       that.data = res;
     });
   }

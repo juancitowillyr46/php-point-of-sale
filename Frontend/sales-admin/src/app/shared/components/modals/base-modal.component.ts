@@ -2,6 +2,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Inject, Injectable } from '@angular/core';
 import { CommonAuditStatusUseCase } from 'src/app/domain/commons/usecase/common-audit-status.usecase';
 import { CommonDto } from 'src/app/domain/commons/model/common.dto';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Injectable()
 export class BaseModalComponent {
@@ -13,40 +14,44 @@ export class BaseModalComponent {
     public commonAuditStatus: CommonDto[] = [];
     public commonAuditStatusUseCase: CommonAuditStatusUseCase;
 
+    public modalService: NgbModal = null;
+
     constructor(
         @Inject(FormBuilder) formBuilder: FormBuilder,
-        @Inject(CommonAuditStatusUseCase) commonAuditStatusUseCase: CommonAuditStatusUseCase
+        @Inject(CommonAuditStatusUseCase) commonAuditStatusUseCase: CommonAuditStatusUseCase,
+        @Inject(NgbModal) modalService: NgbModal,
     ) {
         const that = this;
         that.formBuilder = formBuilder;
         that.commonAuditStatusUseCase = commonAuditStatusUseCase;
+        that.modalService = modalService;
         that.commonAuditStatusLoad();
     }
 
     buildingForm(group: any): FormGroup {
         const that = this;
-        return that.formBuilder.group(group);
+        const formGroup = that.formBuilder.group(group);
+        return formGroup;
     }
+
+    // editValues(obj: any): void {
+    //     const that = this;
+    //     that.loadData = false;
+    // }
 
     resetForm(obj: any): void {
         const that = this;
         that.loadData = true;
+        that.formGroup.markAsDirty();
         that.formGroup.reset();
-        that.formGroup.setValue(obj);
-        that.formGroup.disable();
     }
 
-    editValues(obj: any): void {
-        const that = this;
-        that.formGroup.patchValue(obj);
-        that.loadData = false;
-        that.formGroup.enable();
-    }
+    
 
     newValues(): void {
         const that = this;
         that.loadData = false;
-        that.formGroup.enable();
+        // that.formGroup.enable();
     }
 
     commonAuditStatusLoad() {
@@ -56,6 +61,11 @@ export class BaseModalComponent {
             that.commonAuditStatus = res;
             that.loadData = false;
         });
+    }
+
+    closeModal(reason: string) {
+        const that = this;
+        that.modalService.dismissAll(reason);
     }
 
 }

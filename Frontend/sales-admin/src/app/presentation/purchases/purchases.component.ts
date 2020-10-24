@@ -21,7 +21,6 @@ export class PurchasesComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     const that = this;
     that.route.data.subscribe( res => {
-      console.log(res);
       that.data = res;
     });
   }

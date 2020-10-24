@@ -1,29 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { CommonDto } from 'src/app/domain/commons/model/common.dto';
+import { CommonDto } from '../../../../domain/commons/model/common.dto';
 
-import { CommonAuditStatusUseCase } from 'src/app/domain/commons/usecase/common-audit-status.usecase';
-import { CommonTypeTaxDocumentUseCase } from 'src/app/domain/commons/usecase/common-type-tax-document.usecase';
-import { CommonProvidersUseCase } from 'src/app/domain/commons/usecase/common-providers.usecase';
-import { CommonStatusPurchaseUseCase } from 'src/app/domain/commons/usecase/common-status-purchase';
+import { CommonAuditStatusUseCase } from '../../../../domain/commons/usecase/common-audit-status.usecase';
+import { CommonTypeTaxDocumentUseCase } from '../../../../domain/commons/usecase/common-type-tax-document.usecase';
+import { CommonProvidersUseCase } from '../../../../domain/commons/usecase/common-providers.usecase';
+import { CommonStatusPurchaseUseCase } from '../../../../domain/commons/usecase/common-status-purchase';
 
 import { PurchaseGetUseCase } from '../../../../domain/purchases/usecase/purchase-get.usecase';
 import { PurchaseAddUseCase } from '../../../../domain/purchases/usecase/purchase-add.usercase';
 import { PurchaseEditUseCase } from '../../../../domain/purchases/usecase/purchase-edit.usecase';
-import { PurchaseRemoveUseCase } from '../../../../domain/purchases/usecase/purchase-remove.usecase';
 import { ProviderGetProductsUseCase } from '../../../../domain/providers/usecase/provider-get-products.usecase';
 
+import { PurchaseDetailAddUseCase } from '../../../../domain/purchases/usecase/detail/purchase-detail-add.usercase';
+import { PurchaseDetailAllUseCase } from '../../../../domain/purchases/usecase/detail/purchase-detail-all.usecase';
+import { PurchaseDetailRemoveUseCase } from '../../../../domain/purchases/usecase/detail/purchase-detail-remove.usecase';
+import { PurchaseDetailEditUseCase } from '../../../../domain/purchases/usecase/detail/purchase-detail-edit.usecase';
+
 import { BaseModalComponent } from '../base-modal.component';
-import { GridSimpleService } from '../../grid-simple/grid-simple.service';
-import { ModalDataObservable } from '../modal-data.observable';
-import { ModalDataRemoveObservable } from '../modal-data-remove.observable';
-import { Subscription } from 'rxjs';
-import { PurchaseStoreDto } from 'src/app/domain/Purchases/model/purchase-store.dto';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { PurchaseStoreDto } from '../../../../domain/Purchases/model/purchase-store.dto';
+import { PurchaseDetailStoreDto } from '../../../../domain/purchases/model/purchase-detail-store.dto';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 declare var $: any;
 
 export class Purchase {
-
   detail: Product[] = [];
   public get total(): number {
     const that = this;
@@ -36,11 +38,12 @@ export class Purchase {
 }
 
 export class Product {
-
+  id: string;
   productId: string;
   productName: string;
   quantity: number;
   price: number;
+  purchaseId: string;
 
   public get subTotal(): number {
     const that = this;
@@ -49,6 +52,7 @@ export class Product {
 
   constructor() {
     const that = this;
+    that.id = '';
   }
 
 }
@@ -61,7 +65,7 @@ export class Product {
 export class ModalPurchasesComponent extends BaseModalComponent implements OnInit {
 
   public modalDataSub: Subscription;
-  public dataModal: any;
+
   public submit: any = null;
   public selectedProduct: any = null;
   
@@ -72,79 +76,79 @@ export class ModalPurchasesComponent extends BaseModalComponent implements OnIni
   public commonTypeTaxDocument: CommonDto[] = [];
   public commonStatusPurchase: CommonDto[] = [];
   public providerGetProducts: CommonDto[] = [];
+
+  public countReponse: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  public currentData = this.countReponse.asObservable();
+
+  @Input() public dataModal: any = null;
   
   constructor(
-    private gridSimpleService: GridSimpleService,
-    private modalDataObservable: ModalDataObservable,
-    private modalDataRemoveObservable: ModalDataRemoveObservable,
     private purchaseGetUseCase: PurchaseGetUseCase,
     private purchaseAddUseCase: PurchaseAddUseCase,
     private purchaseEditUseCase: PurchaseEditUseCase,
-    private purchaseRemoveUserCase: PurchaseRemoveUseCase,
-    private providerGetProductsUseCase: ProviderGetProductsUseCase, 
+    
+    private purchaseDetailAddUseCase: PurchaseDetailAddUseCase,
+    private providerGetProductsUseCase: ProviderGetProductsUseCase,
+
+    private purchaseDetailAllUseCase: PurchaseDetailAllUseCase,
+    private purchaseDetailEditUseCase: PurchaseDetailEditUseCase,
+    private purchaseDetailRemoveUserCase: PurchaseDetailRemoveUseCase,
+    
     public commonAuditStatusUseCase: CommonAuditStatusUseCase,
     public commonProvidersUseCase: CommonProvidersUseCase,
     public commonTypeTaxDocumentUseCase: CommonTypeTaxDocumentUseCase,
     public commonStatusPurchaseUseCase: CommonStatusPurchaseUseCase,
     
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    private modalService: NgbModal
   ) { 
-    super(formBuilder, commonAuditStatusUseCase);
+    super(formBuilder, commonAuditStatusUseCase, modalService);
+    const that = this;
+    
   }
 
   ngOnInit(): void {
     const that = this;
-    that.loadCommonPurchases();
     that.buildingFormPurchases();
+    that.loadCommonPurchases();
+    that.getRow();
+  }
 
-    that.modalDataSub = that.modalDataObservable.currentData.subscribe(res => {
-      that.dataModal = null;
-      that.submit = false;
-      that.resetFormPurchase();
-      if(res !== null){
-        that.dataModal = JSON.parse(res);
-        that.purchaseGetUseCase.execute(that.dataModal.id).subscribe( res => {
-          that.submit = false;
-          that.editValues(res);
-        });
-      } else {
-        that.newValues();
-      }
-    });
+  // closeModal(reason: string) {
+  //   const that = this;
+  //   that.modalService.dismissAll(reason);
+  // }
 
-    that.modalDataRemoveObservable.currentData.subscribe( res => {
-      if(res !== null){
-        that.dataModal = JSON.parse(res);
-        that.purchaseRemoveUserCase.execute(that.dataModal.id).subscribe( response => {
-          that.modalDataRemoveObservable.changeData(null);
-          that.gridSimpleService.reload();
-        });
-      }
-    });
-
-
-    $('#date').datepicker().on('changeDate', function (ev) {
-      $('#date').attr("value", $('#date').val());
-      that.formGroup.controls.date.setValue($('#date').val());
-      that.formGroup.controls.date.markAsTouched();
-    });
-
+  getRow() {
+    const that = this;
+    if(that.dataModal.id != ''){
+      that.loadData = true;
+      that.formGroup.disable();
+      that.purchaseGetUseCase.execute(that.dataModal.id).subscribe( res => {
+        that.loadData = false;
+        that.formGroup.patchValue(res);
+        that.formGroup.enable();
+        that.onChangeProductByProvider(that.formGroup.controls.providerId.value);
+        that.getRowsOrders();
+      }, (error) => {
+        
+      });
+    }
   }
 
   loadCommonPurchases(): void {
     const that = this;
     that.loadData = true;
-
     that.commonProvidersUseCase.execute().subscribe( res => {
       that.commonProviders = res;
       that.loadData = false;
     });
-    that.loadData = true;
+
     that.commonTypeTaxDocumentUseCase.execute().subscribe( res => {
       that.commonTypeTaxDocument = res;
       that.loadData = false;
     });
-    that.loadData = true;
+
     that.commonStatusPurchaseUseCase.execute().subscribe( res => {
       that.commonStatusPurchase = res;
       that.loadData = false;
@@ -158,8 +162,13 @@ export class ModalPurchasesComponent extends BaseModalComponent implements OnIni
       documentTypeId: ['', [Validators.required]],
       documentNumber: ['', [Validators.required]], 
       date: ['', [Validators.required]],
-      note: ['', [Validators.required]],
-      active: [true, [Validators.required]],
+      note: [''],
+      active: [true, [Validators.required]]
+    });
+    $('#date').datepicker().on('changeDate', function (ev) {
+      $('#date').attr("value", $('#date').val());
+      that.formGroup.controls.date.setValue($('#date').val());
+      that.formGroup.controls.date.markAsTouched();
     });
   }
 
@@ -177,37 +186,34 @@ export class ModalPurchasesComponent extends BaseModalComponent implements OnIni
 
   onClickClose() {
     const that = this;
-    
-    that.gridSimpleService.closeModal();
+    that.closeModal('DONE');
   }
 
   onClickDone() {
     const that = this;
     
-    let object: PurchaseStoreDto = that.formGroup.value;
-    object.total = 123;
-    object.active = (that.formGroup.controls.active.value == 'true' || that.formGroup.controls.active.value == true)? true : false;
+    that.submit = true;
 
-    if(that.dataModal !== null){
+    let object: PurchaseStoreDto = that.formGroup.value;
+    object.total = that.purchase.total;
+    object.active = (that.formGroup.controls.active.value == 'true' || that.formGroup.controls.active.value == true)? true : false;
+    that.formGroup.disable();
+
+    if(that.dataModal.id !== ''){
       object.id = that.dataModal.id;
       that.purchaseEditUseCase.execute(object).subscribe( res => {
-        that.submit = false;
-        that.gridSimpleService.closeModal();
-        that.gridSimpleService.reload();
-      }, (error) => {
-        alert(error);
-        that.submit = false;
+        that.submit = true;
+        that.formGroup.enable();
+        that.storeOrders(res.id);
       });
     } else {
       that.purchaseAddUseCase.execute(object).subscribe( res => {
-        console.log(res);
-        that.submit = false;
-        that.gridSimpleService.closeModal();
-        that.gridSimpleService.reload();
+        that.submit = true;
+        that.formGroup.enable();
+        that.storeOrders(res.id);
       });
     }
     
-    that.submit = true;
   }
 
   onChangeProductByProvider(value: any) {
@@ -217,27 +223,153 @@ export class ModalPurchasesComponent extends BaseModalComponent implements OnIni
     that.providerGetProductsUseCase.execute({providerId: value}).subscribe( res => {
       that.providerGetProducts = res;
       that.loadData = false;
+    }, (error) => {
+
     });
   }
 
 
-  onChangeProductId(value: any) {
+  onChangeProductId(productId: string) {
     const that = this;
-    let addProduct = new Product();
-    addProduct.price = 0;
-    addProduct.quantity = 0;
-    addProduct.productId = '1233434';
-    addProduct.productName = 'sadasd';
-    that.purchase.detail.push(addProduct);
-    that.selectedProduct = null;
+
+    const exist = that.validateDuplicateOfProduct(productId);
+
+    if(exist) {
+      alert('El producto ya agregó');
+      this.selectedProduct = null;
+      return false;    
+    } else {
+      
+      const productName = that.providerGetProducts.find( f => f.value === productId).text;
+      let addProduct = new Product();
+      addProduct.id = '';
+      addProduct.price = 0;
+      addProduct.quantity = 0;
+      addProduct.productId = productId;
+      addProduct.productName = (productName != undefined)? productName : '';
+      that.purchase.detail.push(addProduct);
+      this.selectedProduct = null;
+    }
+
+  }
+
+  // Detalle producto
+  validateDuplicateOfProduct(productId: string): boolean {
+    const that = this;
+    return (that.purchase.detail.find(f => f.productId === productId) !== undefined)? true : false;    
   }
 
   onClickRemove(idx: number) {
     const that = this;
-    console.log(idx);
-    that.purchase.detail.splice(idx, 1);
-    console.log(that.products);
+    if(that.purchase.detail[idx].id == ''){
+      that.purchase.detail.splice(idx, 1);
+    } else {  
+      const confirm = window.confirm('¿Estás seguro que deseas eliminar?');
+      if(confirm){
+        console.log('Eliminar desde el servidor');
+        that.purchaseDetailRemoveUserCase.execute({
+          id: that.purchase.detail[idx].id,
+          price: that.purchase.detail[idx].price,
+          productId: that.purchase.detail[idx].productId,
+          purchaseId: that.purchase.detail[idx].purchaseId,
+          quantity: that.purchase.detail[idx].quantity,
+          subtotal: that.purchase.detail[idx].subTotal,
+          active: true
+        }).subscribe(res => {
+          console.log(res);
+          that.getRowsOrders();
+        });
+      }
+    }
   }
 
+  storeOrders(purchaseId: string) {
+    const that = this;
+
+    that.submit = true;
+
+    let countResponseSuccess: number = 0;
+
+    that.purchase.detail.forEach(item => {
+
+      const obj: PurchaseDetailStoreDto = {
+        price: item.price,
+        productId: item.productId,
+        quantity: item.quantity,
+        subtotal: item.subTotal,
+        purchaseId: purchaseId, 
+        active: true
+      };
+
+      if(item.id == ''){
+        that.purchaseDetailAddUseCase.execute(obj).subscribe(res => {
+          that.submit = false;
+          countResponseSuccess += 1;
+          that.countReponse.next(countResponseSuccess);
+        });
+      } else {
+        obj.id = item.id;
+        that.purchaseDetailEditUseCase.execute(obj).subscribe( res => {
+          that.submit = false;
+          countResponseSuccess += 1;
+          that.countReponse.next(countResponseSuccess);
+        });
+      }
+    });
+
+    that.countReponse.subscribe( countResponseSuccess => {
+      if(countResponseSuccess){
+        that.submit = true;
+        that.formGroup.enable();
+        if(that.purchase.detail.length === countResponseSuccess) {
+          that.submit = false;
+          that.closeModal('DONE');
+        }
+      }
+    });
+   
+  }
+
+  getRowsOrders(): void {
+    const that = this;
+    that.loadData = true;
+    that.purchase.detail = [];
+    that.purchaseDetailAllUseCase.execute(that.dataModal.id).subscribe( res => {
+      if(res.data.rows.length == 0){
+        alert('No existen productos agregados a la compra');
+      } else {
+        res.data.rows.forEach(detail => {
+
+          const purchaseItem = new Product();
+          purchaseItem.id = detail.id;
+          purchaseItem.purchaseId = detail.purchaseId;
+          purchaseItem.productId = detail.productId;
+          purchaseItem.productName = detail.productName;
+          purchaseItem.quantity = detail.quantity;
+          purchaseItem.price = detail.price;
+          that.purchase.detail.push(purchaseItem);
+          
+        });
+      }
+      that.loadData = false;
+    });
+  }
+
+  get validateOrder(): boolean {
+    const that = this;
+    let countError = 0;
+
+    if(that.purchase.detail.length === 0) {
+      countError = countError + 1;
+    }
+
+    that.purchase.detail.forEach(product => {
+      if(product.price == 0 || product.quantity == 0){
+        countError = countError + 1;
+      }
+    });
+    
+    return (countError > 0);
+  }
 
 }

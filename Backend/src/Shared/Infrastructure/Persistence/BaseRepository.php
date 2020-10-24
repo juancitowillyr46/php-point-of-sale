@@ -125,7 +125,7 @@ class BaseRepository implements RepositoryInterface
         try {
 
             $findAll = $model::all()
-                ->where('purchase_id', '=', 1)
+                ->where('purchase_id', '=', $parentId)
                 ->sortByDesc('id')
                 ->skip(((int)$query['page'] - 1) * $query['size'])
                 ->take((int)$query['size'])

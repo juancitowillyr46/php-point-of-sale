@@ -24,6 +24,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/assets/css/default-assets/datatables.bootstrap4.css",
               "src/assets/css/default-assets/responsive.bootstrap4.css",
               "src/assets/css/default-assets/buttons.bootstrap4.css",
