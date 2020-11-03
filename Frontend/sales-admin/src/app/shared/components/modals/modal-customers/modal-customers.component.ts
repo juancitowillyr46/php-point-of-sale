@@ -20,6 +20,7 @@ import { CustomerRemoveUseCase } from '../../../../domain/customers/usecase/cust
 
 import { CommonDto } from 'src/app/domain/commons/model/common.dto';
 import { CustomerStoreDto } from 'src/app/domain/customers/model/customer-store.dto';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-modal-customers',
@@ -51,9 +52,10 @@ export class ModalCustomersComponent extends BaseModalComponent implements OnIni
     private commonUbigeoDistrictsUseCase: CommonUbigeoDistrictsUseCase,
     public commonAuditStatusUseCase: CommonAuditStatusUseCase,
     public commonDocumentTypesUseCase: CommonDocumentTypesUseCase,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    public modalService: NgbModal
   ) { 
-    super(formBuilder, commonAuditStatusUseCase);
+    super(formBuilder, commonAuditStatusUseCase, modalService);
     const that = this;
   }
 
@@ -71,7 +73,7 @@ export class ModalCustomersComponent extends BaseModalComponent implements OnIni
         that.loadData = true;
         that.customerGetUseCase.execute(that.dataModal.id).subscribe( res => {
           that.submit = false;
-          that.editValues(res);
+          //that.editValues(res);
           that.onChangeDepartament(res.departmentId);
           that.onChangeProvince(res.provinceId);
         });

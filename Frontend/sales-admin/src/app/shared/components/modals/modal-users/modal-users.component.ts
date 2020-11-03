@@ -17,6 +17,7 @@ import { UserRemoveUseCase } from '../../../../domain/users/usecase/user-remove.
 import { BaseModalComponent } from '../base-modal.component';
 import { UserStoreDto } from 'src/app/domain/users/model/user-store.dto';
 import { ModalDataRemoveObservable } from '../modal-data-remove.observable';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-modal-users',
@@ -43,9 +44,10 @@ export class ModalUsersComponent extends BaseModalComponent implements OnInit  {
     private userEditUseCase: UserEditUseCase,
     private userRemoveUserCase: UserRemoveUseCase,
     public commonAuditStatusUseCase: CommonAuditStatusUseCase,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    public modalService: NgbModal
   ) { 
-    super(formBuilder, commonAuditStatusUseCase);
+    super(formBuilder, commonAuditStatusUseCase, modalService);
     const that = this;
   }
 
@@ -63,7 +65,7 @@ export class ModalUsersComponent extends BaseModalComponent implements OnInit  {
         that.dataModal = JSON.parse(res);
         that.userGetUseCase.execute(that.dataModal.id).subscribe( res => {
           that.submit = false;
-          that.editValues(res);
+          //that.editValues(res);
         });
       } else {
         that.newValues();

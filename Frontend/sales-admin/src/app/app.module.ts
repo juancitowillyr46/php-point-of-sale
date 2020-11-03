@@ -22,11 +22,13 @@ import { AuthHttpErrorsInterceptor } from './shared/interceptors/auth-http-error
 
 import { CoreModule } from './core/core.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { InputSelectDirective } from './shared/directives/input-select.directive';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+   // InputSelectDirective
   ],
   imports: [
     BrowserModule,
@@ -52,6 +54,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
       multi: true
     }
   ],
+  exports: [],
   bootstrap: [AppComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

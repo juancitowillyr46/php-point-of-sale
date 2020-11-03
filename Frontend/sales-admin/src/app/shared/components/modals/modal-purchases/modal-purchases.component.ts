@@ -100,7 +100,7 @@ export class ModalPurchasesComponent extends BaseModalComponent implements OnIni
     public commonStatusPurchaseUseCase: CommonStatusPurchaseUseCase,
     
     public formBuilder: FormBuilder,
-    private modalService: NgbModal
+    public modalService: NgbModal
   ) { 
     super(formBuilder, commonAuditStatusUseCase, modalService);
     const that = this;

@@ -15,6 +15,7 @@ import { BaseModalComponent } from '../base-modal.component';
 import { ModalDataRemoveObservable } from '../modal-data-remove.observable';
 import { ModalDataObservable } from '../modal-data.observable';
 import { DataMasterStoreDto } from '../../../../domain/datamaster/model/data-master-store.dto';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-modal-data-master',
@@ -41,9 +42,10 @@ export class ModalDataMasterComponent extends BaseModalComponent implements OnIn
 
     public commonAuditStatusUseCase: CommonAuditStatusUseCase,
     private commonDataMasterTypeUseCase: CommonDataMasterTypeUseCase,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    public modalService: NgbModal
   ) { 
-    super(formBuilder, commonAuditStatusUseCase);
+    super(formBuilder, commonAuditStatusUseCase, modalService);
     const that = this;
   }
 
@@ -61,7 +63,7 @@ export class ModalDataMasterComponent extends BaseModalComponent implements OnIn
         that.dataMasterGetUseCase.execute(that.dataModal.id).subscribe( res => {
           that.submit = false;
 
-          that.editValues(res);
+          //that.editValues(res);
           that.formGroup.controls.type.disable();
         });
       } else {

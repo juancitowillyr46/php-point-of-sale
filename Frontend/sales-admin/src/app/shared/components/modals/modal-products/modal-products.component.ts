@@ -18,6 +18,7 @@ import { BaseModalComponent } from '../base-modal.component';
 import { ProductStoreDto } from '../../../../domain/products/model/product-store.dto';
 import { ModalDataObservable } from '../modal-data.observable';
 import { ModalDataRemoveObservable } from '../modal-data-remove.observable';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-modal-products',
@@ -46,9 +47,10 @@ export class ModalProductsComponent extends BaseModalComponent implements OnInit
     private productAddUseCase: ProductAddUseCase,
     private productEditUseCase: ProductEditUseCase,
     private productRemoveUserCase: ProductRemoveUseCase,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    public modalService: NgbModal
   ) { 
-    super(formBuilder, commonAuditStatusUseCase);
+    super(formBuilder, commonAuditStatusUseCase, modalService);
   }
 
   ngOnInit(): void {
@@ -64,7 +66,7 @@ export class ModalProductsComponent extends BaseModalComponent implements OnInit
         that.dataModal = JSON.parse(res);
         that.productGetUseCase.execute(that.dataModal.id).subscribe( res => {
           that.submit = false;
-          that.editValues(res);
+          //that.editValues(res);
         });
       } else {
         that.newValues();

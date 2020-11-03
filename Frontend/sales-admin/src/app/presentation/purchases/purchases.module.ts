@@ -21,6 +21,7 @@ import { FormsModule } from '@angular/forms';
     NgbPaginationModule,
     NgbModule,
     // NgbRadioGroup
+
   ],
   providers: [
     DecimalPipe

@@ -1,0 +1,374 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-flex align-items-center justify-content-between">
+                <h4 class="mb-0 font-18">Punto de Venta</h4>
+                <!-- <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Maestro</a></li>
+                        <li class="breadcrumb-item active">Compras</li>
+                    </ol>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 order-md-2 box-margin">
+            <div class="mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="check-out-area">
+                            
+                            <form class="needs-validation" novalidate="">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label class="font-15 text-dark" for="firstName">Tipo documento</label>
+                                        <select class="form-control mb-3" >
+                                            <option disabled selected>-- SELECCIONE --</option>
+                                            <option>Boleta</option>
+                                            <option>Factura</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-2">
+                                        <label class="font-15 text-dark" for="firstName">Serie</label>
+                                        <input type="text" class="form-control" placeholder="Last name" value="F001">
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="font-15 text-dark" for="firstName">Número</label>
+                                        <input type="text" class="form-control" placeholder="Last name" value="1045890924">
+                                    </div>
+                                </div>
+                                
+                            </form>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <div class="row">
+                                <div class="col-12">
+                                    <label class="font-15 text-dark" for="firstName">Cliente</label>
+                                    <select class="form-control mb-3" >
+                                        <option disabled selected>-- SELECCIONE --</option>
+                                        <option>Juan Rodas</option>
+                                        <option>Genesis Rodas</option>
+                                        <option>Mateo Rodas</option>
+                                    </select>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <label class="font-15 text-dark" for="firstName">RUC/DNI</label>
+                              <input type="text" class="form-control" placeholder="Last name">
+                            </div>
+                            <div class="col-8">
+                                <label class="font-15 text-dark" for="firstName">Cliente</label>
+                                <input type="text" class="form-control" placeholder="Last name">
+                              </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            
+            <div class="mb-3">
+                <div class="card">
+                    <div class="card-body text-center ">
+                        <!-- bg-info text-white -->
+                        <table class="" width="100%">
+                            <tr>
+                                <td align="left" width="40%">
+                                    <div class="d-inline-block w-75">
+                                        TOTAL
+                                    </div>
+                                    <div class="d-inline-block w-25 text-right pr-1">
+                                        S/
+                                    </div>
+                                </td>
+                                <td align="right" width="60%">
+                                    <div class="d-block mb-1">
+                                        <!-- <div class="d-inline-block w-50 pr-1"></div> -->
+                                        <div class="d-inline-block w-100">{{sale.total}}</div>
+                                    </div>
+                                </td>
+                            </tr>
+                           
+                        </table>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="" width="100%">
+                            <!-- <tr>
+                                
+                                <td align="left" width="40%">
+                                    <div class="d-inline-block w-75">
+                                        TOTAL
+                                    </div>
+                                    <div class="d-inline-block w-25 text-right pr-1">
+                                        S/
+                                    </div>
+                                </td>
+                                <td align="right" width="60%">
+                                    <div class="d-block mb-1">
+                                        
+                                        <div class="d-inline-block w-100">450.00</div>
+                                    </div>
+                                </td>
+                            </tr> -->
+                            <tr>
+                                
+                                <td align="left" width="40%">
+                                    <div class="d-inline-block w-75">
+                                        Importe efectivo
+                                    </div>
+                                    <!-- <div class="d-inline-block w-25 text-right pr-1">
+                                        S/
+                                    </div> -->
+                                </td>
+                                <td align="right" width="60%">
+                                    <div class="d-block mb-2">
+                                        <!-- <div class="d-inline-block w-50 pr-1"></div> -->
+                                        <div class="d-inline-block w-100">
+                                            <input class="d-inline-block" type="text" [(ngModel)]="vuelto" class="form-control text-right" placeholder="Ingrese el vuelto" value="500">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" width="40%">
+                                    <div class="d-inline-block w-75">
+                                        Vuelto
+                                    </div>
+                                    <div class="d-inline-block w-25 text-right pr-1">
+                                        S/
+                                    </div>
+                                </td>
+                                <td align="right" width="60%">
+                                    <div class="d-block mb-2">
+                                        <!-- <div class="d-inline-block w-50 pr-1"></div> -->
+                                        <div class="d-inline-block w-100">{{ (vuelto - sale.total) }}</div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <button class="btn btn-success btn-block"><fa-icon [icon]="['fas', 'money-bill-alt']" class="mr-1"></fa-icon>PAGAR</button>
+                    </div>
+                </div>
+            </div>
+  
+
+        </div>
+    
+        <div class="col-md-8 order-md-1 box-margin">
+
+            <div class="mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <!-- <h4 class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="card-title mb-0">Producto</span>
+                            
+                        </h4> -->
+                        <div class="mb-3">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="product-typehead">
+                                        <ng-template #rt let-r="result" let-t="term">
+                                            <div class="w-25 d-inline-block pr-1 pt-1" style="vertical-align: top;">
+                                                <img [src]="'./assets/img/shop-img/1.png'" 
+                                                class="round mr-3 product-thumb"
+                                                style="vertical-align: super;">
+                                            </div>
+                                            <div class="w-75 d-inline-block">
+                                                <div>
+                                                    <div>Nombre: {{r.text}}</div>
+                                                    <div>Código: C-100</div>
+                                                    <div>En stock: <b>12</b></div>
+                                                    <div>Precio: <b>250.00</b></div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- <ngb-highlight [result]="r.text" [term]="t"></ngb-highlight>
+                                            <ngb-highlight [result]="r.text" [term]="t"></ngb-highlight> -->
+                                            
+                                        </ng-template>
+                                    </div>
+                                    <label class="font-15 text-dark" for="firstName">Producto 
+                                        <span *ngIf="searching">
+                                            <fa-icon [icon]="['fas', 'spinner']" [pulse]="true" class="mr-1"></fa-icon>
+                                            Buscando...
+                                        </span>
+                                    </label>
+                                    <input type="text" ngOnSelectInput class="form-control" id="search" placeholder="Por código, nombre, descripción" 
+                                    [(ngModel)]="model" 
+                                    [ngbTypeahead]="search"
+                                    [resultTemplate]="rt"                    
+                                    [resultFormatter]="resultFormatBandListValue"
+                                    [inputFormatter]="inputFormatBandListValue"
+                                    #instance="ngbTypeahead"   
+                                    [editable]="true"                  
+                                    placeholder="Por código, nombre, descripción"
+                                    (selectItem)="onSelect($event)"
+                                    >
+                                    
+                                    
+                                </div>
+                                <!-- {{ model | json }} -->
+                                <!-- <div class="col-6">
+                                    <label class="font-15 text-dark" for="firstName">Producto</label>
+                                    <input type="text" class="form-control" placeholder="Last name" value="F001">
+                                </div> -->
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="check-out-area">
+                            <!-- <h4 class="card-title">Detalle</h4> -->
+                            <form class="needs-validation" novalidate="">
+                            <table class="table">
+                                <tr>
+                                    <td width="55%">Producto</td>
+                                    <td width="15%" align="center">Cantidad</td>
+                                    <td width="15%" align="center">Precio</td>
+                                    <td width="15%" align="right">Subtotal</td>
+                                    <td>
+                                        <fa-icon [icon]="['fas', 'trash']" class="mr-1"></fa-icon>
+                                    </td>
+                                </tr>
+                                <tr *ngFor="let product of sale.detail; let i = index;">
+                                    <td class="product-td">productodos</td>
+                                    <td class="product-td">
+                                        <input type="number" class="form-control" ngOnSelectInput [ngModelOptions]="{standalone: true}"  [(ngModel)]="product.quantity">
+                                    </td>
+                                    <td class="product-td">
+                                        <input class="form-control" ngOnSelectInput
+                                        currencyMask [options]="{ prefix: '', thousands: ',', decimal: '.', precision: 2 }" [ngModelOptions]="{standalone: true}"  
+                                        [(ngModel)]="product.price"
+                                        
+                                        >
+                                    </td>
+                                    <td align="right" class="product-td">{{product.subTotal}}</td>
+                                    <td align="right" class="product-td">
+                                        <a href="javascript:void(0)" placement="bottom" ngbtooltip="Eliminar" (click)="onClickRemove(i)">
+                                            <fa-icon [icon]="['fas', 'trash']" class="mr-1"></fa-icon>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <!-- <tr>
+                                    <td class="product-td">productodos</td>
+                                    <td class="product-td">
+                                        <input type="number" class="form-control">
+                                    </td>
+                                    <td class="product-td">
+                                        <input class="form-control">
+                                    </td>
+                                    <td align="right" class="product-td">100.00</td>
+                                    <td align="right" class="product-td">
+                                        <a href="javascript:void(0)" placement="bottom" ngbtooltip="Eliminar">
+                                            <fa-icon [icon]="['fas', 'trash']" class="mr-1"></fa-icon>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="product-td">productodos</td>
+                                    <td class="product-td">
+                                        <input type="number" class="form-control">
+                                    </td>
+                                    <td class="product-td">
+                                        <input class="form-control">
+                                    </td>
+                                    <td align="right" class="product-td">100.00</td>
+                                    <td align="right" class="product-td">
+                                        <a href="javascript:void(0)" placement="bottom" ngbtooltip="Eliminar">
+                                            <fa-icon [icon]="['fas', 'trash']" class="mr-1"></fa-icon>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="product-td">productodos</td>
+                                    <td class="product-td">
+                                        <input type="number" class="form-control">
+                                    </td>
+                                    <td class="product-td">
+                                        <input class="form-control">
+                                    </td>
+                                    <td align="right" class="product-td">100.00</td>
+                                    <td align="right" class="product-td">
+                                        <a href="javascript:void(0)" placement="bottom" ngbtooltip="Eliminar">
+                                            <fa-icon [icon]="['fas', 'trash']" class="mr-1"></fa-icon>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="product-td">productodos</td>
+                                    <td class="product-td">
+                                        <input type="number" class="form-control">
+                                    </td>
+                                    <td class="product-td">
+                                        <input class="form-control">
+                                    </td>
+                                    <td align="right" class="product-td">100.00</td>
+                                    <td align="right" class="product-td">
+                                        <a href="javascript:void(0)" placement="bottom" ngbtooltip="Eliminar">
+                                            <fa-icon [icon]="['fas', 'trash']" class="mr-1"></fa-icon>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="product-td">productodos</td>
+                                    <td class="product-td">
+                                        <input type="number" class="form-control">
+                                    </td>
+                                    <td class="product-td">
+                                        <input class="form-control">
+                                    </td>
+                                    <td align="right" class="product-td">100.00</td>
+                                    <td align="right" class="product-td">
+                                        <a href="javascript:void(0)" placement="bottom" ngbtooltip="Eliminar">
+                                            <fa-icon [icon]="['fas', 'trash']" class="mr-1"></fa-icon>
+                                        </a>
+                                    </td>
+                                </tr> -->
+                                <!-- <td align="right" colspan="4"><div class="d-block mb-1">
+                                    <div class="d-inline-block w-100"><b>TOTAL S/: 1600.00</b></div></div>
+                                </td>
+                                <td class=""></td> -->
+                            </table>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

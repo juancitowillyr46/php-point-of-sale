@@ -17,6 +17,7 @@ import { ProviderEditUseCase } from '../../../../domain/providers/usecase/provid
 import { ProviderRemoveUseCase } from '../../../../domain/providers/usecase/provider-remove.usecase';
 import { ProviderStoreDto } from '../../../../../app/domain/providers/model/provider-store.dto';
 import { CommonDto } from 'src/app/domain/commons/model/common.dto';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -45,9 +46,10 @@ export class ModalProvidersComponent extends BaseModalComponent implements OnIni
     private commonUbigeoProvincesUseCase: CommonUbigeoProvincesUseCase,
     private commonUbigeoDistrictsUseCase: CommonUbigeoDistrictsUseCase,
     public commonAuditStatusUseCase: CommonAuditStatusUseCase,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    public modalService: NgbModal
   ) { 
-    super(formBuilder, commonAuditStatusUseCase);
+    super(formBuilder, commonAuditStatusUseCase, modalService);
     const that = this;
   }
 
@@ -66,7 +68,7 @@ export class ModalProvidersComponent extends BaseModalComponent implements OnIni
         that.loadData = true;
         that.providerGetUseCase.execute(that.dataModal.id).subscribe( res => {
           that.submit = false;
-          that.editValues(res);
+          //that.editValues(res);
           that.onChangeDepartament(res.departmentId);
           that.onChangeProvince(res.provinceId);
         });

@@ -10,14 +10,10 @@ import { PresentationRoutingModule } from './../presentation/presentation-routin
 
 import { CustomersModule } from './customers/customers.module';
 import { ProductsModule } from '../presentation/products/products.module';
-
 import { UsersModule } from '../presentation/users/users.module';
 import { PurchasesModule } from '../presentation/purchases/purchases.module';
 import { ProvidersModule } from '../presentation/providers/providers.module';
-// import { EmployeesModule } from '../presentation/employees/employees.module';
-// import { RolesModule } from '../presentation/roles/roles.module';
-
-// import { ProvidersComponent } from './providers/providers.component';
+import { SalesModule } from '../presentation/sales/sales.module';
 
 @NgModule({
   declarations: [PresentationComponent],
@@ -33,6 +29,7 @@ import { ProvidersModule } from '../presentation/providers/providers.module';
     UsersModule,
     PurchasesModule,
     ProvidersModule,
+    SalesModule
     // EmployeesModule,
     // RolesModule
   ]

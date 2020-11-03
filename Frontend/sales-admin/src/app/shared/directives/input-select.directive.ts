@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import { Directive, ElementRef, HostListener, NgModule } from '@angular/core';
 
 @Directive({ selector: '[ngOnSelectInput]' })
 
@@ -13,3 +13,10 @@ export class InputSelectDirective {
     }
     
 }
+
+@NgModule({
+    declarations: [ InputSelectDirective ],
+    exports: [ InputSelectDirective ]
+})
+
+export class InputSelectDirectiveModule {}

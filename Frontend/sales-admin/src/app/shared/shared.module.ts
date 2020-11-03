@@ -8,7 +8,7 @@ import { ModalsModule } from './components/modals/modals.module';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faSpinner, faSignInAlt, faBan, faSync, faDownload, faTrash, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faSignInAlt, faBan, faSync, faDownload, faTrash, faPencilAlt, faMoneyBillAlt } from '@fortawesome/free-solid-svg-icons';
 import { MeObservable } from '../shared/observables/me.observable';
 import { GridSimpleObservable } from '../shared/components/grid-simple/grid-simple.observable';
 import { GridSimpleService } from '../shared/components/grid-simple/grid-simple.service';
@@ -19,8 +19,6 @@ import { ModalDataRemoveObservable } from '../shared/components/modals/modal-dat
 import { CommonRolesObservable } from './observables/common-roles.observable';
 import { NgxCurrencyModule } from 'ngx-currency';
 
-// import { InputSelectDirective } from './directives/input-select.directive';
-
 @NgModule({
   declarations: [GridSimpleComponent, SideNavComponent, FooterComponent, MenuComponent],
   imports: [
@@ -29,7 +27,7 @@ import { NgxCurrencyModule } from 'ngx-currency';
     RouterModule,
     FontAwesomeModule,
     // MeObservable,
-    NgxCurrencyModule
+    NgxCurrencyModule,
   ],
   exports: [
     GridSimpleComponent, 
@@ -39,6 +37,7 @@ import { NgxCurrencyModule } from 'ngx-currency';
     ModalsModule,
     FontAwesomeModule,
     // MeObservable
+    NgxCurrencyModule
   ],
   providers: [
     MeObservable,
@@ -60,7 +59,8 @@ export class SharedModule {
       faSync,
       faDownload,
       faTrash,
-      faPencilAlt
+      faPencilAlt,
+      faMoneyBillAlt
     )
   }
 

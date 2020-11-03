@@ -76,8 +76,8 @@
         </tr>
         <tr *ngFor="let product of purchase.detail; let i = index;">
             <td class="product-td">{{ product.productName }}</td>
-            <td class="product-td"><input type="number" [ngModelOptions]="{standalone: true}" ngOnSelectInput [(ngModel)]="product.quantity" class="form-control" /></td>
-            <td class="product-td"><input [ngModelOptions]="{standalone: true}" ngOnSelectInput currencyMask [options]="{ prefix: '', thousands: ',', decimal: '.', precision: 2 }" [(ngModel)]="product.price" class="form-control" /></td>
+            <td class="product-td"><input type="number" ngOnSelectInput [ngModelOptions]="{standalone: true}"  [(ngModel)]="product.quantity" class="form-control" /></td>
+            <td class="product-td"><input ngOnSelectInput [ngModelOptions]="{standalone: true}"  currencyMask [options]="{ prefix: '', thousands: ',', decimal: '.', precision: 2 }" [(ngModel)]="product.price" class="form-control" /></td>
             <td align="right" class="product-td">{{ product.subTotal | currency:'S/ ' }}</td>
             <td align="right" class="product-td">
                 <a href="javascript:void(0)" (click)="onClickRemove(i)" placement="bottom" ngbTooltip="Eliminar">

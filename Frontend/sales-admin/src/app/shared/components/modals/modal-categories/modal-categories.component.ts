@@ -13,6 +13,7 @@ import { CategoryAddUseCase } from '../../../../domain/categories/usecase/catego
 import { CategoryEditUseCase } from '../../../../domain/categories/usecase/category-edit.usecase';
 import { CategoryRemoveUseCase } from '../../../../domain/categories/usecase/category-remove.usecase';
 import { CategoryStoreDto } from 'src/app/domain/categories/model/category-store.dto';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-modal-categories',
@@ -34,9 +35,10 @@ export class ModalCategoriesComponent extends BaseModalComponent implements OnIn
     private categoryEditUseCase: CategoryEditUseCase,
     private categoryRemoveUserCase: CategoryRemoveUseCase,
     public commonAuditStatusUseCase: CommonAuditStatusUseCase,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    public modalService: NgbModal
   ) { 
-    super(formBuilder, commonAuditStatusUseCase);
+    super(formBuilder, commonAuditStatusUseCase, modalService);
     const that = this;
   }
 
@@ -52,7 +54,7 @@ export class ModalCategoriesComponent extends BaseModalComponent implements OnIn
         that.dataModal = JSON.parse(res);
         that.categoryGetUseCase.execute(that.dataModal.id).subscribe( res => {
           that.submit = false;
-          that.editValues(res);
+          //that.editValues(res);
         });
       } else {
         that.newValues();

@@ -33,6 +33,12 @@ const routes: Routes = [
         // resolve
       },
       {
+        path: 'sales',
+        loadChildren: () => import('./sales/sales.module')
+        .then(m => m.SalesModule)
+        // resolve
+      },
+      {
         path: 'customers',
         loadChildren: () => import('./customers/customers.module')
         .then(m => m.CustomersModule)
